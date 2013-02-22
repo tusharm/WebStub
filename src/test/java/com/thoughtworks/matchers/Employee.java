@@ -1,18 +1,16 @@
 package com.thoughtworks.matchers;
 
 class Employee {
-    private long id;
     private String name;
     private EAddress emailAddress;
 
-    public Employee(long id, String name, String email) {
-        this.id = id;
+    public Employee(String name, String emailString) {
         this.name = name;
-        this.emailAddress = new EAddress(email);
+        this.emailAddress = new EAddress(emailString);
     }
 
     @Override
     public String toString() {
-        return "Employee {id=" + id + "name=" + name + ", eaddress=" + emailAddress + "}";
+        return "Employee {name=" + name + ", eaddress=" + emailAddress + "}";
     }
 }

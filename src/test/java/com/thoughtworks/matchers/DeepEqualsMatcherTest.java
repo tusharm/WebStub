@@ -9,30 +9,30 @@ import static org.junit.Assert.assertThat;
 
 public class DeepEqualsMatcherTest {
     @Test
-    public void shouldReturnTrueIfObjectsHaveSameFieldValues() {
+    public void shouldMatchIfObjectsHaveSameFieldValues() {
         EAddress actual = new EAddress("a@b.com");
         EAddress expected = new EAddress("a@b.com");
         assertThat(actual, is(deepEquals(expected)));
     }
 
     @Test
-    public void shouldReturnTrueIfObjectsHaveSameValuesInNestedObjects() {
-        Employee actual = new Employee(0, "John", "john@b.com");
-        Employee expected = new Employee(0, "John", "john@b.com");
+    public void shouldMatchIfObjectsHaveSameValuesInNestedObjects() {
+        Employee actual = new Employee("John", "john@b.com");
+        Employee expected = new Employee("John", "john@b.com");
         assertThat(actual, is(deepEquals(expected)));
     }
 
     @Test
-    public void shouldReturnFalseIfObjectsHaveDifferentValuesInNestedObjects() {
-        Employee actual = new Employee(0, "John", "john@b.com");
-        Employee expected = new Employee(0, "John", "john@c.com");
+    public void shouldNotMatchIfObjectsHaveDifferentValuesInNestedObjects() {
+        Employee actual = new Employee("John", "john@foo.com");
+        Employee expected = new Employee("John", "john@bar.com");
         assertThat(actual, not(deepEquals(expected)));
     }
 
     @Test
-    public void shouldReturnTrueIfObjectsHaveDifferentValuesOfExcludedFields() {
-        Employee actual = new Employee(0, "John", "john@b.com");
-        Employee expected = new Employee(0, "John", "john@c.com");
+    public void shouldMatchIfObjectsHaveDifferentValuesOfExcludedFields() {
+        Employee actual = new Employee("John", "john@foo.com");
+        Employee expected = new Employee("John", "john@bar.com");
         assertThat(actual, deepEquals(expected, "emailAddress"));
     }
 }
