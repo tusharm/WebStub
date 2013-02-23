@@ -12,10 +12,8 @@ import static java.util.Collections.emptyList;
 
 public class DeepEqualsMatcher<T> extends TypeSafeMatcher<T> {
 
-    private DeepEquals deepEquals;
-
     public static <T> Matcher<T> deepEquals(T expected) {
-        return new DeepEqualsMatcher<T>(expected);
+        return new DeepEqualsMatcher<T>(expected, Ignored.NONE);
     }
 
     public static <T> Matcher<T> deepEquals(T expected, Ignored ignoredFields) {
@@ -28,15 +26,12 @@ public class DeepEqualsMatcher<T> extends TypeSafeMatcher<T> {
 
     private T expected;
     private List<String> ignoredFieldNames;
+    private DeepEquals deepEquals;
 
     private DeepEqualsMatcher(T expected, Ignored ignored) {
         this.expected = expected;
         this.ignoredFieldNames = ignored.names();
         deepEquals = new DeepEquals();
-    }
-
-    public DeepEqualsMatcher(T expected) {
-        this(expected, Ignored.NONE);
     }
 
     @Override
