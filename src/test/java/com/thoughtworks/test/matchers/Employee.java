@@ -1,4 +1,4 @@
-package com.thoughtworks.matchers;
+package com.thoughtworks.test.matchers;
 
 class Employee {
     private String name;

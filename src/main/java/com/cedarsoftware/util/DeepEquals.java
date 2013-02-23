@@ -6,6 +6,10 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+/*
+ * This class is a customization over the one from http://code.google.com/p/deep-equals/.
+ * It now suuports ignoring fields from the root objects, while doing the comparison.
+ */
 public class DeepEquals {
     private  final Map<Class, Boolean> _customEquals = new ConcurrentHashMap<Class, Boolean>();
     private  final Map<Class, Boolean> _customHash = new ConcurrentHashMap<Class, Boolean>();
