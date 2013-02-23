@@ -6,9 +6,60 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-/*
+/**
  * This class is a customization over the one from http://code.google.com/p/deep-equals/.
- * It now suuports ignoring fields from the root objects, while doing the comparison.
+ * It now supports ignoring fields from the root objects, while doing the comparison.
+ *
+ * Copyright 2013 ThoughtWorks Ltd
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+/**
+ *
+ *
+ * Test two objects for equivalence with a 'deep' comparison.  This will traverse
+ * the Object graph and perform either a field-by-field comparison on each
+ * object (if no .equals() method has been overridden from Object), or it
+ * will call the customized .equals() method if it exists.  This method will
+ * allow object graphs loaded at different times (with different object ids)
+ * to be reliably compared.  Object.equals() / Object.hashCode() rely on the
+ * object's identity, which would not consider two equivalent objects necessarily
+ * equals.  This allows graphs containing instances of Classes that did not
+ * overide .equals() / .hashCode() to be compared.  For example, testing for
+ * existence in a cache.  Relying on an object's identity will not locate an
+ * equivalent object in a cache.<br/><br/>
+ *
+ * This method will handle cycles correctly, for example A->B->C->A.  Suppose a and
+ * a' are two separate instances of A with the same values for all fields on
+ * A, B, and C.  Then a.deepEquals(a') will return true.  It uses cycle detection
+ * storing visited objects in a Set to prevent endless loops.
+ *
+ * @author John DeRegnaucourt (jdereg@gmail.com)
+ *         <br/>
+ *         Copyright [2010] John DeRegnaucourt
+ *         <br/><br/>
+ *         Licensed under the Apache License, Version 2.0 (the "License");
+ *         you may not use this file except in compliance with the License.
+ *         You may obtain a copy of the License at
+ *         <br/><br/>
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *         <br/><br/>
+ *         Unless required by applicable law or agreed to in writing, software
+ *         distributed under the License is distributed on an "AS IS" BASIS,
+ *         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *         See the License for the specific language governing permissions and
+ *         limitations under the License.
  */
 public class DeepEquals {
     private  final Map<Class, Boolean> _customEquals = new ConcurrentHashMap<Class, Boolean>();
