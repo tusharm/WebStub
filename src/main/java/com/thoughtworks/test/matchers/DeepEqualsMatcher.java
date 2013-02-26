@@ -1,6 +1,5 @@
 package com.thoughtworks.test.matchers;
 
-import com.cedarsoftware.util.DeepEquals;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -9,6 +8,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
+import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
 public class DeepEqualsMatcher<T> extends TypeSafeMatcher<T> {
 
@@ -26,17 +26,20 @@ public class DeepEqualsMatcher<T> extends TypeSafeMatcher<T> {
 
     private T expected;
     private List<String> ignoredFieldNames;
-    private DeepEquals deepEquals;
 
     private DeepEqualsMatcher(T expected, Ignored ignored) {
         this.expected = expected;
         this.ignoredFieldNames = ignored.names();
-        deepEquals = new DeepEquals();
     }
 
     @Override
     protected boolean matchesSafely(T actual) {
-        return deepEquals.deepEquals(expected, actual, ignoredFieldNames);
+        try {
+            assertReflectionEquals(expected, actual);
+            return true;
+        } catch (Throwable error) {
+            return false;
+        }
     }
 
     @Override
