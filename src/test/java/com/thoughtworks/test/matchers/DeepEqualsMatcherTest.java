@@ -49,7 +49,6 @@ public class DeepEqualsMatcherTest {
         assertThat(actual, not(deepEquals(expected)));
     }
 
-    @Ignore
     @Test
     public void shouldMatchIfObjectsHaveDifferentValuesOfExcludedFields() {
         Employee actual = new Employee("John", "john@foo.com");
