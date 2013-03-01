@@ -10,7 +10,6 @@ import static java.util.Arrays.asList;
 import static org.apache.commons.collections.CollectionUtils.exists;
 import static org.apache.commons.collections.CollectionUtils.selectRejected;
 import static org.unitils.reflectionassert.ReflectionAssert.assertPropertyReflectionEquals;
-import static org.unitils.reflectionassert.ReflectionComparatorMode.LENIENT_DATES;
 
 class DeepEqualsMatcherWithIgnores<T> extends DeepEqualsMatcher<T> {
     private List<String> ignoredFieldNames;
@@ -22,7 +21,7 @@ class DeepEqualsMatcherWithIgnores<T> extends DeepEqualsMatcher<T> {
 
     @Override
     protected boolean matchesSafely(T actual) {
-        return !exists(unignoredFields(), new FieldDoesNotMatch(getExpected(), actual));
+        return !exists(unignoredFields(), new FieldHasDifferentValuesIn(getExpected(), actual));
     }
 
     @Override
@@ -41,38 +40,6 @@ class DeepEqualsMatcherWithIgnores<T> extends DeepEqualsMatcher<T> {
                 return ignoredFieldNames.contains(field.getName());
             }
         });
-    }
-
-    class FieldDoesNotMatch implements Predicate {
-        private T actual;
-        private T expected;
-
-        FieldDoesNotMatch(T expected, T actual) {
-            this.actual = actual;
-            this.expected = expected;
-        }
-
-        @Override
-        public boolean evaluate(Object o) {
-            Field field = (Field) o;
-            String fieldName = field.getName();
-            try {
-                field.setAccessible(true);
-                Object fieldValue = field.get(expected);
-                return !fieldReflectionMatches(fieldName, fieldValue, actual);
-            } catch (Exception e) {
-                throw new RuntimeException("Unable to access field: " + fieldName);
-            }
-        }
-
-        private boolean fieldReflectionMatches(String fieldName, Object fieldValue, T actual) {
-            try {
-                assertPropertyReflectionEquals(fieldName, fieldValue, actual, LENIENT_DATES);
-                return true;
-            } catch (Throwable error) {
-                return false;
-            }
-        }
     }
 }
 
