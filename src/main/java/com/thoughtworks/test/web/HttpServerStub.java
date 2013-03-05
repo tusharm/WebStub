@@ -8,8 +8,10 @@ public class HttpServerStub {
     private final Server server;
 
     public HttpServerStub(int port, String contextRoot) {
+        ServletContextHandler context = createContextWithStatusServlet(contextRoot);
+
         server = new Server(port);
-        server.setHandler(createContextWithStatusServlet(contextRoot));
+        server.setHandler(context);
     }
 
     public void start() {
@@ -38,7 +40,7 @@ public class HttpServerStub {
 
     private String validateAndSanitize(String contextRoot) {
         if (contextRoot == null)
-            throw new IllegalArgumentException("Invalid context root: " + contextRoot);
+            throw new IllegalArgumentException("Invalid context root");
 
         return contextRoot.startsWith("/") ? contextRoot : ("/" + contextRoot);
     }
