@@ -1,18 +1,15 @@
 package com.thoughtworks.test.web.server
 
-import com.thoughtworks.test.SmartSpec
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import com.thoughtworks.test.web.WellBehavedServer
+import com.thoughtworks.test.SmartSpec
 import com.thoughtworks.test.web.utils.Client
 
 @RunWith(classOf[JUnitRunner])
-class HttpServerSpec extends SmartSpec {
-  val httpClient = new Client
+class HttpServerSpec extends SmartSpec with WellBehavedServer {
   val server = new HttpServer(9099, "root")
-
-  override protected def beforeAll {
-    server.start
-  }
+  val httpClient = new Client
 
   describe ("An HttpServer") {
     it ("should display a status page if started") {
@@ -26,9 +23,5 @@ class HttpServerSpec extends SmartSpec {
     it ("should report resource not found if context doesn't exist") {
       httpClient.get("http://localhost:9099/doesNotExist/status").status should be(404)
     }
-  }
-
-  override protected def afterAll {
-    server.stop
   }
 }
