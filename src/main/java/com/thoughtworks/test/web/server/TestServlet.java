@@ -8,11 +8,16 @@ import java.io.IOException;
 
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 
-class StatusServlet extends HttpServlet {
+class TestServlet extends HttpServlet {
+    private int statusCode;
+
+    TestServlet(int statusCode) {
+        this.statusCode = statusCode;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setStatus(SC_OK);
+        resp.setStatus(statusCode);
         resp.setContentType("text/plain");
         resp.getWriter().append("Server is running");
     }
