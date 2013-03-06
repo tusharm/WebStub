@@ -1,4 +1,4 @@
-package com.thoughtworks.test.web;
+package com.thoughtworks.test.web.server;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

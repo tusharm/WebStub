@@ -1,34 +1,22 @@
 package com.thoughtworks.test.web
 
 import com.thoughtworks.test.SmartSpec
-import utils.Client
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import utils.Client
 
 @RunWith(classOf[JUnitRunner])
 class HttpServerStubSpec extends SmartSpec {
   val httpClient = new Client
-  val serverStub = new HttpServerStub(9099, "root")
+  val serverStub = new HttpServerStub(9099, "context")
 
-  override protected def beforeAll {
-    serverStub.start
-  }
-
-  describe ("An HttpServer stub") {
-    it ("should display a status page if started") {
-      httpClient.get("http://localhost:9099/root/status").status should be(200)
+  describe ("HttpServer stub") {
+    describe ("for GET requests") {
+      ignore("should stub response status") {
+        httpClient.get("http://localhost:9099/root/blah").status should be(404)
+        serverStub.get("blah").returns()
+        httpClient.get("http://localhost:9099/root/blah").status should be(200)
+      }
     }
-
-    it ("must not accept an invalid context root") {
-      evaluating (new HttpServerStub(9099, null)) should produce[IllegalArgumentException]
-    }
-
-    it ("should report resource not found if context doesn't exist") {
-      httpClient.get("http://localhost:9099/doesNotExist/status").status should be(404)
-    }
-  }
-
-  override protected def afterAll {
-    serverStub.stop
   }
 }
