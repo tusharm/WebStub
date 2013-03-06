@@ -6,12 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static javax.servlet.http.HttpServletResponse.SC_OK;
+
 class StatusServlet extends HttpServlet {
-    static final String PATH = "/status";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setStatus(SC_OK);
         resp.setContentType("text/plain");
         resp.getWriter().append("Server is running");
     }

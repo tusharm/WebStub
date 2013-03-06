@@ -21,5 +21,8 @@ public class Client {
         } catch (IOException e) {
             throw new RuntimeException("Error executing GET request", e);
         }
+        finally {
+            httpget.releaseConnection();
+        }
     }
 }

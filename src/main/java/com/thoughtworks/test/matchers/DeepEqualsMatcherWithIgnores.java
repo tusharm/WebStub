@@ -9,7 +9,6 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.apache.commons.collections.CollectionUtils.exists;
 import static org.apache.commons.collections.CollectionUtils.selectRejected;
-import static org.unitils.reflectionassert.ReflectionAssert.assertPropertyReflectionEquals;
 
 class DeepEqualsMatcherWithIgnores<T> extends DeepEqualsMatcher<T> {
     private List<String> ignoredFieldNames;
