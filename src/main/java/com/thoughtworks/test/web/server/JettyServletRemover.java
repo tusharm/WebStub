@@ -1,7 +1,7 @@
 package com.thoughtworks.test.web.server;
 
 import com.thoughtworks.test.utils.Partition;
-import org.apache.commons.collections.Predicate;
+import com.thoughtworks.test.utils.Predicate;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -9,6 +9,7 @@ import org.eclipse.jetty.servlet.ServletMapping;
 
 import static com.thoughtworks.test.utils.ListUtils.split;
 import static java.util.Arrays.asList;
+import static org.apache.commons.lang.ArrayUtils.contains;
 
 class JettyServletRemover {
     private ServletHandler servletHandler;
@@ -18,26 +19,32 @@ class JettyServletRemover {
     }
 
     void remove(final String servletPath) {
-        final Partition<ServletMapping> mappings = split(asList(servletHandler.getServletMappings()), new Predicate() {
+        Partition<ServletMapping> mappings = partitionMappingsBy(servletPath);
+        if (mappings.left().isEmpty())
+            return;
+
+        Partition<ServletHolder> holders = partitionHoldersBy(mappings.left().get(0).getServletName());
+
+        servletHandler.setServlets(holders.right().toArray(new ServletHolder[]{}));
+        servletHandler.setServletMappings(mappings.right().toArray(new ServletMapping[]{}));
+    }
+
+    private Partition<ServletHolder> partitionHoldersBy(final String servletName) {
+        return split(asList(servletHandler.getServlets()), new Predicate<ServletHolder>() {
             @Override
-            public boolean evaluate(Object o) {
-                ServletMapping mapping = (ServletMapping) o;
-                return asList(mapping.getPathSpecs()).contains(servletPath);
+            public boolean satisfies(ServletHolder holder) {
+                return holder.getName().equals(servletName);
             }
         });
+    }
 
-        if (!mappings.left().isEmpty()) {
-            Partition<ServletHolder> holders = split(asList(servletHandler.getServlets()), new Predicate() {
-                @Override
-                public boolean evaluate(Object o) {
-                    ServletHolder holder = (ServletHolder) o;
-                    return holder.getName().equals(mappings.left().get(0).getServletName());
-                }
-            });
-
-            servletHandler.setServlets(holders.right().toArray(new ServletHolder[]{}));
-            servletHandler.setServletMappings(mappings.right().toArray(new ServletMapping[]{}));
-        }
+    private Partition<ServletMapping> partitionMappingsBy(final String servletPath) {
+        return split(asList(servletHandler.getServletMappings()), new Predicate<ServletMapping>() {
+            @Override
+            public boolean satisfies(ServletMapping mapping) {
+                return contains(mapping.getPathSpecs(), servletPath);
+            }
+        });
     }
 
 }
