@@ -8,4 +8,5 @@ trait SmartSpec extends FunSpec
   with ShouldMatchers
   with BeforeAndAfterEach
   with BeforeAndAfterAll
-  with MockitoSugar
+  with MockitoSugar {
+}

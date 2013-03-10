@@ -1,6 +1,5 @@
 package com.thoughtworks.test.matchers;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.thoughtworks.test.matchers.DeepEqualsMatcher.deepEquals;

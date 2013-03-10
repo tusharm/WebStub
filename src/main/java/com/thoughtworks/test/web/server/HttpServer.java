@@ -10,13 +10,18 @@ import static org.eclipse.jetty.servlet.ServletContextHandler.SESSIONS;
 
 public class HttpServer {
     public static final String STATUS_PATH = "/status";
+
     private Server server;
     private ServletContextHandler context;
+    private JettyServletRemover servletRemover;
 
     protected HttpServer(int port, String contextRoot) {
         context = createContext(contextRoot);
+
         server = new Server(port);
         server.setHandler(context);
+
+        servletRemover = new JettyServletRemover(context);
 
         addServlet(new TestServlet(200), STATUS_PATH);
     }
@@ -31,6 +36,10 @@ public class HttpServer {
 
     public void addServlet(Servlet servlet, String servletPath) {
         context.addServlet(new ServletHolder(servlet), servletPath);
+    }
+
+    public void removeServlet(String servletPath) {
+        servletRemover.remove(servletPath);
     }
 
     public void stop() {

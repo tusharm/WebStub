@@ -23,10 +23,16 @@ class HttpServerSpec extends SmartSpec with WellBehavedServer {
       httpClient.get("http://localhost:9099/doesNotExist/status").status should be(404)
     }
 
-    it("should add servlets on-the-fly") {
-      server.addServlet(new TestServlet(302), "/test")
+    it("should manipulate servlets on-the-fly") {
+      val servlet = new TestServlet(302)
+
+      server.addServlet(servlet, "/test")
       httpClient.get("http://localhost:9099/root/test").status should be(302)
+
+      server.removeServlet("/test")
+      httpClient.get("http://localhost:9099/root/test").status should be(404)
+
+      httpClient.get("http://localhost:9099/root/status").status should be(200)
     }
   }
-
 }

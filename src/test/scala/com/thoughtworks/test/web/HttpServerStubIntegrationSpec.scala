@@ -14,13 +14,21 @@ class HttpServerStubIntegrationSpec extends SmartSpec with WellBehavedServer {
 
   describe ("HttpServer stub") {
 
+    ignore ("should reset all stubs") {
+      server.get("blah/*").returns(response().withStatus(200))
+      server.reset
+      httpClient.get("http://localhost:9099/context/blah").status should be(404)
+    }
+
     describe ("for GET requests") {
 
       ignore ("should stub response status") {
         val url = "http://localhost:9099/context/blah"
 
         httpClient.get(url).status should be(404)
-        server.get("blah").returns(response().withStatus(200))
+
+        server.get("blah/*").returns(response().withStatus(200))
+
         httpClient.get(url).status should be(200)
       }
 

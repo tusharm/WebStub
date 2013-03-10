@@ -14,5 +14,9 @@ public class HttpServerStub extends HttpServer implements StubDsl {
     public Operation get(String uri) {
         return null;
     }
+
+    public void reset() {
+
+    }
 }
 
