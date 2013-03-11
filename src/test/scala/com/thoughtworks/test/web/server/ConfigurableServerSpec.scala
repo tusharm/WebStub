@@ -6,17 +6,17 @@ import com.thoughtworks.test.SmartSpec
 import com.thoughtworks.test.web.utils.Client
 
 @RunWith(classOf[JUnitRunner])
-class HttpServerSpec extends SmartSpec with WellBehavedServer {
-  val server = new HttpServer(9099, "root")
+class ConfigurableServerSpec extends SmartSpec with WellBehavedServer {
+  val server = new ConfigurableServer(9099, "root")
   val httpClient = new Client
 
-  describe("An HttpServer") {
+  describe("An ConfigurableServer") {
     it("should display a status page if started") {
       httpClient.get("http://localhost:9099/root/status").status should be(200)
     }
 
     it("must not accept an invalid context root") {
-      evaluating(new HttpServer(9099, null)) should produce[IllegalArgumentException]
+      evaluating(new ConfigurableServer(9099, null)) should produce[IllegalArgumentException]
     }
 
     it("should report resource not found if context doesn't exist") {
@@ -24,7 +24,7 @@ class HttpServerSpec extends SmartSpec with WellBehavedServer {
     }
 
     it("should manipulate servlets on-the-fly") {
-      val servlet = new TestServlet(302)
+      val servlet = new StatusServlet(302)
 
       server.addServlet(servlet, "/test")
       httpClient.get("http://localhost:9099/root/test").status should be(302)

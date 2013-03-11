@@ -6,9 +6,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class StubServlet extends HttpServlet {
+import static javax.servlet.http.HttpServletResponse.SC_OK;
+
+class StatusServlet extends HttpServlet {
+    private int statusCode;
+
+    StatusServlet(int statusCode) {
+        this.statusCode = statusCode;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setStatus(statusCode);
+        resp.setContentType("text/plain");
+        resp.getWriter().append("Server is running");
     }
 }

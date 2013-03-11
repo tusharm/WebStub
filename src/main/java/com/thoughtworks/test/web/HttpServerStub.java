@@ -1,22 +1,14 @@
 package com.thoughtworks.test.web;
 
-import com.thoughtworks.test.web.dsl.StubDsl;
-import com.thoughtworks.test.web.dsl.Operation;
-import com.thoughtworks.test.web.server.HttpServer;
+import com.thoughtworks.test.web.server.ConfigurableServer;
 
-public class HttpServerStub extends HttpServer implements StubDsl {
+public class HttpServerStub extends ConfigurableServer {
 
     public HttpServerStub(int port, String contextRoot) {
         super(port, contextRoot);
     }
 
-    @Override
-    public Operation get(String uri) {
-        return null;
-    }
-
     public void reset() {
-
     }
 }
 

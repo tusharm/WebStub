@@ -5,7 +5,7 @@ import org.scalatest.BeforeAndAfterAll
 trait WellBehavedServer {
   this: BeforeAndAfterAll =>
 
-  val server: HttpServer
+  val server: ConfigurableServer
 
   override protected def beforeAll {
     server.start

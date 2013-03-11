@@ -8,14 +8,14 @@ import javax.servlet.Servlet;
 
 import static org.eclipse.jetty.servlet.ServletContextHandler.SESSIONS;
 
-public class HttpServer {
+public class ConfigurableServer {
     public static final String STATUS_PATH = "/status";
 
     private Server server;
     private ServletContextHandler context;
     private JettyServletRemover servletRemover;
 
-    protected HttpServer(int port, String contextRoot) {
+    protected ConfigurableServer(int port, String contextRoot) {
         context = createContext(contextRoot);
 
         server = new Server(port);
@@ -23,7 +23,7 @@ public class HttpServer {
 
         servletRemover = new JettyServletRemover(context);
 
-        addServlet(new TestServlet(200), STATUS_PATH);
+        addServlet(new StatusServlet(200), STATUS_PATH);
     }
 
     public void start() {
