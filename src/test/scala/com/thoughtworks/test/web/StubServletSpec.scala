@@ -10,7 +10,7 @@ import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class StubServletSpec extends SmartSpec {
-  val servlet = new StubServlet(configuration("GET", "/test", 302))
+  val servlet = new StubServlet(new StubConfiguration("GET", "/test", 302))
 
   it("should return the configured response, if method and uri match") {
     val response = mock[HttpServletResponse]
@@ -40,15 +40,5 @@ class StubServletSpec extends SmartSpec {
     when(request.getMethod).thenReturn(method)
     when(request.getRequestURI).thenReturn(uri);
     request
-  }
-
-  private def configuration(method: String, uri: String, status: Int) = {
-    val config = mock[StubConfiguration]
-
-    when(config.method()).thenReturn(method)
-    when(config.uri()).thenReturn(uri)
-    when(config.statusCode()).thenReturn(status)
-
-    config
   }
 }

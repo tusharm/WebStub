@@ -39,6 +39,6 @@ public class StubServlet extends HttpServlet {
             return;
         }
 
-        resp.setStatus(configuration.statusCode());
+        resp.setStatus(configuration.status());
     }
 }

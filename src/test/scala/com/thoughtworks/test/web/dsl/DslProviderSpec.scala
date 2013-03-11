@@ -3,15 +3,18 @@ package com.thoughtworks.test.web.dsl
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.thoughtworks.test.SmartSpec
+import org.mockito.Mockito._
+import com.thoughtworks.test.web.config.StubConfiguration
 
 @RunWith(classOf[JUnitRunner])
 class DslProviderSpec extends SmartSpec {
 
-  it("should create a request with given method and uri") {
-    val provider = new DslProvider(null)
-    val request = provider.get("/test")
+  it("should inform a consumer when configuration is created") {
+    val consumer = mock[DslConsumer]
+    val provider = new DslProvider(consumer)
 
-    request.method() should be("GET")
-    request.uri() should be("/test")
+    provider.get("/test").returns(new Response(204))
+
+    verify(consumer).configurationCreated(new StubConfiguration("GET", "/test", 204))
   }
 }
