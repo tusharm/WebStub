@@ -3,10 +3,10 @@ package com.thoughtworks.test.web.dsl;
 import com.thoughtworks.test.web.config.StubConfiguration;
 
 public class DslProvider {
-    private DslConsumer consumer;
+    private DslClient consumer;
     private Request request;
 
-    public DslProvider(DslConsumer consumer) {
+    public DslProvider(DslClient consumer) {
         this.consumer = consumer;
     }
 

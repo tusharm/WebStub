@@ -10,7 +10,7 @@ import com.thoughtworks.test.web.config.StubConfiguration
 class DslProviderSpec extends SmartSpec {
 
   it("should inform a consumer when configuration is created") {
-    val consumer = mock[DslConsumer]
+    val consumer = mock[DslClient]
     val provider = new DslProvider(consumer)
 
     provider.get("/test").returns(new Response(204))
