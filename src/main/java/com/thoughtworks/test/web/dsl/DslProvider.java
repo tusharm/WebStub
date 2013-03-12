@@ -2,13 +2,8 @@ package com.thoughtworks.test.web.dsl;
 
 import com.thoughtworks.test.web.config.StubConfiguration;
 
-public class DslProvider {
-    private DslClient consumer;
+public abstract class DslProvider {
     private Request request;
-
-    public DslProvider(DslClient consumer) {
-        this.consumer = consumer;
-    }
 
     public DslProvider get(String uri) {
         request = new Request("GET", uri);
@@ -16,7 +11,9 @@ public class DslProvider {
     }
 
     public void returns(Response response) {
-        consumer.configurationCreated(
+        configurationCreated(
                 new StubConfiguration(request.method(), request.uri(), response.status()));
     }
+
+    abstract protected void configurationCreated(StubConfiguration configuration);
 }

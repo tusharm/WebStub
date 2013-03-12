@@ -1,5 +1,6 @@
 package com.thoughtworks.test.web.server;
 
+import com.thoughtworks.test.web.HttpServer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -8,14 +9,14 @@ import javax.servlet.Servlet;
 
 import static org.eclipse.jetty.servlet.ServletContextHandler.SESSIONS;
 
-public class ConfigurableServer {
+public class JettyHttpServer implements HttpServer {
     public static final String STATUS_PATH = "/status";
 
     private Server server;
     private ServletContextHandler context;
     private JettyServletRemover servletRemover;
 
-    protected ConfigurableServer(int port, String contextRoot) {
+    public JettyHttpServer(int port, String contextRoot) {
         context = createContext(contextRoot);
 
         server = new Server(port);
@@ -26,6 +27,7 @@ public class ConfigurableServer {
         addServlet(new StatusServlet(200), STATUS_PATH);
     }
 
+    @Override
     public void start() {
         try {
             server.start();
@@ -34,14 +36,17 @@ public class ConfigurableServer {
         }
     }
 
+    @Override
     public void addServlet(Servlet servlet, String servletPath) {
         context.addServlet(new ServletHolder(servlet), servletPath);
     }
 
+    @Override
     public void removeServlet(String servletPath) {
         servletRemover.remove(servletPath);
     }
 
+    @Override
     public void stop() {
         try {
             server.stop();
