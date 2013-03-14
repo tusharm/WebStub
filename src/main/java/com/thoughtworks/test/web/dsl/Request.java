@@ -4,7 +4,7 @@ class Request {
     private String uri;
     private String method;
 
-    public Request(String method, String uri) {
+    Request(String method, String uri) {
         this.method = method;
         this.uri = uri;
     }
@@ -15,9 +15,5 @@ class Request {
 
     String method() {
         return method;
-    }
-
-    public void returns(Response response) {
-
     }
 }

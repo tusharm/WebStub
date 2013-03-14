@@ -4,8 +4,8 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.thoughtworks.test.SmartSpec
 import com.thoughtworks.test.web.utils.Client
-import com.thoughtworks.test.web.dsl.Response
 import com.thoughtworks.test.web.ServerStubFactory.dslServer
+import com.thoughtworks.test.web.dsl.ResponseBuilder.response
 
 @RunWith(classOf[JUnitRunner])
 class HttpServerStubIntegrationSpec extends SmartSpec {
@@ -28,7 +28,7 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
     val server = dslServer(9091, "/context")
     server.start
 
-    server.get("/person/1").returns(new Response(302))
+    server.get("/person/1").returns(response().withStatus(302))
     httpClient.get("http://localhost:9091/context/person/1").status should be(302)
 
     server.stop
@@ -39,7 +39,7 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
     val server = dslServer(9091, "/context")
     server.start
 
-    server.get("/person/1").returns(new Response(302))
+    server.get("/person/1").returns(response().withStatus(302))
     server.reset
     httpClient.get(base + "/person/1").status should be(404)
 

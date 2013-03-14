@@ -1,9 +1,9 @@
 package com.thoughtworks.test.web.dsl;
 
-public class Response {
+class Response {
     private int status;
 
-    public Response(int status) {
+    Response(int status) {
         this.status = status;
     }
 

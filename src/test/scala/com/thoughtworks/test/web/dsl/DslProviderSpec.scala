@@ -5,6 +5,7 @@ import org.scalatest.junit.JUnitRunner
 import com.thoughtworks.test.SmartSpec
 import com.thoughtworks.test.web.config.StubConfiguration
 import scala.collection.mutable.MutableList
+import ResponseBuilder.response
 
 @RunWith(classOf[JUnitRunner])
 class DslProviderSpec extends SmartSpec {
@@ -18,7 +19,7 @@ class DslProviderSpec extends SmartSpec {
       }
     }
 
-    provider.get("/test").returns(new Response(204))
+    provider.get("/test").returns(response().withStatus(204))
 
     configs should contain(new StubConfiguration("GET", "/test", 204))
   }

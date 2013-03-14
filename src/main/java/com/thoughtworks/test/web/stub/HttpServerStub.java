@@ -15,7 +15,7 @@ public class HttpServerStub extends DslProvider {
     }
 
     @Override
-    public void configurationCreated(StubConfiguration configuration) {
+    protected void configurationCreated(StubConfiguration configuration) {
         server.addServlet(new StubServlet(configuration), configuration.uri());
         registeredUris.add(configuration.uri());
     }

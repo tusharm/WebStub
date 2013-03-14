@@ -10,7 +10,8 @@ public abstract class DslProvider {
         return this;
     }
 
-    public void returns(Response response) {
+    public void returns(ResponseBuilder responseBuilder) {
+        Response response = responseBuilder.build();
         configurationCreated(
                 new StubConfiguration(request.method(), request.uri(), response.status()));
     }
