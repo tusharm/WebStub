@@ -1,7 +1,7 @@
 package com.thoughtworks.test.web.server
 
 import org.scalatest.BeforeAndAfterAll
-import com.thoughtworks.test.web.HttpServer
+import com.thoughtworks.test.web.stub.HttpServer
 
 trait WellBehavedServer {
   this: BeforeAndAfterAll =>

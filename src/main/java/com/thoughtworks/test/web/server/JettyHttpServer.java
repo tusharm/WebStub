@@ -1,6 +1,6 @@
 package com.thoughtworks.test.web.server;
 
-import com.thoughtworks.test.web.HttpServer;
+import com.thoughtworks.test.web.stub.HttpServer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;

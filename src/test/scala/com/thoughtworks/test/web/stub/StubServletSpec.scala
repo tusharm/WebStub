@@ -1,12 +1,12 @@
-package com.thoughtworks.test.web
+package com.thoughtworks.test.web.stub
 
 import com.thoughtworks.test.SmartSpec
-import config.StubConfiguration
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import com.thoughtworks.test.web.config.StubConfiguration
 
 @RunWith(classOf[JUnitRunner])
 class StubServletSpec extends SmartSpec {
@@ -38,7 +38,7 @@ class StubServletSpec extends SmartSpec {
   private def mockRequest(method: String, uri: String) = {
     val request = mock[HttpServletRequest]
     when(request.getMethod).thenReturn(method)
-    when(request.getRequestURI).thenReturn(uri);
+    when(request.getServletPath).thenReturn(uri);
     request
   }
 }

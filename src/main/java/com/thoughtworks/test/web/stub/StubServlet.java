@@ -1,4 +1,4 @@
-package com.thoughtworks.test.web;
+package com.thoughtworks.test.web.stub;
 
 import com.thoughtworks.test.web.config.StubConfiguration;
 
@@ -18,6 +18,10 @@ public class StubServlet extends HttpServlet {
         this.configuration = configuration;
     }
 
+    public StubConfiguration getConfiguration() {
+        return configuration;
+    }
+
     @Override
     public final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         handle(req, resp);
@@ -34,7 +38,7 @@ public class StubServlet extends HttpServlet {
             return;
         }
 
-        if(!configuration.uri().equals(req.getRequestURI())) {
+        if(!configuration.uri().equals(req.getServletPath())) {
             resp.sendError(SC_NOT_FOUND);
             return;
         }

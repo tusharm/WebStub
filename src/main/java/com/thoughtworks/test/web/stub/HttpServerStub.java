@@ -1,18 +1,18 @@
-package com.thoughtworks.test.web;
+package com.thoughtworks.test.web.stub;
 
 import com.thoughtworks.test.web.config.StubConfiguration;
 import com.thoughtworks.test.web.dsl.DslProvider;
-import com.thoughtworks.test.web.server.JettyHttpServer;
 
 public class HttpServerStub extends DslProvider {
     private final HttpServer server;
 
-    public HttpServerStub(int port, String contextRoot) {
-        server = new JettyHttpServer(port, contextRoot);
+    public HttpServerStub(HttpServer httpServer) {
+        server = httpServer;
     }
 
     @Override
     public void configurationCreated(StubConfiguration configuration) {
+        server.addServlet(new StubServlet(configuration), configuration.uri());
     }
 
     public void start() {

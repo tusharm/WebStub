@@ -1,4 +1,4 @@
-package com.thoughtworks.test.web;
+package com.thoughtworks.test.web.stub;
 
 import javax.servlet.Servlet;
 
