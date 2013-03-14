@@ -14,3 +14,13 @@ Currently, this is in a very basic state. Lots more to come..
 ## License
 
 WebStub is distributed under the terms of Apache Software License v2.0: http://www.apache.org/licenses/LICENSE-2.0.html
+
+## RoadMap
+
+Support for:
++ POST, PUT, DELETE
++ request/response body content
++ request/response headers
++ starting other endpoints in-process, rather than on real native ports
+...
+...
