@@ -1,5 +1,6 @@
 package com.thoughtworks.webstub.config;
 
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 public class StubConfiguration {
