@@ -11,3 +11,6 @@ In particular, I think it will be useful in tests which use https://github.com/a
 
 Currently, this is in a very basic state. Lots more to come..
 
+## License
+
+WebStub is distributed under the terms of Apache Software License v2.0: http://www.apache.org/licenses/LICENSE-2.0.html
