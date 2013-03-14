@@ -25,4 +25,14 @@ class HttpServerStubSpec extends SmartSpec {
     servlet should not(be(null))
     servlet.getConfiguration should be(configuration)
   }
+
+  it("should reset all configurations") {
+    serverStub.configurationCreated(new StubConfiguration("POST", "/person/1", 202))
+    serverStub.configurationCreated(new StubConfiguration("POST", "/person/2", 202))
+
+    serverStub.reset
+
+    verify(httpServer).removeServlet("/person/1")
+    verify(httpServer).removeServlet("/person/2")
+  }
 }
