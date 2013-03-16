@@ -32,6 +32,16 @@ public class StubServlet extends HttpServlet {
         handle(req, resp);
     }
 
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        handle(req, resp);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        handle(req, resp);
+    }
+
     private void handle(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if(!configuration.method().equals(req.getMethod())) {
             resp.sendError(SC_NOT_IMPLEMENTED);

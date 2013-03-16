@@ -5,8 +5,9 @@ import org.scalatest.junit.JUnitRunner
 import com.thoughtworks.webstub.ServerStubFactory
 import ServerStubFactory.dslServer
 import com.thoughtworks.webstub.SmartSpec
-import com.thoughtworks.webstub.utils.Client
+import com.thoughtworks.webstub.utils.{Response, Client}
 import com.thoughtworks.webstub.dsl.ResponseBuilder.response
+import com.thoughtworks.webstub.dsl.DslProvider
 
 @RunWith(classOf[JUnitRunner])
 class HttpServerStubIntegrationSpec extends SmartSpec {
@@ -19,12 +20,23 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
   override protected def afterAll() { stubServer.stop }
 
   it("should support GET") {
-    stubServer.get("/person/1").returns(response().withStatus(302))
-    httpClient.get(s"$contextUrl/person/1").status should be(302)
+    expectAndAssert(stubServer.get, httpClient.get)
   }
 
   it("should support POST") {
-    stubServer.post("/person").returns(response().withStatus(202))
-    httpClient.post(s"$contextUrl/person").status should be(202)
+    expectAndAssert(stubServer.post, httpClient.post)
+  }
+
+  it("should support PUT") {
+    expectAndAssert(stubServer.put, httpClient.put)
+  }
+
+  it("should support DELETE") {
+    expectAndAssert(stubServer.delete, httpClient.delete)
+  }
+
+  private def expectAndAssert(expectOperationOn: String => DslProvider, assertOperationOn: String => Response) {
+    expectOperationOn("/person").returns(response().withStatus(200))
+    assertOperationOn(s"$contextUrl/person").status should be(200)
   }
 }

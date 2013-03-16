@@ -1,8 +1,6 @@
 package com.thoughtworks.webstub.utils;
 
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.*;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 
@@ -22,6 +20,14 @@ public class Client {
 
     public Response post(String url) {
         return execute(new HttpPost(url));
+    }
+
+    public Response put(String url) {
+        return execute(new HttpPut(url));
+    }
+
+    public Response delete(String url) {
+        return execute(new HttpDelete(url));
     }
 
     private Response execute(HttpRequestBase requestBase) {
