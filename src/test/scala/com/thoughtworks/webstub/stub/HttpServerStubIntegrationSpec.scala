@@ -10,40 +10,21 @@ import com.thoughtworks.webstub.dsl.ResponseBuilder.response
 
 @RunWith(classOf[JUnitRunner])
 class HttpServerStubIntegrationSpec extends SmartSpec {
+  val stubServer = dslServer(9099, "/context")
   val httpClient = new Client
+  val contextUrl = "http://localhost:9099/context"
 
-  it("should start and stop the server") {
-    val statusPageUrl = "http://localhost:9091/context/status"
-    val server = dslServer(9091, "/context")
+  override protected def beforeAll() { stubServer.start }
+  override protected def beforeEach() { stubServer.reset }
+  override protected def afterAll() { stubServer.stop }
 
-    server.start
-    httpClient.get(statusPageUrl).status should be(200)
-
-    server.stop
-    evaluating {
-      httpClient.get(statusPageUrl).status
-    } should produce[Exception]
+  it("should support GET") {
+    stubServer.get("/person/1").returns(response().withStatus(302))
+    httpClient.get(s"$contextUrl/person/1").status should be(302)
   }
 
-  it("should stub HTTP calls") {
-    val server = dslServer(9091, "/context")
-    server.start
-
-    server.get("/person/1").returns(response().withStatus(302))
-    httpClient.get("http://localhost:9091/context/person/1").status should be(302)
-
-    server.stop
-  }
-
-  it("should allow resetting all stubbed calls") {
-    val base = "http://localhost:9091/context"
-    val server = dslServer(9091, "/context")
-    server.start
-
-    server.get("/person/1").returns(response().withStatus(302))
-    server.reset
-    httpClient.get(base + "/person/1").status should be(404)
-
-    server.stop
+  it("should support POST") {
+    stubServer.post("/person").returns(response().withStatus(202))
+    httpClient.post(s"$contextUrl/person").status should be(202)
   }
 }

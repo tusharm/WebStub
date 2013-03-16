@@ -9,18 +9,25 @@ import com.thoughtworks.webstub.config.StubConfiguration
 
 @RunWith(classOf[JUnitRunner])
 class DslProviderSpec extends SmartSpec {
+  val configs = MutableList[StubConfiguration]()
+  val provider = new DslProvider() {
+    protected def configurationCreated(configuration: StubConfiguration) {
+      configs += configuration
+    }
+  }
 
   it("should inform a consumer when configuration is created") {
-    val configs = MutableList[StubConfiguration]()
-
-    val provider = new DslProvider() {
-      protected def configurationCreated(configuration: StubConfiguration) {
-        configs += configuration
-      }
-    }
-
     provider.get("/test").returns(response().withStatus(204))
-
     configs should contain(new StubConfiguration("GET", "/test", 204))
+  }
+
+  it ("should support POST operation") {
+    provider.post("/post").returns(response().withStatus(202))
+    configs should have length 1
+    configs should contain(new StubConfiguration("POST", "/post", 202))
+  }
+
+  override def afterEach() {
+    configs.clear
   }
 }

@@ -14,6 +14,16 @@ class HttpServerStubSpec extends SmartSpec {
   val httpServer = mock[HttpServer]
   val serverStub = new HttpServerStub(httpServer)
 
+  it ("should start the server") {
+    serverStub.start
+    verify(httpServer).start
+  }
+
+  it ("should stop the server") {
+    serverStub.stop
+    verify(httpServer).stop
+  }
+
   it ("should update server when configuration is created") {
     val configuration = new StubConfiguration("GET", "/test", 200)
     serverStub.configurationCreated(configuration)
@@ -22,7 +32,6 @@ class HttpServerStubSpec extends SmartSpec {
     verify(httpServer).addServlet(captor.capture, mockitoEq("/test"))
 
     val servlet = captor.getValue.asInstanceOf[StubServlet]
-    servlet should not(be(null))
     servlet.getConfiguration should be(configuration)
   }
 
@@ -34,5 +43,7 @@ class HttpServerStubSpec extends SmartSpec {
 
     verify(httpServer).removeServlet("/person/1")
     verify(httpServer).removeServlet("/person/2")
+
+    serverStub.registeredUris should have size 0
   }
 }

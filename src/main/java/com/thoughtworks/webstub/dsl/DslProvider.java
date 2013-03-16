@@ -10,6 +10,11 @@ public abstract class DslProvider {
         return this;
     }
 
+    public DslProvider post(String uri) {
+        request = new Request("POST", uri);
+        return this;
+    }
+
     public void returns(ResponseBuilder responseBuilder) {
         Response response = responseBuilder.build();
         configurationCreated(

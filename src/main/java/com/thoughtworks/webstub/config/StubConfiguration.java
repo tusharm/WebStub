@@ -3,6 +3,8 @@ package com.thoughtworks.webstub.config;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 
+import static java.lang.String.format;
+
 public class StubConfiguration {
     private final String method;
     private final String uri;
@@ -44,6 +46,11 @@ public class StubConfiguration {
         result = 31 * result + uri.hashCode();
         result = 31 * result + status;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return format("StubConfiguration{method:%s, uri:%s, status:%d}", method, uri, status);
     }
 }
 

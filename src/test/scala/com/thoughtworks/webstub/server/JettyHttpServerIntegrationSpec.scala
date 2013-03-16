@@ -6,7 +6,7 @@ import com.thoughtworks.webstub.SmartSpec
 import com.thoughtworks.webstub.utils.Client
 
 @RunWith(classOf[JUnitRunner])
-class JettyHttpServerSpec extends SmartSpec with WellBehavedServer {
+class JettyHttpServerIntegrationSpec extends SmartSpec with WellBehavedServer {
   val server = new JettyHttpServer(9099, "root")
   val httpClient = new Client
 

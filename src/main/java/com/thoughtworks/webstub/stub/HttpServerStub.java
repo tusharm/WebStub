@@ -5,6 +5,9 @@ import com.thoughtworks.webstub.dsl.DslProvider;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+
+import static java.util.Collections.unmodifiableCollection;
 
 public class HttpServerStub extends DslProvider {
     private final HttpServer server;
@@ -33,6 +36,10 @@ public class HttpServerStub extends DslProvider {
 
     public void stop() {
         server.stop();
+    }
+
+    Collection<String> registeredUris() {
+        return unmodifiableCollection(registeredUris);
     }
 }
 
