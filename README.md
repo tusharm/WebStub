@@ -17,8 +17,8 @@ public void shouldStubHttpCalls() {
     assertThat(httpClient.get("http://localhost:9099/context/accounts/1").status(), is(200));
 }
 
-@Before
-public void beforeEach() {
+@After
+public void afterEach() {
     serverStub.reset();
 }
 
