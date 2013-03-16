@@ -1,15 +1,21 @@
 # WebStub
 
 This library intends to simplify stubbing out responses from external HTTP entities that your application/service  depends on.
-This can be useful in testing your application from within JUnit tests. 
+This can be useful in testing your application from within JUnit tests. It internally uses Jetty as the servlet container.
 
 Tests will setup a stub like this:
 ```java
-externalService.get("/accounts/1").returns(response().withStatus(200))
+server = dslServer(9099, "/context");
+...
+server.get("/accounts/1").returns(response().withStatus(200));
+assertThat(httpClient.get("http://localhost:9099/context/accounts/1").status(), is(200))
 ```
 In particular, I think it will be useful in tests which use https://github.com/aharin/inproctester.
 
-Currently, this is in a very basic state. Lots more to come..
+Currently, it supports:
++ Stubbing response status for GET, POST, PUT and DELETE
+
+Lots more to come..
 
 ## RoadMap
 

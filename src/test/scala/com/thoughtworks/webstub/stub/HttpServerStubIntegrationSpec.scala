@@ -35,8 +35,8 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
     expectAndAssert(stubServer.delete, httpClient.delete)
   }
 
-  private def expectAndAssert(expectOperationOn: String => DslProvider, assertOperationOn: String => Response) {
-    expectOperationOn("/person").returns(response().withStatus(200))
-    assertOperationOn(s"$contextUrl/person").status should be(200)
+  private def expectAndAssert(expectedRequest: String => DslProvider, actualRequest: String => Response) {
+    expectedRequest("/person").returns(response().withStatus(200))
+    actualRequest(s"$contextUrl/person").status should be(200)
   }
 }
