@@ -5,10 +5,27 @@ This can be useful in testing your application from within JUnit tests. It inter
 
 Tests will setup a stub like this:
 ```java
-server = dslServer(9099, "/context");
-...
-server.get("/accounts/1").returns(response().withStatus(200));
-assertThat(httpClient.get("http://localhost:9099/context/accounts/1").status(), is(200))
+@BeforeClass
+public static void beforeAll() {
+    serverStub = dslServer(9099, "/context");
+    serverStub.start();
+}
+
+@Test
+public void shouldStubHttpCalls() {
+    serverStub.get("/accounts/1").returns(response().withStatus(200));
+    assertThat(httpClient.get("http://localhost:9099/context/accounts/1").status(), is(200));
+}
+
+@Before
+public void beforeEach() {
+    serverStub.reset();
+}
+
+@AfterClass
+public static void afterAll() {
+    serverStub.stop();
+}
 ```
 In particular, I think it will be useful in tests which use https://github.com/aharin/inproctester.
 
