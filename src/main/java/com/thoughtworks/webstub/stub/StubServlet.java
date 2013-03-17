@@ -1,6 +1,6 @@
 package com.thoughtworks.webstub.stub;
 
-import com.thoughtworks.webstub.config.StubConfiguration;
+import com.thoughtworks.webstub.config.HttpConfiguration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,13 +12,13 @@ import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_IMPLEMENTED;
 
 public class StubServlet extends HttpServlet {
-    private StubConfiguration configuration;
+    private HttpConfiguration configuration;
 
-    public StubServlet(StubConfiguration configuration) {
+    public StubServlet(HttpConfiguration configuration) {
         this.configuration = configuration;
     }
 
-    public StubConfiguration getConfiguration() {
+    public HttpConfiguration getConfiguration() {
         return configuration;
     }
 

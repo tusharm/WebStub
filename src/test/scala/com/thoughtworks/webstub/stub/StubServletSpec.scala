@@ -6,11 +6,11 @@ import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.thoughtworks.webstub.SmartSpec
-import com.thoughtworks.webstub.config.StubConfiguration
+import com.thoughtworks.webstub.config.HttpConfiguration
 
 @RunWith(classOf[JUnitRunner])
 class StubServletSpec extends SmartSpec {
-  val servlet = new StubServlet(new StubConfiguration("GET", "/test", 302))
+  val servlet = new StubServlet(new HttpConfiguration("GET", "/test", 302))
 
   it("should return the configured response, if method and uri match") {
     val response = mock[HttpServletResponse]

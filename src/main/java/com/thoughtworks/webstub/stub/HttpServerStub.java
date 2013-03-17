@@ -1,15 +1,14 @@
 package com.thoughtworks.webstub.stub;
 
-import com.thoughtworks.webstub.config.StubConfiguration;
-import com.thoughtworks.webstub.dsl.DslProvider;
+import com.thoughtworks.webstub.config.ConfigurationListener;
+import com.thoughtworks.webstub.config.HttpConfiguration;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 import static java.util.Collections.unmodifiableCollection;
 
-public class HttpServerStub extends DslProvider {
+public class HttpServerStub implements ConfigurationListener {
     private final HttpServer server;
     private Collection<String> registeredUris = new ArrayList<String>();
 
@@ -18,7 +17,7 @@ public class HttpServerStub extends DslProvider {
     }
 
     @Override
-    public void configurationCreated(StubConfiguration configuration) {
+    public void configurationCreated(HttpConfiguration configuration) {
         server.addServlet(new StubServlet(configuration), configuration.uri());
         registeredUris.add(configuration.uri());
     }

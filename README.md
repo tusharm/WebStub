@@ -7,41 +7,39 @@ Tests will setup a stub like this:
 ```java
 @BeforeClass
 public static void beforeAll() {
-    serverStub = dslServer(9099, "/context");
-    serverStub.start();
+    stub = stubServer(9099, "/context");
+    dslServer = dslWrapped(stub);
+    stub.start();
 }
 
 @Test
 public void shouldStubHttpCalls() {
-    serverStub.get("/accounts/1").returns(response().withStatus(200));
+    dslServer.get("/accounts/1").returns(response().withStatus(200));
     assertThat(httpClient.get("http://localhost:9099/context/accounts/1").status(), is(200));
 }
 
 @After
 public void afterEach() {
-    serverStub.reset();
+    stub.reset();
 }
 
 @AfterClass
 public static void afterAll() {
-    serverStub.stop();
+    stub.stop();
 }
 ```
 In particular, I think it will be useful in tests which use https://github.com/aharin/inproctester.
 
-Currently, it supports:
-+ Stubbing response status for GET, POST, PUT and DELETE
-
-Lots more to come..
+Currently, it's in a basic state; lots more to come...
 
 ## RoadMap
 
 ### Immediate:
-+ POST, PUT, DELETE
-+ request/response body content
-+ request/response headers
-+ https
-+ starting stub servers in-process, rather than on real native ports
+- [x] Stubbing GET, POST, PUT, DELETE response status
+- [] request/response body content
+- [] request/response headers
+- [] https
+- [] starting stub servers in-process, rather than on real native ports
 
 ## License
 

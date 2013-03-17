@@ -5,12 +5,12 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 
 import static java.lang.String.format;
 
-public class StubConfiguration {
+public class HttpConfiguration {
     private final String method;
     private final String uri;
     private final int status;
 
-    public StubConfiguration(String method, String uri, int status) {
+    public HttpConfiguration(String method, String uri, int status) {
         this.method = method;
         this.uri = uri;
         this.status = status;
@@ -30,9 +30,9 @@ public class StubConfiguration {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof StubConfiguration)) return false;
+        if (!(o instanceof HttpConfiguration)) return false;
 
-        StubConfiguration that = (StubConfiguration) o;
+        HttpConfiguration that = (HttpConfiguration) o;
         return new EqualsBuilder()
                 .append(status, that.status)
                 .append(method, that.method)
@@ -50,7 +50,7 @@ public class StubConfiguration {
 
     @Override
     public String toString() {
-        return format("StubConfiguration{method:%s, uri:%s, status:%d}", method, uri, status);
+        return format("HttpConfiguration {method:%s, uri:%s, status:%d}", method, uri, status);
     }
 }
 
