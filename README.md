@@ -35,11 +35,11 @@ Currently, it's in a basic state; lots more to come...
 ## RoadMap
 
 ### Immediate:
-- [x] Stubbing GET, POST, PUT, DELETE response status
-- [] request/response body content
-- [] request/response headers
-- [] https
-- [] starting stub servers in-process, rather than on real native ports
+[x] Stubbing GET, POST, PUT, DELETE response status
+[] request/response body content
+[] request/response headers
+[] https
+[] starting stub servers in-process, rather than on real native ports
 
 ## License
 

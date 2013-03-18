@@ -39,7 +39,7 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
   }
 
   private def expectAndAssert(expectedRequest: String => HttpDsl, actualRequest: String => Response) {
-    expectedRequest("/person").returns(response().withStatus(200))
+    expectedRequest("/person").returns(response(200))
     actualRequest(s"$contextUrl/person").status should be(200)
   }
 }

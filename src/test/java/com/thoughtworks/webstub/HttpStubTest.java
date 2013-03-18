@@ -14,7 +14,7 @@ import static com.thoughtworks.webstub.dsl.ResponseBuilder.response;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class SomeTest {
+public class HttpStubTest {
     private static HttpServerStub stub;
     private static HttpDsl dslServer;
     private Client httpClient = new Client();
@@ -28,7 +28,7 @@ public class SomeTest {
 
     @Test
     public void shouldStubHttpCalls() {
-        dslServer.get("/accounts/1").returns(response().withStatus(200));
+        dslServer.get("/accounts/1").returns(response(200));
         assertThat(httpClient.get("http://localhost:9099/context/accounts/1").status(), is(200));
     }
 

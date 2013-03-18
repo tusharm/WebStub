@@ -1,19 +1,24 @@
 package com.thoughtworks.webstub.dsl;
 
 public class ResponseBuilder {
-    private int status;
-
-    public static ResponseBuilder response() {
-        return new ResponseBuilder();
+    public static ResponseBuilder response(int status) {
+        return new ResponseBuilder(status);
     }
 
-    public ResponseBuilder withStatus(int status) {
+    private int status;
+    private String content;
+
+    private ResponseBuilder(int status) {
         this.status = status;
+    }
+
+    public ResponseBuilder withContent(String content) {
+        this.content = content;
         return this;
     }
 
     Response build() {
-        return new Response(status);
+        return new Response(status, content);
     }
 }
 
