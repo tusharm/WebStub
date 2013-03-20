@@ -6,12 +6,12 @@ import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.thoughtworks.webstub.SmartSpec
-import com.thoughtworks.webstub.config.HttpConfiguration
+import com.thoughtworks.webstub.config.{Response, Request, HttpConfiguration}
 import java.io.{PrintWriter, StringWriter}
 
 @RunWith(classOf[JUnitRunner])
 class StubServletSpec extends SmartSpec {
-  val servlet = new StubServlet(new HttpConfiguration("GET", "/test", 302, "Bruce Willis"))
+  val servlet = new StubServlet(httpConfiguration("GET", "/test", 302, "Bruce Willis"))
 
   it("should return the configured response, if method and uri match") {
     val writer = new StringWriter
@@ -51,4 +51,6 @@ class StubServletSpec extends SmartSpec {
     when(response.getWriter).thenReturn(new PrintWriter(writer))
     response
   }
+
+  private def httpConfiguration(method: String, uri: String, status: Int, content: String) = new HttpConfiguration(new Request(method, uri), new Response(status, content))
 }

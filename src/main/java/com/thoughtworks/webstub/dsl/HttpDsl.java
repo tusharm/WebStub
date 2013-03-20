@@ -34,9 +34,6 @@ public class HttpDsl extends ConfigurationProvider {
     }
 
     public void returns(ResponseBuilder responseBuilder) {
-        Response response = responseBuilder.build();
-        configurationCreated(
-                new HttpConfiguration(request.method(), request.uri(), response.status(), response.content())
-        );
+        configurationCreated(new HttpConfiguration(request, responseBuilder.build()));
     }
 }

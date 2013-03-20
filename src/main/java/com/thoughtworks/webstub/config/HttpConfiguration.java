@@ -6,36 +6,28 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import static java.lang.String.format;
 
 public class HttpConfiguration {
-    private final String method;
-    private final String uri;
-    private final int status;
-    private String content;
+    private Request request;
+    private Response response;
 
-    public HttpConfiguration(String method, String uri, int status) {
-        this.method = method;
-        this.uri = uri;
-        this.status = status;
-    }
-
-    public HttpConfiguration(String method, String uri, int status, String content) {
-        this(method, uri, status);
-        this.content = content;
+    public HttpConfiguration(Request request, Response response) {
+        this.request = request;
+        this.response = response;
     }
 
     public String method() {
-        return method;
+        return request.method();
     }
 
     public String uri() {
-        return uri;
+        return request.uri();
     }
 
     public int status() {
-        return status;
+        return response.status();
     }
 
     public String content() {
-        return content;
+        return response.content();
     }
 
     @Override
@@ -44,20 +36,9 @@ public class HttpConfiguration {
 
         HttpConfiguration that = (HttpConfiguration) o;
         return new EqualsBuilder()
-                .append(status, that.status)
-                .append(method, that.method)
-                .append(uri, that.uri)
-                .append(content, that.content)
+                .append(request, that.request)
+                .append(response, that.response)
                 .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        int result = method.hashCode();
-        result = 31 * result + uri.hashCode();
-        result = 31 * result + status;
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        return result;
     }
 
     @Override
@@ -67,7 +48,7 @@ public class HttpConfiguration {
                 "uri:%s, " +
                 "status:%d, " +
                 "content:%s" +
-                "}", method, uri, status, content);
+                "}", method(), uri(), status(), content());
     }
 }
 

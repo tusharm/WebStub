@@ -7,7 +7,7 @@ import org.mockito.Mockito._
 import org.mockito.Matchers.{ eq  => mockitoEq }
 import javax.servlet.Servlet
 import com.thoughtworks.webstub.SmartSpec
-import com.thoughtworks.webstub.config.HttpConfiguration
+import com.thoughtworks.webstub.config.{Response, Request, HttpConfiguration}
 
 @RunWith(classOf[JUnitRunner])
 class HttpServerStubSpec extends SmartSpec {
@@ -25,7 +25,7 @@ class HttpServerStubSpec extends SmartSpec {
   }
 
   it ("should update server when configuration is created") {
-    val configuration = new HttpConfiguration("GET", "/test", 200)
+    val configuration = httpConfiguration("GET", "/test", 200)
     serverStub.configurationCreated(configuration)
 
     val captor = ArgumentCaptor.forClass(classOf[Servlet])
@@ -36,8 +36,8 @@ class HttpServerStubSpec extends SmartSpec {
   }
 
   it("should reset all configurations") {
-    serverStub.configurationCreated(new HttpConfiguration("POST", "/person/1", 202))
-    serverStub.configurationCreated(new HttpConfiguration("POST", "/person/2", 202))
+    serverStub.configurationCreated(httpConfiguration("POST", "/person/1", 202))
+    serverStub.configurationCreated(httpConfiguration("POST", "/person/2", 202))
 
     serverStub.reset
 
@@ -46,4 +46,7 @@ class HttpServerStubSpec extends SmartSpec {
 
     serverStub.registeredUris should have size 0
   }
+
+  private def httpConfiguration(method: String, uri: String, status: Int, responseContent: String = null) =
+    new HttpConfiguration(new Request(method, uri), new Response(status, responseContent))
 }
