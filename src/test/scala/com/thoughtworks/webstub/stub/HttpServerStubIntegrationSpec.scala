@@ -38,8 +38,13 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
     expectAndAssert(dslServer.delete, httpClient.delete)
   }
 
+  it ("should support response body content") {
+    dslServer.get("/person").returns(response(200).withContent("Some person"))
+    httpClient.get(s"$contextUrl/person").content should be("Some person")
+  }
+
   private def expectAndAssert(expectedRequest: String => HttpDsl, actualRequest: String => Response) {
-    expectedRequest("/person").returns(response(200))
+    expectedRequest("/person").returns(response(200).withContent("Bruce Willis"))
     actualRequest(s"$contextUrl/person").status should be(200)
   }
 }

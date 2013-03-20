@@ -7,16 +7,20 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.thoughtworks.webstub.SmartSpec
 import com.thoughtworks.webstub.config.HttpConfiguration
+import java.io.{PrintWriter, StringWriter}
 
 @RunWith(classOf[JUnitRunner])
 class StubServletSpec extends SmartSpec {
-  val servlet = new StubServlet(new HttpConfiguration("GET", "/test", 302))
+  val servlet = new StubServlet(new HttpConfiguration("GET", "/test", 302, "Bruce Willis"))
 
   it("should return the configured response, if method and uri match") {
-    val response = mock[HttpServletResponse]
+    val writer = new StringWriter
+    val response = mockResponseWithWriter(writer)
+
     servlet.doGet(mockRequest("GET", "/test"), response)
 
     verify(response).setStatus(302)
+    writer.toString should be("Bruce Willis")
   }
 
   it("should return server error if method is not supported") {
@@ -40,5 +44,11 @@ class StubServletSpec extends SmartSpec {
     when(request.getMethod).thenReturn(method)
     when(request.getServletPath).thenReturn(uri);
     request
+  }
+
+  private def mockResponseWithWriter(writer: StringWriter) = {
+    val response = mock[HttpServletResponse]
+    when(response.getWriter).thenReturn(new PrintWriter(writer))
+    response
   }
 }

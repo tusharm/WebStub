@@ -1,19 +1,19 @@
-package com.thoughtworks.webstub.dsl;
+package com.thoughtworks.webstub.config;
 
-class Response {
+public class Response {
     private int status;
     private String content;
 
-    Response(int status, String content) {
+    public Response(int status, String content) {
         this.status = status;
         this.content = content;
     }
 
-    int status() {
+    public int status() {
         return status;
     }
 
-    String content() {
+    public String content() {
         return content;
     }
 }

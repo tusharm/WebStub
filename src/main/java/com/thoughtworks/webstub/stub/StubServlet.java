@@ -53,6 +53,10 @@ public class StubServlet extends HttpServlet {
             return;
         }
 
+        if (configuration.content() != null) {
+            resp.getWriter().print(configuration.content());
+        }
+
         resp.setStatus(configuration.status());
     }
 }

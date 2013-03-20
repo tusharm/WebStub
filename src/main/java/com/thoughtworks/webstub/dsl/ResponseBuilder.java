@@ -1,5 +1,7 @@
 package com.thoughtworks.webstub.dsl;
 
+import com.thoughtworks.webstub.config.Response;
+
 public class ResponseBuilder {
     public static ResponseBuilder response(int status) {
         return new ResponseBuilder(status);

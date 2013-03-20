@@ -34,6 +34,10 @@ public class HttpConfiguration {
         return status;
     }
 
+    public String content() {
+        return content;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof HttpConfiguration)) return false;
