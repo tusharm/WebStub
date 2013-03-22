@@ -14,8 +14,11 @@ public static void beforeAll() {
 
 @Test
 public void shouldStubHttpCalls() {
-    dslServer.get("/accounts/1").returns(response().withStatus(200));
-    assertThat(httpClient.get("http://localhost:9099/context/accounts/1").status(), is(200));
+    dslServer.get("/accounts/1").returns(response(200).withContent("account details"));
+
+    Response response = httpClient.get("http://localhost:9099/context/accounts/1");
+    assertThat(response.status(), is(200));
+    assertThat(response.content(), is("account details"));
 }
 
 @After
