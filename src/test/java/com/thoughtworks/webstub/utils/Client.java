@@ -1,13 +1,12 @@
 package com.thoughtworks.webstub.utils;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.*;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 public class Client {
     private DefaultHttpClient httpClient;
@@ -25,12 +24,21 @@ public class Client {
         return execute(new HttpPost(url));
     }
 
-    public Response put(String url) {
-        return execute(new HttpPut(url));
+    public Response put(String url, String content) {
+        return executeWithContent(new HttpPut(url), content);
     }
 
     public Response delete(String url) {
         return execute(new HttpDelete(url));
+    }
+
+    private Response executeWithContent(HttpEntityEnclosingRequestBase request, String content) {
+        try {
+            request.setEntity(new StringEntity(content));
+            return execute(request);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Error setting entity", e);
+        }
     }
 
     private Response execute(HttpRequestBase requestBase) {

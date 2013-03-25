@@ -23,28 +23,43 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
   override protected def afterAll() { stub.stop }
 
   it("should support GET") {
-    expectAndAssert(dslServer.get, httpClient.get)
-  }
-
-  it("should support POST") {
-    expectAndAssert(dslServer.post, httpClient.post)
-  }
-
-  it("should support PUT") {
-    expectAndAssert(dslServer.put, httpClient.put)
+    dslServer.get("/person").returns(response(200))
+    httpClient.get(s"$contextUrl/person").status should be(200)
   }
 
   it("should support DELETE") {
-    expectAndAssert(dslServer.delete, httpClient.delete)
+    dslServer.delete("/person").returns(response(200))
+    httpClient.delete(s"$contextUrl/person").status should be(200)
+  }
+
+  it("should support POST") {
+    dslServer.post("/person").returns(response(200))
+    httpClient.post(s"$contextUrl/person").status should be(200)
+  }
+
+  it("should support PUT") {
+    // note that no expectation is set on stub for request content, yet it matches response
+    dslServer.put("/person").returns(response(201))
+    httpClient.put(s"$contextUrl/person", "some content").status should be(201)
   }
 
   it ("should support response body content") {
     dslServer.get("/person").returns(response(200).withContent("Some person"))
-    httpClient.get(s"$contextUrl/person").content should be("Some person")
+
+    httpClient.get(s"$contextUrl/person") should have (
+      'status (200),
+      'content ("Some person")
+    )
   }
 
-  private def expectAndAssert(expectedRequest: String => HttpDsl, actualRequest: String => Response) {
-    expectedRequest("/person").returns(response(200).withContent("Bruce Willis"))
-    actualRequest(s"$contextUrl/person").status should be(200)
+  describe("for entity enclosing requests") {
+  }
+
+  it ("should support multiple expectations on the server") {
+    dslServer.get("/person/1").returns(response(404))
+    dslServer.delete("/person/2").returns(response(200))
+
+    httpClient.get(s"$contextUrl/person/1").status should be(404)
+    httpClient.delete(s"$contextUrl/person/2").status should be(200)
   }
 }

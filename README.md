@@ -42,6 +42,7 @@ Currently, it's in a basic state; lots more to come...
 - [] request/response body content
 - [] request/response headers
 - [] https
+- [] better test failure messages
 - [] starting stub servers in-process, rather than on real native ports
 
 ## License
