@@ -5,10 +5,20 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 public class Request {
     private String uri;
     private String method;
+    private String content;
 
     public Request(String method, String uri) {
         this.method = method;
         this.uri = uri;
+    }
+
+    public Request(String method, String uri, String content) {
+        this(method, uri);
+        this.content = content;
+    }
+
+    public String content() {
+        return content;
     }
 
     public String uri() {

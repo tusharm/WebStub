@@ -24,6 +24,10 @@ public class Client {
         return execute(new HttpPost(url));
     }
 
+    public Response post(String url, String content) {
+        return executeWithContent(new HttpPost(url), content);
+    }
+
     public Response put(String url, String content) {
         return executeWithContent(new HttpPut(url), content);
     }

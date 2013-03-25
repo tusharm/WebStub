@@ -53,6 +53,12 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
   }
 
   describe("for entity enclosing requests") {
+    ignore("should support POST with request body") {
+      dslServer.post("/users").withContent("new user").returns(response(201))
+
+      httpClient.post(s"$contextUrl/users").status should be(404)
+      httpClient.post(s"$contextUrl/users", "new user").status should be(201)
+    }
   }
 
   it ("should support multiple expectations on the server") {

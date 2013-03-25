@@ -3,7 +3,6 @@ package com.thoughtworks.webstub.dsl;
 import com.thoughtworks.webstub.config.*;
 
 public class HttpDsl extends ConfigurationProvider {
-    private Request request;
 
     public static HttpDsl dslWrapped(ConfigurationListener listener) {
         return new HttpDsl(listener);
@@ -13,27 +12,23 @@ public class HttpDsl extends ConfigurationProvider {
         super(listener);
     }
 
-    public HttpDsl get(String uri) {
-        request = new Request("GET", uri);
-        return this;
+    public RequestBuilder get(String uri) {
+        return requestBuilder("GET", uri);
     }
 
-    public HttpDsl post(String uri) {
-        request = new Request("POST", uri);
-        return this;
+    public RequestBuilder post(String uri) {
+        return requestBuilder("POST", uri);
     }
 
-    public HttpDsl put(String uri) {
-        request = new Request("PUT", uri);
-        return this;
+    public RequestBuilder put(String uri) {
+        return requestBuilder("PUT", uri);
     }
 
-    public HttpDsl delete(String uri) {
-        request = new Request("DELETE", uri);
-        return this;
+    public RequestBuilder delete(String uri) {
+        return requestBuilder("DELETE", uri);
     }
 
-    public void returns(ResponseBuilder responseBuilder) {
-        configurationCreated(new HttpConfiguration(request, responseBuilder.build()));
+    private RequestBuilder requestBuilder(String method, String uri) {
+        return new RequestBuilder(this).withMethod(method).withUri(uri);
     }
 }
