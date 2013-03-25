@@ -38,6 +38,11 @@ class HttpDslSpec extends SmartSpec {
     configs should contain(httpConfiguration("DELETE", "/delete", 404))
   }
 
+  it ("should support adding request content") {
+    provider.post("/employees").withContent("new employee").returns(response(201))
+    configs should contain(httpConfiguration("POST", "/employees", "new employee", 201))
+  }
+
   it ("should support adding expected response content") {
     provider.get("/employee/1").returns(response(200).withContent("Bruce Willis"))
     configs should contain(httpConfiguration("GET", "/employee/1", 200, "Bruce Willis"))
@@ -49,4 +54,7 @@ class HttpDslSpec extends SmartSpec {
 
   private def httpConfiguration(method: String, uri: String, status: Int, responseContent: String = null) =
     new HttpConfiguration(new Request(method, uri), new Response(status, responseContent))
+
+  private def httpConfiguration(method: String, uri: String, requestContent: String, status: Int) =
+    new HttpConfiguration(new Request(method, uri, requestContent), new Response(status, null))
 }

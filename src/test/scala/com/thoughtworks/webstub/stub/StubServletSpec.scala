@@ -2,12 +2,13 @@ package com.thoughtworks.webstub.stub
 
 import org.mockito.Mockito._
 import org.mockito.Matchers._
+import org.mockito.Matchers.{ eq  => mockitoEq }
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.thoughtworks.webstub.SmartSpec
 import com.thoughtworks.webstub.config.{Response, Request, HttpConfiguration}
-import java.io.{PrintWriter, StringWriter}
+import java.io.{BufferedReader, StringReader, PrintWriter, StringWriter}
 
 @RunWith(classOf[JUnitRunner])
 class StubServletSpec extends SmartSpec {
@@ -39,10 +40,33 @@ class StubServletSpec extends SmartSpec {
     verify(response, never()).setStatus(any())
   }
 
-  private def mockRequest(method: String, uri: String) = {
+  it ("should return client error if POST doesn't contain content, while its stub configuration does") {
+    val servlet = new StubServlet(httpConfiguration("POST", "/employees", "Bruce Willis", 201))
+
+    val request = mockRequest("POST", "/employees")
+    val response = mock[HttpServletResponse]
+    servlet.doPost(request, response)
+
+    verify(request).getReader
+    verify(response).sendError(mockitoEq(404), anyString());
+  }
+
+  it ("should return response if POST contains content matching the stub configuration") {
+    val servlet = new StubServlet(httpConfiguration("POST", "/employees", "Bruce Willis", 201))
+
+    val request = mockRequest("POST", "/employees", "Bruce Willis")
+    val response = mock[HttpServletResponse]
+    servlet.doPost(request, response)
+
+    verify(request).getReader
+    verify(response).setStatus(201);
+  }
+
+  private def mockRequest(method: String, uri: String, content: String = "") = {
     val request = mock[HttpServletRequest]
     when(request.getMethod).thenReturn(method)
     when(request.getServletPath).thenReturn(uri);
+    when(request.getReader).thenReturn(new BufferedReader(new StringReader(content)));
     request
   }
 
@@ -52,5 +76,9 @@ class StubServletSpec extends SmartSpec {
     response
   }
 
-  private def httpConfiguration(method: String, uri: String, status: Int, content: String) = new HttpConfiguration(new Request(method, uri), new Response(status, content))
+  private def httpConfiguration(method: String, uri: String, status: Int, responseContent: String) =
+    new HttpConfiguration(new Request(method, uri), new Response(status, responseContent))
+
+  private def httpConfiguration(method: String, uri: String, requestContent: String, status: Int) =
+    new HttpConfiguration(new Request(method, uri, requestContent), new Response(status, null))
 }

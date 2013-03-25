@@ -26,7 +26,11 @@ public class HttpConfiguration {
         return response.status();
     }
 
-    public String content() {
+    public String requestContent() {
+        return request.content();
+    }
+
+    public String responseContent() {
         return response.content();
     }
 
@@ -46,9 +50,10 @@ public class HttpConfiguration {
         return format("HttpConfiguration {" +
                 "method:%s, " +
                 "uri:%s, " +
+                "request content:%s, " +
                 "status:%d, " +
-                "content:%s" +
-                "}", method(), uri(), status(), content());
+                "response content:%s" +
+                "}", method(), uri(), requestContent(), status(), responseContent());
     }
 }
 

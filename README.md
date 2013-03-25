@@ -40,7 +40,7 @@ Currently, it's in a basic state; lots more to come...
 
 ### Immediate:
 - [x] Stubbing GET, POST, PUT, DELETE response status
-- [] request/response body content
+- [x] request/response body content
 - [] request/response headers
 - [] https
 - [] better test failure messages

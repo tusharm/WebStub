@@ -6,31 +6,28 @@ import com.thoughtworks.webstub.config.Request;
 
 public class RequestBuilder {
     private ConfigurationProvider configurationProvider;
-    private String content;
-    private String uri;
-    private String method;
+    protected String uri;
+    protected String method;
 
     RequestBuilder(ConfigurationProvider configurationProvider) {
         this.configurationProvider = configurationProvider;
     }
 
-    RequestBuilder withMethod(String method) {
+    <T extends RequestBuilder> T withMethod(String method) {
         this.method = method;
-        return this;
+        return (T) this;
     }
 
-    RequestBuilder withUri(String uri) {
+    <T extends RequestBuilder> T withUri(String uri) {
         this.uri = uri;
-        return this;
+        return (T) this;
     }
 
-    public RequestBuilder withContent(String content) {
-        this.content = content;
-        return this;
+    protected Request build() {
+        return new Request(method, uri);
     }
 
     public final void returns(ResponseBuilder responseBuilder) {
-        Request request = new Request(method, uri, content);
-        configurationProvider.configurationCreated(new HttpConfiguration(request, responseBuilder.build()));
+        configurationProvider.configurationCreated(new HttpConfiguration(this.build(), responseBuilder.build()));
     }
 }

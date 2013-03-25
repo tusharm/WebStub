@@ -36,13 +36,16 @@ public class Request {
         Request that = (Request) o;
         return new EqualsBuilder()
                 .append(method, that.method)
-                .append(uri, that.uri).isEquals();
+                .append(uri, that.uri)
+                .append(content, that.content)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
         int result = uri.hashCode();
         result = 31 * result + method.hashCode();
+        result = 31 * result + (content != null ? content.hashCode() : 0);
         return result;
     }
 }

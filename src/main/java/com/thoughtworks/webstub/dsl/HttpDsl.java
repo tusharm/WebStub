@@ -13,22 +13,19 @@ public class HttpDsl extends ConfigurationProvider {
     }
 
     public RequestBuilder get(String uri) {
-        return requestBuilder("GET", uri);
+        return new RequestBuilder(this).withMethod("GET").withUri(uri);
     }
 
-    public RequestBuilder post(String uri) {
-        return requestBuilder("POST", uri);
+    public EntityEnclosingRequestBuilder post(String uri) {
+        return new EntityEnclosingRequestBuilder(this).withMethod("POST").withUri(uri);
     }
 
-    public RequestBuilder put(String uri) {
-        return requestBuilder("PUT", uri);
+    public EntityEnclosingRequestBuilder put(String uri) {
+        return new EntityEnclosingRequestBuilder(this).withMethod("PUT").withUri(uri);
     }
 
     public RequestBuilder delete(String uri) {
-        return requestBuilder("DELETE", uri);
+        return new RequestBuilder(this).withMethod("DELETE").withUri(uri);
     }
 
-    private RequestBuilder requestBuilder(String method, String uri) {
-        return new RequestBuilder(this).withMethod(method).withUri(uri);
-    }
 }
