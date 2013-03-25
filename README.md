@@ -31,8 +31,9 @@ public static void afterAll() {
     stub.stop();
 }
 ```
-In particular, I think it will be useful in tests which use https://github.com/aharin/inproctester.
+Refer to tests in src/test/scala/com/thoughtworks/webstub/stub/HttpServerStubIntegrationSpec.scala.
 
+In particular, I think it will be useful in tests which use https://github.com/aharin/inproctester.
 Currently, it's in a basic state; lots more to come...
 
 ## RoadMap
