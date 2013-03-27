@@ -14,7 +14,7 @@ public class JettyHttpServer implements HttpServer {
 
     private Server server;
     private ServletContextHandler context;
-    private JettyServletRemover servletRemover;
+    private JettyHandlerRemover servletRemover;
 
     public JettyHttpServer(int port, String contextRoot) {
         context = createContext(contextRoot);

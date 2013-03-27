@@ -2,7 +2,7 @@ package com.thoughtworks.webstub.server
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.eclipse.jetty.servlet.{ServletHolder, ServletMapping, ServletHandler, ServletContextHandler}
+import org.eclipse.jetty.servlet.{ServletHolder, ServletMapping, ServletHandler}
 import javax.servlet.http.HttpServlet
 import org.mockito.Mockito._
 import org.mockito.Matchers._
