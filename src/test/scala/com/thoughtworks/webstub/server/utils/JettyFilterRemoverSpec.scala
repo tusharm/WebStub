@@ -50,6 +50,16 @@ class JettyFilterRemoverSpec extends SmartSpec {
     verify(servletHandler, never()).setFilters(any())
   }
 
+  it("should remove all filters with the given path") {
+    when(servletHandler.getFilterMappings).thenReturn(Array(filterMapping("/test", "one"), filterMapping("/test", "two")))
+    when(servletHandler.getFilters).thenReturn(Array(filterHolder("one"), filterHolder("two")))
+
+    remover.remove("/test")
+
+    verify(servletHandler).setFilterMappings(Array())
+    verify(servletHandler).setFilters(Array())
+  }
+
   private def filterMapping(pathSpec: String, filterName: String) = {
     val mapping = new FilterMapping
     mapping.setPathSpec(pathSpec)

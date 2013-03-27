@@ -31,11 +31,11 @@ public class JettyServletRemover extends JettyHandlerRemover<ServletMapping, Ser
     }
 
     @Override
-    PredicatedPartition<ServletHolder> partitionHoldersBy(final String pathSpec) {
+    PredicatedPartition<ServletHolder> partitionHoldersBy(final List<String> handlerNames) {
         return partition(asList(servletHandler().getServlets()), new Predicate<ServletHolder>() {
             @Override
             public boolean satisfies(ServletHolder holder) {
-                return holder.getName().equals(pathSpec);
+                return handlerNames.contains(holder.getName());
             }
         });
     }

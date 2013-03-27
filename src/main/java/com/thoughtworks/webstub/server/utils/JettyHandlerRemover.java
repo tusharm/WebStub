@@ -1,11 +1,14 @@
 package com.thoughtworks.webstub.server.utils;
 
 import com.thoughtworks.webstub.utils.PredicatedPartition;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHandler;
 
 import java.util.List;
 
+import static org.apache.commons.collections.CollectionUtils.collect;
 import static org.apache.commons.lang.ArrayUtils.contains;
 
 public abstract class JettyHandlerRemover<Mapping, Holder> {
@@ -20,11 +23,21 @@ public abstract class JettyHandlerRemover<Mapping, Holder> {
         if (mappings.satisfying().isEmpty())
             return;
 
-        String handlerNameFromMapping = getHandlerName(mappings.satisfying().get(0));
-        PredicatedPartition<Holder> holders = partitionHoldersBy(handlerNameFromMapping);
+        List<String> handlerNames = handlerNames(mappings.satisfying());
+        PredicatedPartition<Holder> holders = partitionHoldersBy(handlerNames);
 
         setNewHolders(holders.notSatisfying());
         setNewMappings(mappings.notSatisfying());
+    }
+
+    private List<String> handlerNames(List<Mapping> mappings) {
+        return (List<String>) collect(mappings, new Transformer() {
+            @Override
+            public Object transform(Object o) {
+                Mapping mapping = (Mapping) o;
+                return getHandlerName(mapping);
+            }
+        });
     }
 
     protected ServletHandler servletHandler() {
@@ -35,7 +48,7 @@ public abstract class JettyHandlerRemover<Mapping, Holder> {
 
     abstract void setNewMappings(List<Mapping> mappings);
 
-    abstract PredicatedPartition<Holder> partitionHoldersBy(String pathSpec);
+    abstract PredicatedPartition<Holder> partitionHoldersBy(List<String> handlerNames);
 
     abstract void setNewHolders(List<Holder> holders);
 

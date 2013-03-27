@@ -52,6 +52,19 @@ class JettyServletRemoverSpec extends SmartSpec {
     verify(servletHandler, never()).setServlets(any())
   }
 
+  it("should remove all servlets with the given path") {
+    val mapping = servletMapping("/test1", "three")
+    val holder = servletHolder("three")
+
+    when(servletHandler.getServletMappings).thenReturn(Array(servletMapping("/test", "one"), servletMapping("/test", "two"), mapping))
+    when(servletHandler.getServlets).thenReturn(Array(servletHolder("one"), servletHolder("two"), holder))
+
+    remover.remove("/test")
+
+    verify(servletHandler).setServletMappings(Array(mapping))
+    verify(servletHandler).setServlets(Array(holder))
+  }
+
   private def servletMapping(servletPath: String, servletName: String) = {
     val mapping = new ServletMapping()
     mapping.setPathSpec(servletPath)

@@ -35,11 +35,11 @@ public class JettyFilterRemover extends JettyHandlerRemover<FilterMapping, Filte
     }
 
     @Override
-    PredicatedPartition<FilterHolder> partitionHoldersBy(final String pathSpec) {
+    PredicatedPartition<FilterHolder> partitionHoldersBy(final List<String> handlerNames) {
         return partition(asList(servletHandler().getFilters()), new Predicate<FilterHolder>() {
             @Override
             public boolean satisfies(FilterHolder holder) {
-                return holder.getName().equals(pathSpec);
+                return handlerNames.contains(holder.getName());
             }
         });
     }
