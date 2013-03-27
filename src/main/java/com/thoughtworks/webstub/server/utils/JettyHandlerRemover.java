@@ -1,15 +1,13 @@
 package com.thoughtworks.webstub.server.utils;
 
+import com.thoughtworks.webstub.utils.Mapper;
 import com.thoughtworks.webstub.utils.PredicatedPartition;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHandler;
 
-import java.util.List;
+import java.util.Collection;
 
-import static org.apache.commons.collections.CollectionUtils.collect;
-import static org.apache.commons.lang.ArrayUtils.contains;
+import static com.thoughtworks.webstub.utils.CollectionUtils.map;
 
 public abstract class JettyHandlerRemover<Mapping, Holder> {
     private ServletHandler servletHandler;
@@ -23,18 +21,17 @@ public abstract class JettyHandlerRemover<Mapping, Holder> {
         if (mappings.satisfying().isEmpty())
             return;
 
-        List<String> handlerNames = handlerNames(mappings.satisfying());
+        Collection<String> handlerNames = handlerNames(mappings.satisfying());
         PredicatedPartition<Holder> holders = partitionHoldersBy(handlerNames);
 
         setNewHolders(holders.notSatisfying());
         setNewMappings(mappings.notSatisfying());
     }
 
-    private List<String> handlerNames(List<Mapping> mappings) {
-        return (List<String>) collect(mappings, new Transformer() {
+    private Collection<String> handlerNames(Collection<Mapping> mappings) {
+        return map(mappings, new Mapper<Mapping, String>() {
             @Override
-            public Object transform(Object o) {
-                Mapping mapping = (Mapping) o;
+            public String map(Mapping mapping) {
                 return getHandlerName(mapping);
             }
         });
@@ -46,11 +43,11 @@ public abstract class JettyHandlerRemover<Mapping, Holder> {
 
     abstract PredicatedPartition<Mapping> partitionMappingsBy(String pathSpec);
 
-    abstract void setNewMappings(List<Mapping> mappings);
+    abstract void setNewMappings(Collection<Mapping> mappings);
 
-    abstract PredicatedPartition<Holder> partitionHoldersBy(List<String> handlerNames);
+    abstract PredicatedPartition<Holder> partitionHoldersBy(Collection<String> handlerNames);
 
-    abstract void setNewHolders(List<Holder> holders);
+    abstract void setNewHolders(Collection<Holder> holders);
 
     abstract String getHandlerName(Mapping mapping);
 }

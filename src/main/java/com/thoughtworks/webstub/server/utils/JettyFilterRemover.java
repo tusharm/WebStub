@@ -2,11 +2,12 @@ package com.thoughtworks.webstub.server.utils;
 
 import com.thoughtworks.webstub.utils.Predicate;
 import com.thoughtworks.webstub.utils.PredicatedPartition;
-import org.eclipse.jetty.servlet.*;
+import org.eclipse.jetty.servlet.FilterHolder;
+import org.eclipse.jetty.servlet.FilterMapping;
 
-import java.util.List;
+import java.util.Collection;
 
-import static com.thoughtworks.webstub.utils.ListUtils.partition;
+import static com.thoughtworks.webstub.utils.CollectionUtils.partition;
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang.ArrayUtils.contains;
 
@@ -30,12 +31,12 @@ public class JettyFilterRemover extends JettyHandlerRemover<FilterMapping, Filte
     }
 
     @Override
-    void setNewMappings(List<FilterMapping> mappings) {
+    void setNewMappings(Collection<FilterMapping> mappings) {
         servletHandler().setFilterMappings(mappings.toArray(new FilterMapping[]{}));
     }
 
     @Override
-    PredicatedPartition<FilterHolder> partitionHoldersBy(final List<String> handlerNames) {
+    PredicatedPartition<FilterHolder> partitionHoldersBy(final Collection<String> handlerNames) {
         return partition(asList(servletHandler().getFilters()), new Predicate<FilterHolder>() {
             @Override
             public boolean satisfies(FilterHolder holder) {
@@ -45,7 +46,7 @@ public class JettyFilterRemover extends JettyHandlerRemover<FilterMapping, Filte
     }
 
     @Override
-    void setNewHolders(List<FilterHolder> holders) {
+    void setNewHolders(Collection<FilterHolder> holders) {
         servletHandler().setFilters(holders.toArray(new FilterHolder[]{}));
     }
 

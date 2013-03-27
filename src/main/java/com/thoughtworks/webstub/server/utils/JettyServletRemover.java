@@ -5,9 +5,9 @@ import com.thoughtworks.webstub.utils.PredicatedPartition;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.servlet.ServletMapping;
 
-import java.util.List;
+import java.util.Collection;
 
-import static com.thoughtworks.webstub.utils.ListUtils.partition;
+import static com.thoughtworks.webstub.utils.CollectionUtils.partition;
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang.ArrayUtils.contains;
 
@@ -31,7 +31,7 @@ public class JettyServletRemover extends JettyHandlerRemover<ServletMapping, Ser
     }
 
     @Override
-    PredicatedPartition<ServletHolder> partitionHoldersBy(final List<String> handlerNames) {
+    PredicatedPartition<ServletHolder> partitionHoldersBy(final Collection<String> handlerNames) {
         return partition(asList(servletHandler().getServlets()), new Predicate<ServletHolder>() {
             @Override
             public boolean satisfies(ServletHolder holder) {
@@ -46,12 +46,12 @@ public class JettyServletRemover extends JettyHandlerRemover<ServletMapping, Ser
     }
 
     @Override
-    void setNewMappings(List<ServletMapping> mappings) {
+    void setNewMappings(Collection<ServletMapping> mappings) {
         servletHandler().setServletMappings(mappings.toArray(new ServletMapping[]{}));
     }
 
     @Override
-    void setNewHolders(List<ServletHolder> holders) {
+    void setNewHolders(Collection<ServletHolder> holders) {
         servletHandler().setServlets(holders.toArray(new ServletHolder[]{}));
     }
 
