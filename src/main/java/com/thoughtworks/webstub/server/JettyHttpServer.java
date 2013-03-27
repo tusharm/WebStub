@@ -1,5 +1,7 @@
 package com.thoughtworks.webstub.server;
 
+import com.thoughtworks.webstub.server.utils.JettyHandlerRemover;
+import com.thoughtworks.webstub.server.utils.JettyServletRemover;
 import com.thoughtworks.webstub.stub.HttpServer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;

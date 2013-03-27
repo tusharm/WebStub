@@ -1,5 +1,7 @@
 package com.thoughtworks.webstub.server;
 
+import com.thoughtworks.webstub.server.utils.JettyHandlerRemover;
+
 public class ServletContextHandler extends org.eclipse.jetty.servlet.ServletContextHandler {
     private JettyHandlerRemover servletRemover;
 

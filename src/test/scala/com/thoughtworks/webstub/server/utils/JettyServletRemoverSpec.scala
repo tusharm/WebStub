@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.server
+package com.thoughtworks.webstub.server.utils
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 import com.thoughtworks.webstub.SmartSpec
+import com.thoughtworks.webstub.server.ServletContextHandler
 
 @RunWith(classOf[JUnitRunner])
 class JettyServletRemoverSpec extends SmartSpec {

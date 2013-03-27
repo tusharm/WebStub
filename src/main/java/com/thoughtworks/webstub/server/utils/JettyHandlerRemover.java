@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.server;
+package com.thoughtworks.webstub.server.utils;
 
 import com.thoughtworks.webstub.utils.PredicatedPartition;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -8,14 +8,14 @@ import java.util.List;
 
 import static org.apache.commons.lang.ArrayUtils.contains;
 
-abstract class JettyHandlerRemover<Mapping, Holder> {
+public abstract class JettyHandlerRemover<Mapping, Holder> {
     private ServletHandler servletHandler;
 
-    JettyHandlerRemover(ServletContextHandler contextHandler) {
+    protected JettyHandlerRemover(ServletContextHandler contextHandler) {
         servletHandler = contextHandler.getServletHandler();
     }
 
-    void remove(String pathSpec) {
+    public void remove(String pathSpec) {
         PredicatedPartition<Mapping> mappings = partitionMappingsBy(pathSpec);
         if (mappings.satisfying().isEmpty())
             return;

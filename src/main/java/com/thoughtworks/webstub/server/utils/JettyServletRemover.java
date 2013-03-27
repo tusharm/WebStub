@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.server;
+package com.thoughtworks.webstub.server.utils;
 
 import com.thoughtworks.webstub.utils.Predicate;
 import com.thoughtworks.webstub.utils.PredicatedPartition;
@@ -12,7 +12,7 @@ import static java.util.Arrays.asList;
 import static org.apache.commons.lang.ArrayUtils.contains;
 
 public class JettyServletRemover extends JettyHandlerRemover<ServletMapping, ServletHolder> {
-    JettyServletRemover(org.eclipse.jetty.servlet.ServletContextHandler contextHandler) {
+    public JettyServletRemover(org.eclipse.jetty.servlet.ServletContextHandler contextHandler) {
         super(contextHandler);
     }
 
