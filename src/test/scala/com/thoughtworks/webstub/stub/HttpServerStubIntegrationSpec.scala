@@ -25,6 +25,7 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
   it("should support GET") {
     dslServer.get("/person").returns(response(200))
     httpClient.get(s"$contextUrl/person").status should be(200)
+    httpClient.get(s"$contextUrl/person/1").status should be(404)
   }
 
   it("should support DELETE") {
@@ -56,7 +57,7 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
     it("should support POST with request body") {
       dslServer.post("/users").withContent("new user").returns(response(201))
 
-      httpClient.post(s"$contextUrl/users").status should be(404)
+      httpClient.post(s"$contextUrl/users").status should be(400)
       httpClient.post(s"$contextUrl/users", "new user").status should be(201)
     }
 

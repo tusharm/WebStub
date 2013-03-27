@@ -5,7 +5,7 @@ import org.scalatest.junit.JUnitRunner
 import org.mockito.ArgumentCaptor
 import org.mockito.Mockito._
 import org.mockito.Matchers.{ eq  => mockitoEq }
-import javax.servlet.Servlet
+import org.mockito.Matchers._
 import com.thoughtworks.webstub.SmartSpec
 import com.thoughtworks.webstub.config.{Response, Request, HttpConfiguration}
 import javax.servlet.http.HttpServlet
@@ -30,7 +30,7 @@ class HttpServerStubSpec extends SmartSpec {
     serverStub.configurationCreated(configuration)
 
     val captor = ArgumentCaptor.forClass(classOf[HttpServlet])
-    verify(httpServer).addHandlerChain(mockitoEq("/test"), captor.capture())
+    verify(httpServer).addHandlerChain(mockitoEq("/test"), captor.capture(), any(classOf[StubFilter]))
 
     val servlet = captor.getValue.asInstanceOf[StubServlet]
     servlet.getConfiguration should be(configuration)

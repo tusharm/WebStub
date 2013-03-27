@@ -2,7 +2,7 @@ package com.thoughtworks.webstub.stub
 
 import org.mockito.Mockito._
 import org.mockito.Matchers._
-import org.mockito.Matchers.{ eq  => mockitoEq }
+import org.mockito.Matchers.{eq => mockitoEq}
 import javax.servlet.http.{HttpServletResponse, HttpServletRequest}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -12,9 +12,9 @@ import java.io.{BufferedReader, StringReader, PrintWriter, StringWriter}
 
 @RunWith(classOf[JUnitRunner])
 class StubServletSpec extends SmartSpec {
-  val servlet = new StubServlet(httpConfiguration("GET", "/test", 302, "Bruce Willis"))
 
-  it("should return the configured response, if method and uri match") {
+  it("should return the configured response content") {
+    val servlet = new StubServlet(httpConfiguration("GET", "/test", 302, "Bruce Willis"))
     val writer = new StringWriter
     val response = mockResponseWithWriter(writer)
 
@@ -24,49 +24,23 @@ class StubServletSpec extends SmartSpec {
     writer.toString should be("Bruce Willis")
   }
 
-  it("should return server error if method is not supported") {
-    val response = mock[HttpServletResponse]
-    servlet.doPost(mockRequest("POST", "/test"), response)
 
-    verify(response).sendError(501)
-    verify(response, never()).setStatus(any())
+  it("should return the configured response for POST , PUT, DELETE") {
+    List("POST", "PUT", "DELETE").foreach {
+      method =>
+        val servlet = new StubServlet(httpConfiguration(method, "/test", 200))
+        val response = mock[HttpServletResponse]
+
+        servlet.doGet(mockRequest(method, "/test"), response)
+
+        verify(response).setStatus(200)
+    }
   }
 
-  it("should return client error if uri doesn't match") {
-    val response = mock[HttpServletResponse]
-    servlet.doGet(mockRequest("GET", "/non-existent"), response)
-
-    verify(response).sendError(404)
-    verify(response, never()).setStatus(any())
-  }
-
-  it ("should return client error if POST doesn't contain content, while its stub configuration does") {
-    val servlet = new StubServlet(httpConfiguration("POST", "/employees", "Bruce Willis", 201))
-
-    val request = mockRequest("POST", "/employees")
-    val response = mock[HttpServletResponse]
-    servlet.doPost(request, response)
-
-    verify(request).getReader
-    verify(response).sendError(mockitoEq(404), anyString());
-  }
-
-  it ("should return response if POST contains content matching the stub configuration") {
-    val servlet = new StubServlet(httpConfiguration("POST", "/employees", "Bruce Willis", 201))
-
-    val request = mockRequest("POST", "/employees", "Bruce Willis")
-    val response = mock[HttpServletResponse]
-    servlet.doPost(request, response)
-
-    verify(request).getReader
-    verify(response).setStatus(201);
-  }
-
-  private def mockRequest(method: String, uri: String, content: String = "") = {
+  private def mockRequest(method: String, uri: String) = {
     val request = mock[HttpServletRequest]
     when(request.getMethod).thenReturn(method)
     when(request.getServletPath).thenReturn(uri);
-    when(request.getReader).thenReturn(new BufferedReader(new StringReader(content)));
     request
   }
 
@@ -76,9 +50,7 @@ class StubServletSpec extends SmartSpec {
     response
   }
 
-  private def httpConfiguration(method: String, uri: String, status: Int, responseContent: String) =
+  private def httpConfiguration(method: String, uri: String, status: Int, responseContent: String = null) =
     new HttpConfiguration(new Request(method, uri), new Response(status, responseContent))
 
-  private def httpConfiguration(method: String, uri: String, requestContent: String, status: Int) =
-    new HttpConfiguration(new Request(method, uri, requestContent), new Response(status, null))
 }
