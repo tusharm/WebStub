@@ -8,6 +8,7 @@ import org.mockito.Matchers.{ eq  => mockitoEq }
 import javax.servlet.Servlet
 import com.thoughtworks.webstub.SmartSpec
 import com.thoughtworks.webstub.config.{Response, Request, HttpConfiguration}
+import javax.servlet.http.HttpServlet
 
 @RunWith(classOf[JUnitRunner])
 class HttpServerStubSpec extends SmartSpec {
@@ -28,8 +29,8 @@ class HttpServerStubSpec extends SmartSpec {
     val configuration = httpConfiguration("GET", "/test", 200)
     serverStub.configurationCreated(configuration)
 
-    val captor = ArgumentCaptor.forClass(classOf[Servlet])
-    verify(httpServer).addServlet(captor.capture, mockitoEq("/test"))
+    val captor = ArgumentCaptor.forClass(classOf[HttpServlet])
+    verify(httpServer).addHandlerChain(mockitoEq("/test"), captor.capture())
 
     val servlet = captor.getValue.asInstanceOf[StubServlet]
     servlet.getConfiguration should be(configuration)
@@ -41,8 +42,8 @@ class HttpServerStubSpec extends SmartSpec {
 
     serverStub.reset
 
-    verify(httpServer).removeServlet("/person/1")
-    verify(httpServer).removeServlet("/person/2")
+    verify(httpServer).removeHandlerChain("/person/1")
+    verify(httpServer).removeHandlerChain("/person/2")
 
     serverStub.registeredUris should have size 0
   }

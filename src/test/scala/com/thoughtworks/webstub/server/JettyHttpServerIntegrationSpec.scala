@@ -10,7 +10,7 @@ class JettyHttpServerIntegrationSpec extends SmartSpec with WellBehavedServer {
   val server = new JettyHttpServer(9099, "root")
   val httpClient = new Client
 
-  describe("An JettyHttpServer") {
+  describe("A JettyHttpServer") {
     it("should display a status page if started") {
       httpClient.get("http://localhost:9099/root/status").status should be(200)
     }
@@ -26,10 +26,10 @@ class JettyHttpServerIntegrationSpec extends SmartSpec with WellBehavedServer {
     it("should manipulate servlets on-the-fly") {
       val servlet = new StatusServlet(302)
 
-      server.addServlet(servlet, "/test")
+      server.addHandlerChain("/test", servlet)
       httpClient.get("http://localhost:9099/root/test").status should be(302)
 
-      server.removeServlet("/test")
+      server.removeHandlerChain("/test")
       httpClient.get("http://localhost:9099/root/test").status should be(404)
 
       httpClient.get("http://localhost:9099/root/status").status should be(200)

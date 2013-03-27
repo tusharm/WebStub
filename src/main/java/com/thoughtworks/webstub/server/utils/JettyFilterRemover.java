@@ -17,7 +17,11 @@ public class JettyFilterRemover extends JettyHandlerRemover<FilterMapping, Filte
 
     @Override
     PredicatedPartition<FilterMapping> partitionMappingsBy(final String pathSpec) {
-        return partition(asList(servletHandler().getFilterMappings()), new Predicate<FilterMapping>() {
+        FilterMapping[] filterMappings = servletHandler().getFilterMappings();
+        if (filterMappings == null)
+            return PredicatedPartition.empty();
+
+        return partition(asList(filterMappings), new Predicate<FilterMapping>() {
             @Override
             public boolean satisfies(FilterMapping mapping) {
                 return contains(mapping.getPathSpecs(), pathSpec);

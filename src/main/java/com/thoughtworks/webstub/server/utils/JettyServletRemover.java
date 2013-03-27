@@ -17,21 +17,25 @@ public class JettyServletRemover extends JettyHandlerRemover<ServletMapping, Ser
     }
 
     @Override
-    PredicatedPartition<ServletHolder> partitionHoldersBy(final String pathSpec) {
-        return partition(asList(servletHandler().getServlets()), new Predicate<ServletHolder>() {
+    PredicatedPartition<ServletMapping> partitionMappingsBy(final String pathSpec) {
+        ServletMapping[] servletMappings = servletHandler().getServletMappings();
+        if (servletMappings == null)
+            return PredicatedPartition.empty();
+
+        return partition(asList(servletMappings), new Predicate<ServletMapping>() {
             @Override
-            public boolean satisfies(ServletHolder holder) {
-                return holder.getName().equals(pathSpec);
+            public boolean satisfies(ServletMapping mapping) {
+                return contains(mapping.getPathSpecs(), pathSpec);
             }
         });
     }
 
     @Override
-    PredicatedPartition<ServletMapping> partitionMappingsBy(final String pathSpec) {
-        return partition(asList(servletHandler().getServletMappings()), new Predicate<ServletMapping>() {
+    PredicatedPartition<ServletHolder> partitionHoldersBy(final String pathSpec) {
+        return partition(asList(servletHandler().getServlets()), new Predicate<ServletHolder>() {
             @Override
-            public boolean satisfies(ServletMapping mapping) {
-                return contains(mapping.getPathSpecs(), pathSpec);
+            public boolean satisfies(ServletHolder holder) {
+                return holder.getName().equals(pathSpec);
             }
         });
     }

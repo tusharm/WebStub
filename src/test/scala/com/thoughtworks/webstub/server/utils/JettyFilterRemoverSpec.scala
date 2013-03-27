@@ -14,8 +14,6 @@ class JettyFilterRemoverSpec extends SmartSpec {
 
   override protected def beforeEach() {
     servletHandler = mock[ServletHandler]
-    when(servletHandler.getFilterMappings).thenReturn(Array(filterMapping("/test", "blah")))
-    when(servletHandler.getFilters).thenReturn(Array(filterHolder("blah")))
 
     val contextHandler = mock[ServletContextHandler]
     when(contextHandler.getServletHandler).thenReturn(servletHandler)
@@ -24,6 +22,9 @@ class JettyFilterRemoverSpec extends SmartSpec {
   }
 
   it("should remove filter with the given path") {
+    when(servletHandler.getFilterMappings).thenReturn(Array(filterMapping("/test", "blah")))
+    when(servletHandler.getFilters).thenReturn(Array(filterHolder("blah")))
+
     remover.remove("/test")
 
     verify(servletHandler).setFilterMappings(Array())
@@ -31,6 +32,18 @@ class JettyFilterRemoverSpec extends SmartSpec {
   }
 
   it("should have no effect if filter not found") {
+    when(servletHandler.getFilterMappings).thenReturn(Array(filterMapping("/test", "blah")))
+    when(servletHandler.getFilters).thenReturn(Array(filterHolder("blah")))
+
+    remover.remove("non-existent")
+
+    verify(servletHandler, never()).setFilterMappings(any())
+    verify(servletHandler, never()).setFilters(any())
+  }
+
+  it ("should have not effect if no filters exist") {
+    when(servletHandler.getFilterMappings).thenReturn(null)
+
     remover.remove("non-existent")
 
     verify(servletHandler, never()).setFilterMappings(any())

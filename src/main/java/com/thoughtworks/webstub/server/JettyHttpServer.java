@@ -1,32 +1,41 @@
 package com.thoughtworks.webstub.server;
 
-import com.thoughtworks.webstub.server.utils.JettyHandlerRemover;
-import com.thoughtworks.webstub.server.utils.JettyServletRemover;
 import com.thoughtworks.webstub.stub.HttpServer;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import javax.servlet.Servlet;
-
-import static org.eclipse.jetty.servlet.ServletContextHandler.SESSIONS;
+import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
+import javax.servlet.http.HttpServlet;
+import java.util.EnumSet;
 
 public class JettyHttpServer implements HttpServer {
     public static final String STATUS_PATH = "/status";
 
     private Server server;
     private ServletContextHandler context;
-    private JettyHandlerRemover servletRemover;
 
     public JettyHttpServer(int port, String contextRoot) {
         context = createContext(contextRoot);
+        addHandlerChain(STATUS_PATH, new StatusServlet(200));
 
         server = new Server(port);
         server.setHandler(context);
+    }
 
-        servletRemover = new JettyServletRemover(context);
+    @Override
+    public void addHandlerChain(String pathSpec, HttpServlet servlet, Filter... filters) {
+        for (Filter filter : filters) {
+            context.addFilter(new FilterHolder(filter), pathSpec, EnumSet.of(DispatcherType.REQUEST));
+        }
+        context.addServlet(new ServletHolder(servlet), pathSpec);
+    }
 
-        addServlet(new StatusServlet(200), STATUS_PATH);
+    @Override
+    public void removeHandlerChain(String pathSpec) {
+        context.removeFilter(pathSpec);
+        context.removeServlet(pathSpec);
     }
 
     @Override
@@ -36,16 +45,6 @@ public class JettyHttpServer implements HttpServer {
         } catch (Exception e) {
             throw new RuntimeException("Unable to start server", e);
         }
-    }
-
-    @Override
-    public void addServlet(Servlet servlet, String servletPath) {
-        context.addServlet(new ServletHolder(servlet), servletPath);
-    }
-
-    @Override
-    public void removeServlet(String servletPath) {
-        servletRemover.remove(servletPath);
     }
 
     @Override
@@ -62,6 +61,6 @@ public class JettyHttpServer implements HttpServer {
             throw new IllegalArgumentException("Invalid context root");
 
         String prefixedRoot = contextRoot.startsWith("/") ? contextRoot : ("/" + contextRoot);
-        return new ServletContextHandler(null, prefixedRoot, SESSIONS);
+        return new ServletContextHandler(prefixedRoot);
     }
 }

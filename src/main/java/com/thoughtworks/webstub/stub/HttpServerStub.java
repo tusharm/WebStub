@@ -18,7 +18,7 @@ public class HttpServerStub implements ConfigurationListener {
 
     @Override
     public void configurationCreated(HttpConfiguration configuration) {
-        server.addServlet(new StubServlet(configuration), configuration.uri());
+        server.addHandlerChain(configuration.uri(), new StubServlet(configuration));
         registeredUris.add(configuration.uri());
     }
 
@@ -28,7 +28,7 @@ public class HttpServerStub implements ConfigurationListener {
 
     public void reset() {
         for (String uri : registeredUris) {
-            server.removeServlet(uri);
+            server.removeHandlerChain(uri);
         }
         registeredUris.clear();
     }

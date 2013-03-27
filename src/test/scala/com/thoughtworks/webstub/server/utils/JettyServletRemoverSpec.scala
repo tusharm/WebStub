@@ -16,8 +16,6 @@ class JettyServletRemoverSpec extends SmartSpec {
 
   override protected def beforeEach() {
     servletHandler = mock[ServletHandler]
-    when(servletHandler.getServletMappings).thenReturn(Array(servletMapping("/test", "blah")))
-    when(servletHandler.getServlets).thenReturn(Array(servletHolder("blah")))
 
     val contextHandler = mock[ServletContextHandler]
     when(contextHandler.getServletHandler).thenReturn(servletHandler)
@@ -26,6 +24,9 @@ class JettyServletRemoverSpec extends SmartSpec {
   }
 
   it("should remove servlet with the given path") {
+    when(servletHandler.getServletMappings).thenReturn(Array(servletMapping("/test", "blah")))
+    when(servletHandler.getServlets).thenReturn(Array(servletHolder("blah")))
+
     remover.remove("/test")
 
     verify(servletHandler).setServletMappings(Array())
@@ -33,6 +34,18 @@ class JettyServletRemoverSpec extends SmartSpec {
   }
 
   it("should have no effect if servlet not found") {
+    when(servletHandler.getServletMappings).thenReturn(Array(servletMapping("/test", "blah")))
+    when(servletHandler.getServlets).thenReturn(Array(servletHolder("blah")))
+
+    remover.remove("non-existent")
+
+    verify(servletHandler, never()).setServletMappings(any())
+    verify(servletHandler, never()).setServlets(any())
+  }
+
+  it ("should have not effect if no servlets exist") {
+    when(servletHandler.getServletMappings).thenReturn(null)
+
     remover.remove("non-existent")
 
     verify(servletHandler, never()).setServletMappings(any())
