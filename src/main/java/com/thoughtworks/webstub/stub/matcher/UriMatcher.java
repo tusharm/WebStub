@@ -14,6 +14,10 @@ public class UriMatcher extends ConfigurationMatcher {
 
     @Override
     public boolean matches(HttpServletRequest request) {
-        return configuration.uri().equals(request.getServletPath());
+        return requestUri().equals(request.getServletPath());
+    }
+
+    private String requestUri() {
+        return configuration.request().uri();
     }
 }

@@ -5,10 +5,10 @@ import org.scalatest.junit.JUnitRunner
 import com.thoughtworks.webstub.StubServerFactory
 import StubServerFactory.stubServer
 import com.thoughtworks.webstub.SmartSpec
-import com.thoughtworks.webstub.utils.{Response, Client}
+import com.thoughtworks.webstub.utils.Client
 import com.thoughtworks.webstub.dsl.ResponseBuilder.response
 import com.thoughtworks.webstub.dsl.HttpDsl.dslWrapped
-import com.thoughtworks.webstub.dsl.HttpDsl
+import scala.collection.JavaConversions._
 
 @RunWith(classOf[JUnitRunner])
 class HttpServerStubIntegrationSpec extends SmartSpec {
@@ -18,9 +18,17 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
   val stub = stubServer(9099, "/context")
   val dslServer = dslWrapped(stub)
 
-  override protected def beforeAll() { stub.start }
-  override protected def beforeEach() { stub.reset }
-  override protected def afterAll() { stub.stop }
+  override protected def beforeAll() {
+    stub.start
+  }
+
+  override protected def beforeEach() {
+    stub.reset
+  }
+
+  override protected def afterAll() {
+    stub.stop
+  }
 
   it("should support GET") {
     dslServer.get("/person").returns(response(200))
@@ -44,13 +52,29 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
     httpClient.put(s"$contextUrl/person", "some content").status should be(201)
   }
 
-  it ("should support response body content") {
+  it("should support response body content") {
     dslServer.get("/person").returns(response(200).withContent("Some person"))
 
-    httpClient.get(s"$contextUrl/person") should have (
-      'status (200),
-      'content ("Some person")
+    httpClient.get(s"$contextUrl/person") should have(
+      'status(200),
+      'content("Some person")
     )
+  }
+
+  describe("for response headers") {
+    it("should support adding a header") {
+      dslServer.get("/users/1").returns(response(200).withHeader("Content-Length", "13"))
+
+      val resp = httpClient.get(s"$contextUrl/users/1")
+      resp.header("Content-Length") should contain("13")
+    }
+
+    it("should support adding multiple headers") {
+      dslServer.get("/users/1").returns(response(200).withHeaders(Map("Content-Length" -> "13")))
+
+      val resp = httpClient.get(s"$contextUrl/users/1")
+      resp.header("Content-Length") should contain("13")
+    }
   }
 
   describe("for entity enclosing requests") {
@@ -67,7 +91,7 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
     }
   }
 
-  it ("should support multiple expectations on the server") {
+  it("should support multiple expectations on the server") {
     dslServer.get("/person/1").returns(response(404))
     dslServer.delete("/person/2").returns(response(200))
 

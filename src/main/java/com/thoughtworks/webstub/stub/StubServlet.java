@@ -1,6 +1,7 @@
 package com.thoughtworks.webstub.stub;
 
 import com.thoughtworks.webstub.config.HttpConfiguration;
+import com.thoughtworks.webstub.dsl.Header;
 import com.thoughtworks.webstub.stub.matcher.ConfigurationMatcher;
 import com.thoughtworks.webstub.stub.matcher.ContentMatcher;
 import com.thoughtworks.webstub.stub.matcher.MethodMatcher;
@@ -60,10 +61,22 @@ public class StubServlet extends HttpServlet {
             }
         }
 
-        if (configuration.responseContent() != null) {
-            response.getWriter().print(configuration.responseContent());
+        setResponseHeaders(configuration, response);
+
+        if (responseContent() != null) {
+            response.getWriter().print(responseContent());
         }
 
-        response.setStatus(configuration.status());
+        response.setStatus(configuration.response().status());
+    }
+
+    private void setResponseHeaders(HttpConfiguration configuration, HttpServletResponse response) {
+        for (Header header : configuration.response().headers()) {
+            response.setHeader(header.name(), header.value());
+        }
+    }
+
+    private String responseContent() {
+        return configuration.response().content();
     }
 }

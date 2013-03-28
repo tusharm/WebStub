@@ -8,6 +8,7 @@ import org.mockito.Matchers.{ eq  => mockitoEq }
 import com.thoughtworks.webstub.SmartSpec
 import com.thoughtworks.webstub.config.{Response, Request, HttpConfiguration}
 import javax.servlet.http.HttpServlet
+import scala.collection.JavaConversions._
 
 @RunWith(classOf[JUnitRunner])
 class HttpServerStubSpec extends SmartSpec {
@@ -48,5 +49,5 @@ class HttpServerStubSpec extends SmartSpec {
   }
 
   private def httpConfiguration(method: String, uri: String, status: Int, responseContent: String = null) =
-    new HttpConfiguration(new Request(method, uri), new Response(status, responseContent))
+    new HttpConfiguration(new Request(method, uri), new Response(status, responseContent, List()))
 }

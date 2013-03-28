@@ -18,8 +18,9 @@ public class HttpServerStub implements ConfigurationListener {
 
     @Override
     public void configurationCreated(HttpConfiguration configuration) {
-        server.addHandlerChain(configuration.uri(), new StubServlet(configuration));
-        registeredUris.add(configuration.uri());
+        String pathSpec = configuration.request().uri();
+        server.addHandlerChain(pathSpec, new StubServlet(configuration));
+        registeredUris.add(pathSpec);
     }
 
     public void start() {

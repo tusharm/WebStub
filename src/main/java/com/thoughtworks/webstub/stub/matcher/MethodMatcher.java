@@ -13,6 +13,10 @@ public class MethodMatcher extends ConfigurationMatcher {
 
     @Override
     public boolean matches(HttpServletRequest request) {
-        return configuration.method().equals(request.getMethod());
+        return requestMethod().equals(request.getMethod());
+    }
+
+    private String requestMethod() {
+        return configuration.request().method();
     }
 }

@@ -16,7 +16,7 @@ public class ContentMatcher extends ConfigurationMatcher {
 
     @Override
     public boolean matches(HttpServletRequest request) throws IOException {
-        String configuredContent = configuration.requestContent();
+        String configuredContent = configuration.request().content();
         return isBlank(configuredContent) || configuredContent.equals(getContent(request));
     }
 

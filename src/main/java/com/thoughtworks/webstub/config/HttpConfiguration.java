@@ -14,24 +14,12 @@ public class HttpConfiguration {
         this.response = response;
     }
 
-    public String method() {
-        return request.method();
+    public Request request() {
+        return request;
     }
 
-    public String uri() {
-        return request.uri();
-    }
-
-    public int status() {
-        return response.status();
-    }
-
-    public String requestContent() {
-        return request.content();
-    }
-
-    public String responseContent() {
-        return response.content();
+    public Response response() {
+        return response;
     }
 
     @Override
@@ -53,7 +41,7 @@ public class HttpConfiguration {
                 "request content:%s, " +
                 "status:%d, " +
                 "response content:%s" +
-                "}", method(), uri(), requestContent(), status(), responseContent());
+                "}", request.method(), request.uri(), request.content(), response.status(), response.content());
     }
 }
 

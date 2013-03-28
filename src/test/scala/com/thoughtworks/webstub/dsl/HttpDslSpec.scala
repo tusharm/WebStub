@@ -7,6 +7,7 @@ import ResponseBuilder.response
 import com.thoughtworks.webstub.dsl.HttpDsl.dslWrapped
 import com.thoughtworks.webstub.SmartSpec
 import com.thoughtworks.webstub.config.{Response, Request, ConfigurationListener, HttpConfiguration}
+import scala.collection.JavaConversions._
 
 @RunWith(classOf[JUnitRunner])
 class HttpDslSpec extends SmartSpec {
@@ -53,8 +54,8 @@ class HttpDslSpec extends SmartSpec {
   }
 
   private def httpConfiguration(method: String, uri: String, status: Int, responseContent: String = null) =
-    new HttpConfiguration(new Request(method, uri), new Response(status, responseContent))
+    new HttpConfiguration(new Request(method, uri), new Response(status, responseContent, List()))
 
   private def httpConfiguration(method: String, uri: String, requestContent: String, status: Int) =
-    new HttpConfiguration(new Request(method, uri, requestContent), new Response(status, null))
+    new HttpConfiguration(new Request(method, uri, requestContent), new Response(status, null, List()))
 }

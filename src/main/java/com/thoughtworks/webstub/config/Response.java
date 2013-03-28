@@ -1,14 +1,20 @@
 package com.thoughtworks.webstub.config;
 
+import com.thoughtworks.webstub.dsl.Header;
 import org.apache.commons.lang.builder.EqualsBuilder;
+
+import java.util.Collection;
+import java.util.List;
 
 public class Response {
     private int status;
     private String content;
+    private Collection<Header> headers;
 
-    public Response(int status, String content) {
+    public Response(int status, String content, Collection<Header> headers) {
         this.status = status;
         this.content = content;
+        this.headers = headers;
     }
 
     public int status() {
@@ -17,6 +23,10 @@ public class Response {
 
     public String content() {
         return content;
+    }
+
+    public Collection<Header> headers() {
+        return headers;
     }
 
     @Override
