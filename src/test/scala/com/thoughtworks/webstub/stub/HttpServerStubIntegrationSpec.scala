@@ -61,19 +61,16 @@ class HttpServerStubIntegrationSpec extends SmartSpec {
     )
   }
 
-  describe("for response headers") {
-    it("should support adding a header") {
-      dslServer.get("/users/1").returns(response(200).withHeader("Content-Length", "13"))
+  it("should support adding response headers") {
+    List(
+      response(200).withHeader("Content-Length", "13"),
+      response(200).withHeaders(Map("Content-Length" -> "13"))
+    ).foreach {
+      response =>
+        dslServer.get("/users/1").returns(response)
 
-      val resp = httpClient.get(s"$contextUrl/users/1")
-      resp.header("Content-Length") should contain("13")
-    }
-
-    it("should support adding multiple headers") {
-      dslServer.get("/users/1").returns(response(200).withHeaders(Map("Content-Length" -> "13")))
-
-      val resp = httpClient.get(s"$contextUrl/users/1")
-      resp.header("Content-Length") should contain("13")
+        val resp = httpClient.get(s"$contextUrl/users/1")
+        resp.header("Content-Length") should contain("13")
     }
   }
 
