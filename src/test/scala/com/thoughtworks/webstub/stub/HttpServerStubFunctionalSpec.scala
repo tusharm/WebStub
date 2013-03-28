@@ -11,7 +11,7 @@ import com.thoughtworks.webstub.dsl.HttpDsl.dslWrapped
 import scala.collection.JavaConversions._
 
 @RunWith(classOf[JUnitRunner])
-class HttpServerStubIntegrationSpec extends SmartSpec {
+class HttpServerStubFunctionalSpec extends SmartSpec {
   val httpClient = new Client
   val contextUrl = "http://localhost:9099/context"
 
