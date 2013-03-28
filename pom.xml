@@ -4,7 +4,7 @@
     <groupId>com.thoughtworks</groupId>
     <artifactId>web-stub</artifactId>
     <packaging>jar</packaging>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOT</version>
     <name>Library for stubbing remote HTTP endpoints</name>
     <url>http://maven.apache.org</url>
 

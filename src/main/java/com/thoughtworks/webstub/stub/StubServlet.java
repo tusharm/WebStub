@@ -1,18 +1,31 @@
 package com.thoughtworks.webstub.stub;
 
 import com.thoughtworks.webstub.config.HttpConfiguration;
+import com.thoughtworks.webstub.stub.matcher.ConfigurationMatcher;
+import com.thoughtworks.webstub.stub.matcher.ContentMatcher;
+import com.thoughtworks.webstub.stub.matcher.MethodMatcher;
+import com.thoughtworks.webstub.stub.matcher.UriMatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+
+import static java.util.Arrays.asList;
 
 public class StubServlet extends HttpServlet {
+    private final List<? extends ConfigurationMatcher> matchers;
     private HttpConfiguration configuration;
 
     public StubServlet(HttpConfiguration configuration) {
         this.configuration = configuration;
+        matchers = asList(
+                new MethodMatcher(configuration),
+                new UriMatcher(configuration),
+                new ContentMatcher(configuration)
+        );
     }
 
     public HttpConfiguration getConfiguration() {
@@ -39,11 +52,18 @@ public class StubServlet extends HttpServlet {
         handle(req, resp);
     }
 
-    private void handle(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if (configuration.responseContent() != null) {
-            resp.getWriter().print(configuration.responseContent());
+    private void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        for (ConfigurationMatcher matcher : matchers) {
+            if (!matcher.matches(request)) {
+                response.sendError(matcher.failedResponseCode());
+                return;
+            }
         }
 
-        resp.setStatus(configuration.status());
+        if (configuration.responseContent() != null) {
+            response.getWriter().print(configuration.responseContent());
+        }
+
+        response.setStatus(configuration.status());
     }
 }
