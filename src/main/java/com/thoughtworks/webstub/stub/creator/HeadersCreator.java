@@ -11,7 +11,7 @@ public class HeadersCreator extends ResponsePartCreator {
     }
 
     @Override
-    public void applyOn(HttpServletResponse response) {
+    public void createFor(HttpServletResponse response) {
         for (Header header : configuration.response().headers()) {
             response.setHeader(header.name(), header.value());
         }

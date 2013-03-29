@@ -1,7 +1,10 @@
 package com.thoughtworks.webstub.stub;
 
 import com.thoughtworks.webstub.config.HttpConfiguration;
-import com.thoughtworks.webstub.dsl.Header;
+import com.thoughtworks.webstub.stub.creator.ContentCreator;
+import com.thoughtworks.webstub.stub.creator.HeadersCreator;
+import com.thoughtworks.webstub.stub.creator.ResponsePartCreator;
+import com.thoughtworks.webstub.stub.creator.StatusCreator;
 import com.thoughtworks.webstub.stub.matcher.ContentMatcher;
 import com.thoughtworks.webstub.stub.matcher.MethodMatcher;
 import com.thoughtworks.webstub.stub.matcher.RequestPartMatcher;
@@ -17,20 +20,24 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 public class StubServlet extends HttpServlet {
-    private final List<? extends RequestPartMatcher> matchers;
+    private final List<RequestPartMatcher> requestMatchers;
+    private final List<ResponsePartCreator> responseCreators;
     private HttpConfiguration configuration;
 
     public StubServlet(HttpConfiguration configuration) {
         this.configuration = configuration;
-        matchers = asList(
+
+        requestMatchers = asList(
                 new MethodMatcher(configuration),
                 new UriMatcher(configuration),
                 new ContentMatcher(configuration)
         );
-    }
 
-    public HttpConfiguration getConfiguration() {
-        return configuration;
+        responseCreators = asList(
+                new HeadersCreator(configuration),
+                new ContentCreator(configuration),
+                new StatusCreator(configuration)
+        );
     }
 
     @Override
@@ -53,30 +60,20 @@ public class StubServlet extends HttpServlet {
         handle(req, resp);
     }
 
+    HttpConfiguration getConfiguration() {
+        return configuration;
+    }
+
     private void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        for (RequestPartMatcher matcher : matchers) {
+        for (RequestPartMatcher matcher : requestMatchers) {
             if (!matcher.matches(request)) {
                 response.sendError(matcher.failedResponseCode());
                 return;
             }
         }
 
-        setResponseHeaders(configuration, response);
-
-        if (responseContent() != null) {
-            response.getWriter().print(responseContent());
+        for (ResponsePartCreator creator : responseCreators) {
+            creator.createFor(response);
         }
-
-        response.setStatus(configuration.response().status());
-    }
-
-    private void setResponseHeaders(HttpConfiguration configuration, HttpServletResponse response) {
-        for (Header header : configuration.response().headers()) {
-            response.setHeader(header.name(), header.value());
-        }
-    }
-
-    private String responseContent() {
-        return configuration.response().content();
     }
 }

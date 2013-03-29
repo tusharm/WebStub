@@ -8,6 +8,7 @@ import scala.collection.JavaConversions._
 import com.thoughtworks.webstub.dsl.Header
 import javax.servlet.http.HttpServletResponse
 import org.mockito.Mockito._
+import org.mockito.Matchers._
 
 @RunWith(classOf[JUnitRunner])
 class HeadersCreatorSpec extends SmartSpec {
@@ -16,12 +17,17 @@ class HeadersCreatorSpec extends SmartSpec {
     val configuration = configurationWithResponseHeaders(new Header("name", "value"))
     val response = mock[HttpServletResponse]
 
-    new HeadersCreator(configuration).applyOn(response)
-
+    new HeadersCreator(configuration).createFor(response)
     verify(response).setHeader("name", "value")
   }
 
-  def configurationWithResponseHeaders(headers: Header*): HttpConfiguration = {
-    new HttpConfiguration(null, new Response(0, null, headers))
+  it ("should not modify response if no headers configured") {
+    val configuration = configurationWithResponseHeaders()
+    val response = mock[HttpServletResponse]
+
+    new HeadersCreator(configuration).createFor(response)
+    verify(response, never()).setHeader(anyString(), anyString())
   }
+
+  def configurationWithResponseHeaders(headers: Header*) = new HttpConfiguration(null, new Response(0, null, headers))
 }

@@ -3,6 +3,7 @@ package com.thoughtworks.webstub.stub.creator;
 import com.thoughtworks.webstub.config.HttpConfiguration;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public abstract class ResponsePartCreator {
     protected HttpConfiguration configuration;
@@ -11,5 +12,5 @@ public abstract class ResponsePartCreator {
         this.configuration = configuration;
     }
 
-    public abstract void applyOn(HttpServletResponse response);
+    public abstract void createFor(HttpServletResponse response) throws IOException;
 }
