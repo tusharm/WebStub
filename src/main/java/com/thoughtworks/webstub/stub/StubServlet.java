@@ -2,9 +2,9 @@ package com.thoughtworks.webstub.stub;
 
 import com.thoughtworks.webstub.config.HttpConfiguration;
 import com.thoughtworks.webstub.dsl.Header;
-import com.thoughtworks.webstub.stub.matcher.ConfigurationMatcher;
 import com.thoughtworks.webstub.stub.matcher.ContentMatcher;
 import com.thoughtworks.webstub.stub.matcher.MethodMatcher;
+import com.thoughtworks.webstub.stub.matcher.RequestPartMatcher;
 import com.thoughtworks.webstub.stub.matcher.UriMatcher;
 
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 public class StubServlet extends HttpServlet {
-    private final List<? extends ConfigurationMatcher> matchers;
+    private final List<? extends RequestPartMatcher> matchers;
     private HttpConfiguration configuration;
 
     public StubServlet(HttpConfiguration configuration) {
@@ -54,7 +54,7 @@ public class StubServlet extends HttpServlet {
     }
 
     private void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        for (ConfigurationMatcher matcher : matchers) {
+        for (RequestPartMatcher matcher : matchers) {
             if (!matcher.matches(request)) {
                 response.sendError(matcher.failedResponseCode());
                 return;

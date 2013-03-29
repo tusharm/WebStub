@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
 
-public class UriMatcher extends ConfigurationMatcher {
+public class UriMatcher extends RequestPartMatcher {
     public UriMatcher(HttpConfiguration configuration) {
         super(configuration, SC_NOT_FOUND);
     }

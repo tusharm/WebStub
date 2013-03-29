@@ -9,7 +9,7 @@ import java.io.IOException;
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static org.apache.commons.lang.StringUtils.isBlank;
 
-public class ContentMatcher extends ConfigurationMatcher {
+public class ContentMatcher extends RequestPartMatcher {
     public ContentMatcher(HttpConfiguration configuration) {
         super(configuration, SC_BAD_REQUEST);
     }

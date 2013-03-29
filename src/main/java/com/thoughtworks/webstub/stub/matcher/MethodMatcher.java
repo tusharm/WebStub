@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static javax.servlet.http.HttpServletResponse.SC_NOT_IMPLEMENTED;
 
-public class MethodMatcher extends ConfigurationMatcher {
+public class MethodMatcher extends RequestPartMatcher {
     public MethodMatcher(HttpConfiguration configuration) {
         super(configuration, SC_NOT_IMPLEMENTED);
     }
