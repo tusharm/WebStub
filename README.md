@@ -33,18 +33,24 @@ public static void afterAll() {
 ```
 Refer to tests in [HttpServerStubFunctionalSpec](/src/test/scala/com/thoughtworks/webstub/stub/HttpServerStubFunctionalSpec.scala).
 
-In particular, I think it will be useful in tests which use https://github.com/aharin/inproctester.
-Currently, it's in a basic state; lots more to come...
+In particular, I think it will be useful in tests which use [inproctester](https://github.com/aharin/inproctester).
+
+## Features
+
+- Configure a real server (Jetty-based) with stubbed behaviour, within your tests (so that test data setup lies in the test)
+- Supports GET, POST, PUT and DELETE methods
+- Ability to set expectations on request (method, uri, headers, content)
+- Ability to stub response (status code, headers, content)
+- Reset the stub configuration before/after every test, to keep them independent
+- Can be used for functional testing of services running externally or inside the test itself (check out [inproctester](https://github.com/aharin/inproctester))
 
 ## RoadMap
 
-### Immediate:
-- [x] Stubbing GET, POST, PUT, DELETE response status
-- [x] request/response body content
-- [x] request/response headers
-- [] https
-- [] better test failure messages
-- [] starting stub servers in-process, rather than on real native ports
+- Support for https
+- Support for auth
+- Starting stub servers in-process, rather than on real native ports
+- Error reporting
+- Dashboard for the stub server
 
 ## License
 
