@@ -45,12 +45,7 @@ In particular, I think it will be useful in tests which use [inproctester](https
 
 ## RoadMap
 
-- Support for https
-- Support for auth
-- Other HTTP verbs
-- Starting stub servers in-process, rather than on real native ports
-- Dashboard for the stub server
-- Better reporting of assertion failures
+[Todo](https://trello.com/board/webstub/515729e7ec87d5886b001af3)
 
 ## License
 
