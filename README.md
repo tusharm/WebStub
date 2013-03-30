@@ -1,4 +1,4 @@
-# WebStub
+# WebStub [![Build Status](https://travis-ci.org/tusharm/WebStub.png)](https://travis-ci.org/tusharm/WebStub)
 
 This library intends to simplify stubbing out responses from external HTTP entities that your application/service  depends on.
 This can be useful in testing your application from within JUnit tests. It internally uses Jetty as the servlet container.
