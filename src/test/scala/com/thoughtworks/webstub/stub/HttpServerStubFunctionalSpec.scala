@@ -18,17 +18,9 @@ class HttpServerStubFunctionalSpec extends SmartSpec {
   val stub = stubServer(9099, "/context")
   val dslServer = dslWrapped(stub)
 
-  override protected def beforeAll() {
-    stub.start
-  }
-
-  override protected def beforeEach() {
-    stub.reset
-  }
-
-  override protected def afterAll() {
-    stub.stop
-  }
+  override protected def beforeAll() { stub.start }
+  override protected def beforeEach() { stub.reset }
+  override protected def afterAll() { stub.stop }
 
   it("should support GET") {
     dslServer.get("/person").returns(response(200))
@@ -61,16 +53,26 @@ class HttpServerStubFunctionalSpec extends SmartSpec {
     )
   }
 
-  it("should support adding response headers") {
-    List(
-      response(200).withHeader("Content-Length", "13"),
-      response(200).withHeaders(Map("Content-Length" -> "13"))
-    ).foreach {
-      response =>
-        dslServer.get("/users/1").returns(response)
+  describe("for headers") {
+    ignore("should support request headers") {
+      /*
+         TODO: for some weird reason, this doesn't compile in scala (the withHeader() part);
+         this scenario is covered in HttpStubTest for now
+       */
+      // dslServer.get("/users/1").withHeader("name", "value").returns(response(200))
+    }
 
-        val resp = httpClient.get(s"$contextUrl/users/1")
-        resp.header("Content-Length") should contain("13")
+    it("should support response headers") {
+      List(
+        response(200).withHeader("Content-Length", "13"),
+        response(200).withHeaders(Map("Content-Length" -> "13"))
+      ).foreach {
+        response =>
+          dslServer.get("/users/1").returns(response)
+
+          val resp = httpClient.get(s"$contextUrl/users/1")
+          resp.header("Content-Length") should contain("13")
+      }
     }
   }
 

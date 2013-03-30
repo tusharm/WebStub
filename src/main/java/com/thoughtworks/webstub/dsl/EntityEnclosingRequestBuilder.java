@@ -17,6 +17,6 @@ public class EntityEnclosingRequestBuilder extends RequestBuilder {
 
     @Override
     protected Request build() {
-        return new Request(method, uri, content);
+        return new Request(method, uri, content, headers);
     }
 }

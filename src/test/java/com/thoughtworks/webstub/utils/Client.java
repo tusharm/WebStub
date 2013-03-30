@@ -1,5 +1,6 @@
 package com.thoughtworks.webstub.utils;
 
+import org.apache.http.Header;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -7,6 +8,7 @@ import org.apache.http.params.HttpConnectionParams;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 public class Client {
     private DefaultHttpClient httpClient;
@@ -18,6 +20,12 @@ public class Client {
 
     public Response get(String url) {
         return execute(new HttpGet(url));
+    }
+
+    public Response get(String url, List<? extends Header> headers) {
+        HttpGet request = new HttpGet(url);
+        request.setHeaders(headers.toArray(new Header[]{}));
+        return execute(request);
     }
 
     public Response post(String url) {

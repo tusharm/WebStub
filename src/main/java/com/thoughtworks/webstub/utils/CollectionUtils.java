@@ -24,4 +24,13 @@ public class CollectionUtils {
 
         return outputs;
     }
+
+    public static <T> boolean exists(Collection<T> collection, com.thoughtworks.webstub.utils.Predicate<T> predicate) {
+        for (T t : collection) {
+            if (predicate.satisfies(t))
+                return true;
+        }
+
+        return false;
+    }
 }
