@@ -37,20 +37,20 @@ In particular, I think it will be useful in tests which use [inproctester](https
 
 ## Features
 
-- Configure a real server (Jetty-based) with stubbed behaviour, within your tests (so that test data setup lies in the test)
-- Supports GET, POST, PUT and DELETE methods
-- Ability to set expectations on request (method, uri, headers, content)
-- Ability to stub response (status code, headers, content)
-- Reset the stub configuration before/after every test, to keep them independent
+- Stubs a real server (embedded Jetty) on-the-fly from within your tests (so test data setup lies in the test) using a fluent DSL
+- Supports GET, POST, PUT and DELETE verbs
+- Supports stubbing requests (method, uri, headers, content) and responses (status code, headers, content)
+- Allows resetting stub configuration before/after every test, to keep individual tests independent
 - Can be used for functional testing of services running externally or inside the test itself (check out [inproctester](https://github.com/aharin/inproctester))
 
 ## RoadMap
 
 - Support for https
 - Support for auth
+- Other HTTP verbs
 - Starting stub servers in-process, rather than on real native ports
-- Error reporting
 - Dashboard for the stub server
+- Better reporting of assertion failures
 
 ## License
 
