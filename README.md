@@ -35,6 +35,15 @@ Refer to tests in [HttpServerStubFunctionalSpec](/src/test/scala/com/thoughtwork
 
 In particular, I think it will be useful in tests which use [inproctester](https://github.com/aharin/inproctester).
 
+Access the repo at https://oss.sonatype.org/content/repositories/snapshots/, give the latest snapshot a ride and provide your feedback.
+The maven co-ordinates are:
+```
+<dependency>
+  <groupId>com.thoughtworks</groupId>
+  <artifactId>web-stub</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+</dependency>
+```
 ## Features
 
 - Stubs a real server (embedded Jetty) on-the-fly from within your tests (so test data setup lies in the test) using a fluent DSL
