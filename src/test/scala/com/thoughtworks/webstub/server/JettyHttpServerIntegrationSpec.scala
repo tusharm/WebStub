@@ -34,5 +34,15 @@ class JettyHttpServerIntegrationSpec extends SmartSpec with WellBehavedServer {
 
       httpClient.get("http://localhost:9099/root/status").status should be(200)
     }
+
+    it("should register multiple paths against the same servlet") {
+      val servlet = new StatusServlet(302)
+
+      server.addHandlerChain("/test1", servlet)
+      server.addHandlerChain("/test2", servlet)
+
+      httpClient.get("http://localhost:9099/root/test1").status should be(302)
+      httpClient.get("http://localhost:9099/root/test2").status should be(302)
+    }
   }
 }
