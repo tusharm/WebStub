@@ -2,10 +2,10 @@ package com.thoughtworks.webstub.stub;
 
 import com.thoughtworks.webstub.stub.matcher.RequestPartMatcher;
 
-class ConfigurationNotFoundException extends Exception {
+class MissingMatchingConfigurationException extends Exception {
     private RequestPartMatcher matcher;
 
-    ConfigurationNotFoundException(RequestPartMatcher matcher) {
+    MissingMatchingConfigurationException(RequestPartMatcher matcher) {
         this.matcher = matcher;
     }
 

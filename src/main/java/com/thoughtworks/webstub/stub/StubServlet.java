@@ -5,7 +5,10 @@ import com.thoughtworks.webstub.stub.creator.ContentCreator;
 import com.thoughtworks.webstub.stub.creator.HeadersCreator;
 import com.thoughtworks.webstub.stub.creator.ResponsePartCreator;
 import com.thoughtworks.webstub.stub.creator.StatusCreator;
-import com.thoughtworks.webstub.stub.matcher.*;
+import com.thoughtworks.webstub.stub.matcher.ContentMatcher;
+import com.thoughtworks.webstub.stub.matcher.HeadersMatcher;
+import com.thoughtworks.webstub.stub.matcher.MethodMatcher;
+import com.thoughtworks.webstub.stub.matcher.UriMatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,17 +20,10 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 public class StubServlet extends HttpServlet {
-    private HttpConfiguration configuration;
-    private final List<ResponsePartCreator> responseCreators;
+    private Configurations configurations;
 
-    public StubServlet(HttpConfiguration configuration) {
-        this.configuration = configuration;
-
-        responseCreators = asList(
-                new HeadersCreator(configuration),
-                new ContentCreator(configuration),
-                new StatusCreator(configuration)
-        );
+    public StubServlet(Configurations configurations) {
+        this.configurations = configurations;
     }
 
     @Override
@@ -50,20 +46,27 @@ public class StubServlet extends HttpServlet {
         handle(req, resp);
     }
 
-    HttpConfiguration getConfiguration() {
-        return configuration;
+    private void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            Configurations filtered = configurations
+                    .filterBy(new MethodMatcher(request))
+                    .filterBy(new UriMatcher(request))
+                    .filterBy(new HeadersMatcher(request))
+                    .filterBy(new ContentMatcher(request));
+
+            for (ResponsePartCreator creator : responseCreators(filtered.first())) {
+                creator.createFor(response);
+            }
+        } catch (MissingMatchingConfigurationException e) {
+            response.setStatus(e.getFailedMatcher().failedResponseCode());
+        }
     }
 
-    private void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        for (RequestPartMatcher matcher : asList(new MethodMatcher(request), new UriMatcher(request), new HeadersMatcher(request), new ContentMatcher(request))) {
-            if (!matcher.matches(configuration)) {
-                response.sendError(matcher.failedResponseCode());
-                return;
-            }
-        }
-
-        for (ResponsePartCreator creator : responseCreators) {
-            creator.createFor(response);
-        }
+    private List<ResponsePartCreator> responseCreators(HttpConfiguration configuration) {
+        return asList(
+                new HeadersCreator(configuration),
+                new ContentCreator(configuration),
+                new StatusCreator(configuration)
+        );
     }
 }

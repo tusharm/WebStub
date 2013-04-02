@@ -3,24 +3,18 @@ package com.thoughtworks.webstub.stub;
 import com.thoughtworks.webstub.config.ConfigurationListener;
 import com.thoughtworks.webstub.config.HttpConfiguration;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static java.util.Collections.unmodifiableCollection;
-
 public class HttpServerStub implements ConfigurationListener {
     private final HttpServer server;
-    private Collection<String> registeredUris = new ArrayList<String>();
+    private Configurations configurations;
 
     public HttpServerStub(HttpServer httpServer) {
         server = httpServer;
+        initConfigurations();
     }
 
     @Override
     public void configurationCreated(HttpConfiguration configuration) {
-        String pathSpec = configuration.request().uri();
-        server.addHandlerChain(pathSpec, new StubServlet(configuration));
-        registeredUris.add(pathSpec);
+        configurations.add(configuration);
     }
 
     public void start() {
@@ -28,18 +22,17 @@ public class HttpServerStub implements ConfigurationListener {
     }
 
     public void reset() {
-        for (String uri : registeredUris) {
-            server.removeHandlerChain(uri);
-        }
-        registeredUris.clear();
+        initConfigurations();
     }
 
     public void stop() {
         server.stop();
     }
 
-    Collection<String> registeredUris() {
-        return unmodifiableCollection(registeredUris);
+    private void initConfigurations() {
+        configurations = new Configurations();
+        server.removeHandlerChain("/");
+        server.addHandlerChain("/", new StubServlet(configurations));
     }
 }
 

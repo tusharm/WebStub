@@ -16,10 +16,10 @@ class ConfigurationsSpec extends SmartSpec {
   ))
 
   it("should allow adding configuration") {
-    val configs = configurations.add(httpConfiguration("DELETE", "/blah")).all
+    configurations.add(httpConfiguration("DELETE", "/blah"))
 
-    configs should have size  (4)
-    configs should contain(httpConfiguration("DELETE", "/blah"))
+    configurations.all should have size  (4)
+    configurations.all should contain(httpConfiguration("DELETE", "/blah"))
   }
 
   it ("should filter a list of configurations based on the given matcher") {
@@ -32,7 +32,7 @@ class ConfigurationsSpec extends SmartSpec {
   it ("should throw an exception if no configuration is found for the given matcher") {
     evaluating {
       configurations.filterBy(uriMatcherFor("/non-existing"))
-    } should produce[ConfigurationNotFoundException]
+    } should produce[MissingMatchingConfigurationException]
   }
 
   private def uriMatcherFor(uri: String) = new RequestPartMatcher(null, 101) {

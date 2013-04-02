@@ -24,30 +24,4 @@ class HttpServerStubSpec extends SmartSpec {
     serverStub.stop
     verify(httpServer).stop
   }
-
-  it ("should update server when configuration is created") {
-    val configuration = httpConfiguration("GET", "/test", 200)
-    serverStub.configurationCreated(configuration)
-
-    val captor = ArgumentCaptor.forClass(classOf[HttpServlet])
-    verify(httpServer).addHandlerChain(mockitoEq("/test"), captor.capture())
-
-    val servlet = captor.getValue.asInstanceOf[StubServlet]
-    servlet.getConfiguration should be(configuration)
-  }
-
-  it("should reset all configurations") {
-    serverStub.configurationCreated(httpConfiguration("POST", "/person/1", 202))
-    serverStub.configurationCreated(httpConfiguration("POST", "/person/2", 202))
-
-    serverStub.reset
-
-    verify(httpServer).removeHandlerChain("/person/1")
-    verify(httpServer).removeHandlerChain("/person/2")
-
-    serverStub.registeredUris should have size 0
-  }
-
-  private def httpConfiguration(method: String, uri: String, status: Int, responseContent: String = null) =
-    new HttpConfiguration(new Request(method, uri), new Response(status, responseContent, List()))
 }

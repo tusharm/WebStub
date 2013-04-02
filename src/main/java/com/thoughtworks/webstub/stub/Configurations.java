@@ -9,28 +9,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
 import static org.apache.commons.collections.CollectionUtils.select;
 
 class Configurations {
     private final List<HttpConfiguration> configurations;
 
     Configurations() {
-        this.configurations = asList();
+        this.configurations = new ArrayList<HttpConfiguration>();
     }
 
     Configurations(List<HttpConfiguration> configurations) {
-        this.configurations = unmodifiableList(configurations);
+        this.configurations = new ArrayList<HttpConfiguration>(configurations);
     }
 
-    Configurations add(HttpConfiguration configuration) {
-        List<HttpConfiguration> newConfigs = new ArrayList<HttpConfiguration>(configurations);
-        newConfigs.add(configuration);
-        return new Configurations(newConfigs);
+    void add(HttpConfiguration configuration) {
+        configurations.add(configuration);
     }
 
-    Configurations filterBy(final RequestPartMatcher matcher) throws ConfigurationNotFoundException {
+    Configurations filterBy(final RequestPartMatcher matcher) throws MissingMatchingConfigurationException {
         List<HttpConfiguration> filtered = (List<HttpConfiguration>) select(configurations, new Predicate<HttpConfiguration>() {
             @Override
             public boolean satisfies(HttpConfiguration configuration) {
@@ -43,13 +39,17 @@ class Configurations {
         });
 
         if (filtered.isEmpty())
-            throw new ConfigurationNotFoundException(matcher);
+            throw new MissingMatchingConfigurationException(matcher);
 
         return new Configurations(filtered);
     }
 
 
     List<HttpConfiguration> all() {
-        return configurations;
+        return Collections.unmodifiableList(configurations);
+    }
+
+    HttpConfiguration first() {
+        return configurations.get(0);
     }
 }

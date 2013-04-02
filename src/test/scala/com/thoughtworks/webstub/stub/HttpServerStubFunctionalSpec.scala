@@ -98,9 +98,9 @@ class HttpServerStubFunctionalSpec extends SmartSpec {
     httpClient.delete(s"$contextUrl/person/2").status should be(200)
   }
 
-  ignore("should support multiple expectations on the same uri") {
+  it("should support multiple expectations on the same uri") {
     dslServer.get("/person/1").returns(response(200))
-    dslServer.put("/person/1").returns(response(405))
+    dslServer.delete("/person/1").returns(response(405))
 
     httpClient.get(s"$contextUrl/person/1").status should be(200)
     httpClient.delete(s"$contextUrl/person/1").status should be(405)
