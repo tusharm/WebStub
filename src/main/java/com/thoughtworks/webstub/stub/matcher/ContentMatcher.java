@@ -10,12 +10,12 @@ import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static org.apache.commons.lang.StringUtils.isBlank;
 
 public class ContentMatcher extends RequestPartMatcher {
-    public ContentMatcher(HttpConfiguration configuration) {
-        super(configuration, SC_BAD_REQUEST);
+    public ContentMatcher(HttpServletRequest request) {
+        super(request, SC_BAD_REQUEST);
     }
 
     @Override
-    public boolean matches(HttpServletRequest request) throws IOException {
+    public boolean matches(HttpConfiguration configuration) throws IOException {
         String configuredContent = configuration.request().content();
         return isBlank(configuredContent) || configuredContent.equals(getContent(request));
     }

@@ -17,19 +17,11 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 public class StubServlet extends HttpServlet {
-    private final List<RequestPartMatcher> requestMatchers;
-    private final List<ResponsePartCreator> responseCreators;
     private HttpConfiguration configuration;
+    private final List<ResponsePartCreator> responseCreators;
 
     public StubServlet(HttpConfiguration configuration) {
         this.configuration = configuration;
-
-        requestMatchers = asList(
-                new MethodMatcher(configuration),
-                new UriMatcher(configuration),
-                new HeadersMatcher(configuration),
-                new ContentMatcher(configuration)
-        );
 
         responseCreators = asList(
                 new HeadersCreator(configuration),
@@ -63,8 +55,8 @@ public class StubServlet extends HttpServlet {
     }
 
     private void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        for (RequestPartMatcher matcher : requestMatchers) {
-            if (!matcher.matches(request)) {
+        for (RequestPartMatcher matcher : asList(new MethodMatcher(request), new UriMatcher(request), new HeadersMatcher(request), new ContentMatcher(request))) {
+            if (!matcher.matches(configuration)) {
                 response.sendError(matcher.failedResponseCode());
                 return;
             }

@@ -15,12 +15,12 @@ class HeadersMatcherSpec extends SmartSpec{
 
   it ("should match when expected headers is present") {
     val configuration = configurationWithRequestHeaders("x" -> "y");
-    new HeadersMatcher(configuration).matches(request) should be(true)
+    new HeadersMatcher(request).matches(configuration) should be(true)
   }
 
   it ("should not match when expected header is absent") {
     val configuration = configurationWithRequestHeaders("x" -> "y", "a" -> "b");
-    new HeadersMatcher(configuration).matches(request) should be(false)
+    new HeadersMatcher(request).matches(configuration) should be(false)
   }
 
   def requestWithHeader(name: String, value: String) = {

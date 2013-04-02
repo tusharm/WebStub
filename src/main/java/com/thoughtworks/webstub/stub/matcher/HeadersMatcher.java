@@ -12,13 +12,13 @@ import static com.thoughtworks.webstub.utils.CollectionUtils.exists;
 import static javax.servlet.http.HttpServletResponse.SC_PRECONDITION_FAILED;
 
 public class HeadersMatcher extends RequestPartMatcher {
-    public HeadersMatcher(HttpConfiguration configuration) {
-        super(configuration, SC_PRECONDITION_FAILED);
+    public HeadersMatcher(HttpServletRequest request) {
+        super(request, SC_PRECONDITION_FAILED);
     }
 
     @Override
-    public boolean matches(final HttpServletRequest request) throws IOException {
-        return !exists(configuredHeaders(), new Predicate<Header>() {
+    public boolean matches(HttpConfiguration configuration) throws IOException {
+        return !exists(getHeaders(configuration), new Predicate<Header>() {
             @Override
             public boolean satisfies(Header configuredHeader) {
                 return headerAbsentFromRequest(configuredHeader, request);
@@ -26,12 +26,12 @@ public class HeadersMatcher extends RequestPartMatcher {
         });
     }
 
+    private Collection<Header> getHeaders(HttpConfiguration configuration) {
+        return configuration.request().headers();
+    }
+
     private boolean headerAbsentFromRequest(Header configuredHeader, HttpServletRequest request) {
         String found = request.getHeader(configuredHeader.name());
         return (found == null) || !found.equals(configuredHeader.value()) ;
-    }
-
-    private Collection<Header> configuredHeaders() {
-        return configuration.request().headers();
     }
 }

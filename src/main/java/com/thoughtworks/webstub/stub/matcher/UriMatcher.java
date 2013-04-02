@@ -4,20 +4,21 @@ package com.thoughtworks.webstub.stub.matcher;
 import com.thoughtworks.webstub.config.HttpConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
 
 public class UriMatcher extends RequestPartMatcher {
-    public UriMatcher(HttpConfiguration configuration) {
-        super(configuration, SC_NOT_FOUND);
+    public UriMatcher(HttpServletRequest request) {
+        super(request, SC_NOT_FOUND);
     }
 
     @Override
-    public boolean matches(HttpServletRequest request) {
-        return requestUri().equals(request.getServletPath());
+    public boolean matches(HttpConfiguration configuration) throws IOException {
+        return getUri(configuration).equals(request.getServletPath());
     }
 
-    private String requestUri() {
+    private String getUri(HttpConfiguration configuration) {
         return configuration.request().uri();
     }
 }

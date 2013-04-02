@@ -6,11 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 public abstract class RequestPartMatcher {
-    protected HttpConfiguration configuration;
+    protected HttpServletRequest request;
     private int failedResponseCode;
 
-    protected RequestPartMatcher(HttpConfiguration configuration, int failedResponseCode) {
-        this.configuration = configuration;
+    protected RequestPartMatcher(HttpServletRequest request, int failedResponseCode) {
+        this.request = request;
         this.failedResponseCode = failedResponseCode;
     }
 
@@ -18,5 +18,5 @@ public abstract class RequestPartMatcher {
         return failedResponseCode;
     }
 
-    public abstract boolean matches(HttpServletRequest request) throws IOException;
+    public abstract boolean matches(HttpConfiguration configuration) throws IOException;
 }
