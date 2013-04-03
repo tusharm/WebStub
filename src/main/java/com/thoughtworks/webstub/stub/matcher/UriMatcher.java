@@ -19,6 +19,6 @@ public class UriMatcher extends RequestPartMatcher {
     }
 
     private String getUri(HttpConfiguration configuration) {
-        return configuration.request().uri();
+        return configuration.request().uri().split("\\?")[0];
     }
 }

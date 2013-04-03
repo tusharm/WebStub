@@ -34,6 +34,13 @@ class MethodStubbingSpec extends StubFunctionalSpec {
     httpClient.put(s"$contextUrl/person", "some content").status should be(201)
   }
 
+  it ("should support query params") {
+    dslServer.get("/dogs?color=black&status=new born").returns(response(200))
+
+    httpClient.getWithParams(s"$contextUrl/dogs?color=black&status=new born").status should be(200)
+    httpClient.get(s"$contextUrl/dogs").status should be(400)
+  }
+
   it("should support multiple expectations") {
     dslServer.get("/person/1").returns(response(404))
     dslServer.delete("/person/2").returns(response(200))

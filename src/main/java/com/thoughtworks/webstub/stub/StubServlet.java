@@ -5,10 +5,7 @@ import com.thoughtworks.webstub.stub.creator.ContentCreator;
 import com.thoughtworks.webstub.stub.creator.HeadersCreator;
 import com.thoughtworks.webstub.stub.creator.ResponsePartCreator;
 import com.thoughtworks.webstub.stub.creator.StatusCreator;
-import com.thoughtworks.webstub.stub.matcher.ContentMatcher;
-import com.thoughtworks.webstub.stub.matcher.HeadersMatcher;
-import com.thoughtworks.webstub.stub.matcher.MethodMatcher;
-import com.thoughtworks.webstub.stub.matcher.UriMatcher;
+import com.thoughtworks.webstub.stub.matcher.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -51,6 +48,7 @@ public class StubServlet extends HttpServlet {
             Configurations filtered = configurations
                     .filterBy(new MethodMatcher(request))
                     .filterBy(new UriMatcher(request))
+                    .filterBy(new QueryStringMatcher(request))
                     .filterBy(new HeadersMatcher(request))
                     .filterBy(new ContentMatcher(request));
 
