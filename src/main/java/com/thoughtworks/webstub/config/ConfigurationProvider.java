@@ -7,7 +7,7 @@ public abstract class ConfigurationProvider {
         this.listener = listener;
     }
 
-    public final void configurationCreated(HttpConfiguration configuration) {
+    public void configurationCreated(HttpConfiguration configuration) {
         listener.configurationCreated(configuration);
     }
 }

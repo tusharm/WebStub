@@ -1,6 +1,7 @@
-package com.thoughtworks.webstub.dsl;
+package com.thoughtworks.webstub.dsl.builders;
 
 import com.thoughtworks.webstub.config.Response;
+import com.thoughtworks.webstub.dsl.Header;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +21,11 @@ public class ResponseBuilder {
     }
 
     public ResponseBuilder withContent(String content) {
-        this.content = content;
+        return withContent(new StringContentBuilder(content));
+    }
+
+    public ResponseBuilder withContent(ContentBuilder contentBuilder) {
+        this.content = contentBuilder.build();
         return this;
     }
 
@@ -37,7 +42,7 @@ public class ResponseBuilder {
         return this;
     }
 
-    Response build() {
+    public Response build() {
         return new Response(status, content, headers);
     }
 }

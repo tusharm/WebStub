@@ -4,7 +4,6 @@ import com.thoughtworks.webstub.dsl.HttpDsl;
 import com.thoughtworks.webstub.stub.HttpServerStub;
 import com.thoughtworks.webstub.utils.Client;
 import com.thoughtworks.webstub.utils.Response;
-import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,7 +12,7 @@ import org.junit.Test;
 
 import static com.thoughtworks.webstub.StubServerFactory.stubServer;
 import static com.thoughtworks.webstub.dsl.HttpDsl.dslWrapped;
-import static com.thoughtworks.webstub.dsl.ResponseBuilder.response;
+import static com.thoughtworks.webstub.dsl.builders.ResponseBuilder.response;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

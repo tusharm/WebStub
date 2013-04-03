@@ -1,5 +1,6 @@
 package com.thoughtworks.webstub.dsl
 
+import builders.ResponseBuilder
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import scala.collection.mutable.MutableList

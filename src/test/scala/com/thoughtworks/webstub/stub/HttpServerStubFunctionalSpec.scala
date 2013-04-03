@@ -6,7 +6,8 @@ import com.thoughtworks.webstub.StubServerFactory
 import StubServerFactory.stubServer
 import com.thoughtworks.webstub.SmartSpec
 import com.thoughtworks.webstub.utils.Client
-import com.thoughtworks.webstub.dsl.ResponseBuilder.response
+import com.thoughtworks.webstub.dsl.builders.ResponseBuilder
+import ResponseBuilder.response
 import com.thoughtworks.webstub.dsl.HttpDsl.dslWrapped
 import scala.collection.JavaConversions._
 

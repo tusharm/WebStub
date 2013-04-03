@@ -1,6 +1,8 @@
 package com.thoughtworks.webstub.dsl;
 
 import com.thoughtworks.webstub.config.*;
+import com.thoughtworks.webstub.dsl.builders.EntityEnclosingRequestBuilder;
+import com.thoughtworks.webstub.dsl.builders.RequestBuilder;
 
 public class HttpDsl extends ConfigurationProvider {
 
