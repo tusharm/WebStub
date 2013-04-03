@@ -31,7 +31,10 @@ public static void afterAll() {
     stub.stop();
 }
 ```
-Refer to tests in [HttpServerStubFunctionalSpec](/src/test/scala/com/thoughtworks/webstub/stub/HttpServerStubFunctionalSpec.scala).
+Refer to tests:
++ [MethodStubbingSpec](/src/test/scala/com/thoughtworks/webstub/MethodStubbingSpec.scala).
++ [HeaderStubbingSpec](/src/test/scala/com/thoughtworks/webstub/HeaderStubbingSpec.scala).
++ [BodyContentStubbingSpec](/src/test/scala/com/thoughtworks/webstub/BodyContentStubbingSpec.scala).
 
 In particular, I think it will be useful in tests which use [inproctester](https://github.com/aharin/inproctester).
 
@@ -51,7 +54,7 @@ The maven co-ordinates are:
 - Supports stubbing requests (method, uri, headers, content) and responses (status code, headers, content)
 - Allows resetting stub configuration before/after every test, to keep individual tests independent
 - Requests/responses can take [ContentBuilder](/src/main/java/com/thoughtworks/webstub/dsl/builders/ContentBuilder.java) implementations; create ContentBuilders (e.g. to convert your domain objects to JSON or XML) to suit your needs
-- Can be used for functional testing of services running externally or inside the test itself (check out [inproctester](https://github.com/aharin/inproctester))
+- Can be used for functional testing of services running externally or inside the test itself (e.g. using [inproctester](https://github.com/aharin/inproctester))
 
 ## RoadMap
 
