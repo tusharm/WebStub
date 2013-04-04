@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 import com.thoughtworks.webstub.StubServerFactory._
 
 @RunWith(classOf[JUnitRunner])
-class MethodStubbingSpec extends StubFunctionalSpec {
+class RequestLineStubbingSpec extends StubFunctionalSpec {
   val contextUrl = "http://localhost:9099/context"
   val stub = stubServer(9099, "/context")
   val dslServer = dslWrapped(stub)

@@ -32,7 +32,7 @@ public static void afterAll() {
 }
 ```
 Refer to tests:
-+ [MethodStubbingSpec](/src/test/scala/com/thoughtworks/webstub/MethodStubbingSpec.scala).
++ [RequestLineStubbingSpec](/src/test/scala/com/thoughtworks/webstub/RequestLineStubbingSpec.scala).
 + [HeaderStubbingSpec](/src/test/scala/com/thoughtworks/webstub/HeaderStubbingSpec.scala).
 + [BodyContentStubbingSpec](/src/test/scala/com/thoughtworks/webstub/BodyContentStubbingSpec.scala).
 
