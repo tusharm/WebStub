@@ -38,7 +38,7 @@ Refer to tests:
 
 For a real example, refer to [WebStubDemo](https://github.com/tusharm/WebStubDemo) where a real Spring application is tested using WebStub and [Inproctester](https://github.com/aharin/inproctester)
 
-Access the repo at https://oss.sonatype.org/content/groups/public, give the library a ride and provide your feedback.
+The artifact is available at [Maven Central Repository](http://search.maven.org/#search%7Cga%7C1%7Cweb-stub); give it a ride and give your feedback.
 The maven co-ordinates are:
 ```
 <dependency>
