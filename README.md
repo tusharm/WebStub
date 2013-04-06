@@ -36,7 +36,7 @@ Refer to tests:
 + [HeaderStubbingSpec](/src/test/scala/com/thoughtworks/webstub/HeaderStubbingSpec.scala).
 + [BodyContentStubbingSpec](/src/test/scala/com/thoughtworks/webstub/BodyContentStubbingSpec.scala).
 
-In particular, I think it will be useful in tests which use [inproctester](https://github.com/aharin/inproctester).
+For a real example, refer to [WebStubDemo](https://github.com/tusharm/WebStubDemo) where a real Spring application is tested using WebStub and [Inproctester](https://github.com/aharin/inproctester)
 
 Access the repo at https://oss.sonatype.org/content/repositories/snapshots/, give the latest snapshot a ride and provide your feedback.
 The maven co-ordinates are:
@@ -54,7 +54,7 @@ The maven co-ordinates are:
 - Supports stubbing requests (method, uri, query params, headers, content) and responses (status code, headers, content)
 - Allows resetting stub configuration before/after every test, to keep individual tests independent
 - Requests/responses can take [ContentBuilder](/src/main/java/com/thoughtworks/webstub/dsl/builders/ContentBuilder.java) implementations; create ContentBuilders (e.g. to convert your domain objects to JSON or XML) to suit your needs
-- Can be used for functional testing of services running externally or inside the test itself (e.g. using [inproctester](https://github.com/aharin/inproctester))
+- Can be used for functional testing of services running externally or inside the test itself
 
 ## RoadMap
 
