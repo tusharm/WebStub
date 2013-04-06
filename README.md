@@ -38,13 +38,13 @@ Refer to tests:
 
 For a real example, refer to [WebStubDemo](https://github.com/tusharm/WebStubDemo) where a real Spring application is tested using WebStub and [Inproctester](https://github.com/aharin/inproctester)
 
-Access the repo at https://oss.sonatype.org/content/repositories/snapshots/, give the latest snapshot a ride and provide your feedback.
+Access the repo at https://oss.sonatype.org/content/groups/public, give the library a ride and provide your feedback.
 The maven co-ordinates are:
 ```
 <dependency>
   <groupId>com.thoughtworks</groupId>
   <artifactId>web-stub</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 </dependency>
 ```
 ## Features
