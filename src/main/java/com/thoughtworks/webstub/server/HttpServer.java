@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.stub;
+package com.thoughtworks.webstub.server;
 
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServlet;

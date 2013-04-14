@@ -15,9 +15,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 
-import static com.thoughtworks.webstub.StubServerFactory.stubServer;
+import static com.thoughtworks.webstub.stub.StubServerFactory.stubServer;
 import static com.thoughtworks.webstub.dsl.HttpDsl.dslWrapped;
 import static com.thoughtworks.webstub.dsl.builders.ResponseBuilder.response;
 import static java.util.Arrays.asList;

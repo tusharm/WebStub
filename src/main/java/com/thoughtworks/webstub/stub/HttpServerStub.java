@@ -2,6 +2,8 @@ package com.thoughtworks.webstub.stub;
 
 import com.thoughtworks.webstub.config.ConfigurationListener;
 import com.thoughtworks.webstub.config.HttpConfiguration;
+import com.thoughtworks.webstub.server.HttpServer;
+import com.thoughtworks.webstub.stub.config.Configurations;
 
 public class HttpServerStub implements ConfigurationListener {
     private final HttpServer server;

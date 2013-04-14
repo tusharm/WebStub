@@ -1,8 +1,7 @@
-package com.thoughtworks.webstub;
+package com.thoughtworks.webstub.stub;
 
 import com.thoughtworks.webstub.server.JettyHttpServer;
-import com.thoughtworks.webstub.stub.HttpServerStub;
-import com.thoughtworks.webstub.stub.HttpServer;
+import com.thoughtworks.webstub.server.HttpServer;
 
 public class StubServerFactory {
     public static HttpServerStub stubServer(int port, String contextRoot) {

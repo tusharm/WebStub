@@ -2,6 +2,7 @@ package com.thoughtworks.webstub
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import stub.StubServerFactory
 import StubServerFactory.stubServer
 import com.thoughtworks.webstub.dsl.builders.ResponseBuilder
 import ResponseBuilder.response

@@ -1,15 +1,15 @@
-package com.thoughtworks.webstub.stub;
+package com.thoughtworks.webstub.stub.config;
 
 import com.thoughtworks.webstub.stub.matcher.RequestPartMatcher;
 
-class MissingMatchingConfigurationException extends Exception {
+public class MissingMatchingConfigurationException extends Exception {
     private RequestPartMatcher matcher;
 
     MissingMatchingConfigurationException(RequestPartMatcher matcher) {
         this.matcher = matcher;
     }
 
-    RequestPartMatcher getFailedMatcher() {
+    public RequestPartMatcher getFailedMatcher() {
         return this.matcher;
     }
 }

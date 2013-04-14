@@ -9,6 +9,7 @@ import com.thoughtworks.webstub.SmartSpec
 import com.thoughtworks.webstub.config.{Response, Request, HttpConfiguration}
 import javax.servlet.http.HttpServlet
 import scala.collection.JavaConversions._
+import com.thoughtworks.webstub.server.HttpServer
 
 @RunWith(classOf[JUnitRunner])
 class HttpServerStubSpec extends SmartSpec {

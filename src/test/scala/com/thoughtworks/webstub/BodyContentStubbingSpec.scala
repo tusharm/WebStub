@@ -4,7 +4,8 @@ import dsl.builders.ResponseBuilder._
 import dsl.HttpDsl._
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
-import com.thoughtworks.webstub.StubServerFactory._
+import stub.StubServerFactory
+import StubServerFactory._
 
 @RunWith(classOf[JUnitRunner])
 class BodyContentStubbingSpec extends StubFunctionalSpec {

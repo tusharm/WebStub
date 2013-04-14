@@ -1,6 +1,5 @@
 package com.thoughtworks.webstub.server;
 
-import com.thoughtworks.webstub.stub.HttpServer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletHolder;

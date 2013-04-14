@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.stub;
+package com.thoughtworks.webstub.stub.config;
 
 import com.thoughtworks.webstub.config.HttpConfiguration;
 import com.thoughtworks.webstub.stub.matcher.RequestPartMatcher;
@@ -11,22 +11,22 @@ import java.util.List;
 
 import static org.apache.commons.collections.CollectionUtils.select;
 
-class Configurations {
+public class Configurations {
     private final List<HttpConfiguration> configurations;
 
-    Configurations() {
+    public Configurations() {
         this.configurations = new ArrayList<HttpConfiguration>();
     }
 
-    Configurations(List<HttpConfiguration> configurations) {
+    public Configurations(List<HttpConfiguration> configurations) {
         this.configurations = new ArrayList<HttpConfiguration>(configurations);
     }
 
-    void add(HttpConfiguration configuration) {
+    public void add(HttpConfiguration configuration) {
         configurations.add(configuration);
     }
 
-    Configurations filterBy(final RequestPartMatcher matcher) throws MissingMatchingConfigurationException {
+    public Configurations filterBy(final RequestPartMatcher matcher) throws MissingMatchingConfigurationException {
         List<HttpConfiguration> filtered = (List<HttpConfiguration>) select(configurations, new Predicate<HttpConfiguration>() {
             @Override
             public boolean satisfies(HttpConfiguration configuration) {
@@ -45,11 +45,11 @@ class Configurations {
     }
 
 
-    List<HttpConfiguration> all() {
+    public List<HttpConfiguration> all() {
         return Collections.unmodifiableList(configurations);
     }
 
-    HttpConfiguration first() {
+    public HttpConfiguration first() {
         return configurations.get(0);
     }
 }

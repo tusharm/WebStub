@@ -1,5 +1,6 @@
 package com.thoughtworks.webstub.stub
 
+import config.{Configurations, MissingMatchingConfigurationException}
 import matcher.RequestPartMatcher
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
