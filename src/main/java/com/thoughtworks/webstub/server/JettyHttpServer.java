@@ -24,17 +24,13 @@ public class JettyHttpServer implements HttpServer {
     }
 
     @Override
-    public void addHandlerChain(String pathSpec, HttpServlet servlet, Filter... filters) {
-        for (Filter filter : filters) {
-            context.addFilter(new FilterHolder(filter), pathSpec, EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD));
-        }
-        context.addServlet(new ServletHolder(servlet), pathSpec);
+    public void addHandlerChain(String contextRelativePath, HttpServlet servlet) {
+        context.addServlet(new ServletHolder(servlet), contextRelativePath);
     }
 
     @Override
-    public void removeHandlerChain(String pathSpec) {
-        context.removeFilter(pathSpec);
-        context.removeServlet(pathSpec);
+    public void removeHandlerChain(String contextRelativePath) {
+        context.removeServlet(contextRelativePath);
     }
 
     @Override
