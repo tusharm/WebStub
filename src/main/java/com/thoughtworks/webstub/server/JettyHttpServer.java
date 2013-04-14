@@ -9,15 +9,15 @@ import javax.servlet.Filter;
 import javax.servlet.http.HttpServlet;
 import java.util.EnumSet;
 
+import static com.thoughtworks.webstub.server.ServletContextFactory.STATUS_PATH;
+
 public class JettyHttpServer implements HttpServer {
-    public static final String STATUS_PATH = "/status";
 
     private Server server;
     private ServletContextHandler context;
 
-    public JettyHttpServer(int port, String contextRoot) {
-        context = createContext(contextRoot);
-        addHandlerChain(STATUS_PATH, new StatusServlet(200));
+    public JettyHttpServer(int port, ServletContextHandler context) {
+        this.context = context;
 
         server = new Server(port);
         server.setHandler(context);
@@ -25,7 +25,7 @@ public class JettyHttpServer implements HttpServer {
 
     @Override
     public void addHandlerChain(String contextRelativePath, HttpServlet servlet) {
-        context.addServlet(new ServletHolder(servlet), contextRelativePath);
+        context.addServlet(contextRelativePath, servlet);
     }
 
     @Override
@@ -49,13 +49,5 @@ public class JettyHttpServer implements HttpServer {
         } catch (Exception e) {
             throw new RuntimeException("Unable to stop server", e);
         }
-    }
-
-    private ServletContextHandler createContext(String contextRoot) {
-        if (contextRoot == null)
-            throw new IllegalArgumentException("Invalid context root");
-
-        String prefixedRoot = contextRoot.startsWith("/") ? contextRoot : ("/" + contextRoot);
-        return new ServletContextHandler(prefixedRoot);
     }
 }

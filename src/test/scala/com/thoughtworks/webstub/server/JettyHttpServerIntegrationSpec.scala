@@ -7,16 +7,12 @@ import com.thoughtworks.webstub.utils.Client
 
 @RunWith(classOf[JUnitRunner])
 class JettyHttpServerIntegrationSpec extends SmartSpec with WellBehavedServer {
-  val server = new JettyHttpServer(9099, "root")
+  val server = new JettyHttpServer(9099, ServletContextFactory.create("root"))
   val httpClient = new Client
 
   describe("A JettyHttpServer") {
     it("should display a status page if started") {
       httpClient.get("http://localhost:9099/root/status").status should be(200)
-    }
-
-    it("must not accept an invalid context root") {
-      evaluating(new JettyHttpServer(9099, null)) should produce[IllegalArgumentException]
     }
 
     it("should report resource not found if context doesn't exist") {
