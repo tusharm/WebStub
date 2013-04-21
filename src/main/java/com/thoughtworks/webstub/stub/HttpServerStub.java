@@ -3,14 +3,17 @@ package com.thoughtworks.webstub.stub;
 import com.thoughtworks.webstub.config.ConfigurationListener;
 import com.thoughtworks.webstub.config.HttpConfiguration;
 import com.thoughtworks.webstub.server.HttpServer;
+import com.thoughtworks.webstub.server.ServletContextHandler;
 import com.thoughtworks.webstub.stub.config.Configurations;
 
 public class HttpServerStub implements ConfigurationListener {
-    private final HttpServer server;
+    private HttpServer server;
+    private ServletContextHandler contextHandler;
     private Configurations configurations;
 
-    public HttpServerStub(HttpServer httpServer) {
+    public HttpServerStub(HttpServer httpServer, ServletContextHandler contextHandler) {
         server = httpServer;
+        this.contextHandler = contextHandler;
         initConfigurations();
     }
 
@@ -33,8 +36,8 @@ public class HttpServerStub implements ConfigurationListener {
 
     private void initConfigurations() {
         configurations = new Configurations();
-        server.removeHandlerChain("/");
-        server.addHandlerChain("/", new StubServlet(configurations));
+        contextHandler.removeServlet("/");
+        contextHandler.addServlet("/", new StubServlet(configurations));
     }
 }
 

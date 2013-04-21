@@ -1,36 +1,24 @@
 package com.thoughtworks.webstub.server;
 
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.FilterHolder;
-import org.eclipse.jetty.servlet.ServletHolder;
-
-import javax.servlet.DispatcherType;
-import javax.servlet.Filter;
-import javax.servlet.http.HttpServlet;
-import java.util.EnumSet;
-
-import static com.thoughtworks.webstub.server.ServletContextFactory.STATUS_PATH;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 
 public class JettyHttpServer implements HttpServer {
 
     private Server server;
-    private ServletContextHandler context;
+    private ContextHandlerCollection handlerCollection;
 
-    public JettyHttpServer(int port, ServletContextHandler context) {
-        this.context = context;
+    public JettyHttpServer(int port) {
+        handlerCollection = new ContextHandlerCollection();
 
         server = new Server(port);
-        server.setHandler(context);
+        server.setHandler(handlerCollection);
     }
 
     @Override
-    public void addHandlerChain(String contextRelativePath, HttpServlet servlet) {
-        context.addServlet(contextRelativePath, servlet);
-    }
-
-    @Override
-    public void removeHandlerChain(String contextRelativePath) {
-        context.removeServlet(contextRelativePath);
+    public void addContext(ServletContextHandler contextHandler) {
+        handlerCollection.addHandler(contextHandler);
+        start(contextHandler);
     }
 
     @Override
@@ -48,6 +36,14 @@ public class JettyHttpServer implements HttpServer {
             server.stop();
         } catch (Exception e) {
             throw new RuntimeException("Unable to stop server", e);
+        }
+    }
+
+    private void start(ServletContextHandler contextHandler) {
+        try {
+            contextHandler.start();
+        } catch (Exception e) {
+            throw new RuntimeException("Error starting context: " + contextHandler.getDisplayName(), e);
         }
     }
 }
