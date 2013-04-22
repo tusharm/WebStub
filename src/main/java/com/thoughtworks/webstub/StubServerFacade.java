@@ -1,10 +1,10 @@
-package com.thoughtworks.webstub.stub;
+package com.thoughtworks.webstub;
 
+import com.thoughtworks.webstub.dsl.HttpDsl;
 import com.thoughtworks.webstub.server.HttpServer;
 import com.thoughtworks.webstub.server.JettyHttpServer;
 import com.thoughtworks.webstub.server.ServletContextHandler;
-
-import static com.thoughtworks.webstub.server.ServletContextFactory.create;
+import com.thoughtworks.webstub.stub.HttpServerStub;
 
 public class StubServerFacade implements HttpServer {
     public static StubServerFacade newServer(int port) {
@@ -17,8 +17,8 @@ public class StubServerFacade implements HttpServer {
         this.httpServer = httpServer;
     }
 
-    public HttpServerStub withContext(String contextRoot) {
-        return new HttpServerStub(httpServer, contextRoot);
+    public HttpDsl withContext(String contextRoot) {
+        return new HttpDsl(new HttpServerStub(httpServer, contextRoot));
     }
 
     @Override

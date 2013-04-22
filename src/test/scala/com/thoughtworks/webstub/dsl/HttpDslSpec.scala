@@ -5,7 +5,6 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import scala.collection.mutable.MutableList
 import ResponseBuilder.response
-import com.thoughtworks.webstub.dsl.HttpDsl.dslWrapped
 import com.thoughtworks.webstub.SmartSpec
 import com.thoughtworks.webstub.config.{Response, Request, ConfigurationListener, HttpConfiguration}
 import scala.collection.JavaConversions._
@@ -13,9 +12,13 @@ import scala.collection.JavaConversions._
 @RunWith(classOf[JUnitRunner])
 class HttpDslSpec extends SmartSpec {
   val configs = MutableList[HttpConfiguration]()
-  val provider = dslWrapped(new ConfigurationListener {
-    override def configurationCreated(configuration: HttpConfiguration) {
+  val provider = new HttpDsl(new ConfigurationListener {
+    def configurationCreated(configuration: HttpConfiguration) {
         configs += configuration
+    }
+
+    def configurationCleared() {
+      configs.clear
     }
   })
 
@@ -48,6 +51,13 @@ class HttpDslSpec extends SmartSpec {
   it ("should support adding expected response content") {
     provider.get("/employee/1").returns(response(200).withContent("Bruce Willis"))
     configs should contain(httpConfiguration("GET", "/employee/1", 200, "Bruce Willis"))
+  }
+
+  it ("should reset the configuration") {
+    provider.get("/employee/1").returns(response(200).withContent("Bruce Willis"))
+
+    provider.reset
+    configs should be('empty)
   }
 
   override def afterEach() {

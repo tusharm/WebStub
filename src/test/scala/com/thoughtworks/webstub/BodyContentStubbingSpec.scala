@@ -1,21 +1,19 @@
 package com.thoughtworks.webstub
 
 import dsl.builders.ResponseBuilder._
-import dsl.HttpDsl._
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
-import stub.StubServerFacade._
+import StubServerFacade._
 
 @RunWith(classOf[JUnitRunner])
 class BodyContentStubbingSpec extends StubFunctionalSpec {
   val contextUrl = "http://localhost:9099/context"
 
   val stub = newServer(9099)
-  val context = stub.withContext("/context")
-  val dslServer = dslWrapped(context)
+  val dslServer = stub.withContext("/context")
 
   override protected def beforeEach() {
-    context.reset
+    dslServer.reset
   }
 
   describe("for entity enclosing requests") {

@@ -10,4 +10,8 @@ public abstract class ConfigurationProvider {
     public void configurationCreated(HttpConfiguration configuration) {
         listener.configurationCreated(configuration);
     }
+
+    protected void configurationCleared() {
+        listener.configurationCleared();
+    }
 }

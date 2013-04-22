@@ -1,5 +1,6 @@
 package com.thoughtworks.webstub.config;
 
 public interface ConfigurationListener {
-    public void configurationCreated(HttpConfiguration configuration);
+    void configurationCreated(HttpConfiguration configuration);
+    void configurationCleared();
 }

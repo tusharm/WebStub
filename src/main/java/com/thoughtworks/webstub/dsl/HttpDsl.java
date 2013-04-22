@@ -6,11 +6,7 @@ import com.thoughtworks.webstub.dsl.builders.RequestBuilder;
 
 public class HttpDsl extends ConfigurationProvider {
 
-    public static HttpDsl dslWrapped(ConfigurationListener listener) {
-        return new HttpDsl(listener);
-    }
-
-    private HttpDsl(ConfigurationListener listener) {
+    public HttpDsl(ConfigurationListener listener) {
         super(listener);
     }
 
@@ -30,4 +26,7 @@ public class HttpDsl extends ConfigurationProvider {
         return new RequestBuilder(this).withMethod("DELETE").withUri(uri);
     }
 
+    public void reset() {
+        configurationCleared();
+    }
 }

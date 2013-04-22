@@ -23,7 +23,8 @@ public class HttpServerStub implements ConfigurationListener {
         configurations.add(configuration);
     }
 
-    public void reset() {
+    @Override
+    public void configurationCleared() {
         initConfigurations();
     }
 
