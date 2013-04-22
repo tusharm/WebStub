@@ -6,14 +6,15 @@ import com.thoughtworks.webstub.server.HttpServer;
 import com.thoughtworks.webstub.server.ServletContextHandler;
 import com.thoughtworks.webstub.stub.config.Configurations;
 
+import static com.thoughtworks.webstub.server.ServletContextFactory.create;
+
 public class HttpServerStub implements ConfigurationListener {
-    private HttpServer server;
     private ServletContextHandler contextHandler;
     private Configurations configurations;
 
-    public HttpServerStub(HttpServer httpServer, ServletContextHandler contextHandler) {
-        server = httpServer;
-        this.contextHandler = contextHandler;
+    public HttpServerStub(HttpServer server, String contextRoot) {
+        this.contextHandler = create(contextRoot);
+        server.addContext(this.contextHandler);
         initConfigurations();
     }
 
@@ -22,16 +23,8 @@ public class HttpServerStub implements ConfigurationListener {
         configurations.add(configuration);
     }
 
-    public void start() {
-        server.start();
-    }
-
     public void reset() {
         initConfigurations();
-    }
-
-    public void stop() {
-        server.stop();
     }
 
     private void initConfigurations() {

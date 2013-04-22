@@ -4,14 +4,19 @@ import dsl.builders.ResponseBuilder._
 import dsl.HttpDsl._
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
-import stub.StubServerFactory
-import StubServerFactory._
+import stub.StubServerFacade._
 
 @RunWith(classOf[JUnitRunner])
 class RequestLineStubbingSpec extends StubFunctionalSpec {
   val contextUrl = "http://localhost:9099/context"
-  val stub = stubServer(9099, "/context")
-  val dslServer = dslWrapped(stub)
+
+  val stub = newServer(9099)
+  val context = stub.withContext("/context")
+  val dslServer = dslWrapped(context)
+
+  override protected def beforeEach() {
+    context.reset
+  }
 
   it("should support GET") {
     dslServer.get("/person").returns(response(200))

@@ -2,12 +2,13 @@ package com.thoughtworks.webstub;
 
 import com.thoughtworks.webstub.dsl.HttpDsl;
 import com.thoughtworks.webstub.stub.HttpServerStub;
+import com.thoughtworks.webstub.stub.StubServerFacade;
 import com.thoughtworks.webstub.utils.Client;
 import com.thoughtworks.webstub.utils.Response;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.message.BasicHeader;
-import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -16,7 +17,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
 
-import static com.thoughtworks.webstub.stub.StubServerFactory.stubServer;
 import static com.thoughtworks.webstub.dsl.HttpDsl.dslWrapped;
 import static com.thoughtworks.webstub.dsl.builders.ResponseBuilder.response;
 import static java.util.Arrays.asList;
@@ -24,15 +24,22 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class HttpStubTest {
-    private static HttpServerStub stub;
+    private static StubServerFacade stub;
     private static HttpDsl dslServer;
     private Client httpClient = new Client();
+    private static HttpServerStub context;
 
     @BeforeClass
     public static void beforeAll() {
-        stub = stubServer(9099, "/context");
-        dslServer = dslWrapped(stub);
+        stub = StubServerFacade.newServer(9099);
+        context = stub.withContext("/context");
+        dslServer = dslWrapped(context);
         stub.start();
+    }
+
+    @Before
+    public void setUp() {
+        context.reset();
     }
 
     @Test
@@ -58,11 +65,6 @@ public class HttpStubTest {
         assertThat(uri.getHost(), is("localhost"));
         assertThat(uri.getPort(), is(9090));
         assertThat(URLDecoder.decode(uri.getQuery(), "UTF-8"), is("color=blue&name=Handsome Jack"));
-    }
-
-    @After
-    public void afterEach() {
-        stub.reset();
     }
 
     @AfterClass

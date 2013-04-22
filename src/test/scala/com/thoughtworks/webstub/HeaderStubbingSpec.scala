@@ -2,8 +2,7 @@ package com.thoughtworks.webstub
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import stub.StubServerFactory
-import StubServerFactory.stubServer
+import stub.StubServerFacade._
 import com.thoughtworks.webstub.dsl.builders.ResponseBuilder
 import ResponseBuilder.response
 import com.thoughtworks.webstub.dsl.HttpDsl.dslWrapped
@@ -12,8 +11,14 @@ import scala.collection.JavaConversions._
 @RunWith(classOf[JUnitRunner])
 class HeaderStubbingSpec extends StubFunctionalSpec {
   val contextUrl = "http://localhost:9099/context"
-  val stub = stubServer(9099, "/context")
-  val dslServer = dslWrapped(stub)
+
+  val stub = newServer(9099)
+  val context = stub.withContext("/context")
+  val dslServer = dslWrapped(context)
+
+  override protected def beforeEach() {
+    context.reset
+  }
 
   ignore("should support request headers") {
     /*
