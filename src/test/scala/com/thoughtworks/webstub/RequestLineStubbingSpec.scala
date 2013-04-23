@@ -10,8 +10,8 @@ import StubServerFacade._
 class RequestLineStubbingSpec extends StubFunctionalSpec {
   val contextUrl = "http://localhost:9099/context"
 
-  val stub = newServer(9099)
-  val dslServer = stub.withContext("/context")
+  val server = newServer(9099)
+  val dslServer = server.withContext("/context")
 
   override protected def beforeEach() {
     dslServer.reset

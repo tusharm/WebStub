@@ -3,40 +3,51 @@
 This library intends to simplify stubbing out responses from external HTTP entities that your application/service  depends on.
 This can be useful in testing your application from within JUnit tests. It internally uses Jetty as the servlet container.
 
-Tests will setup a stub like this:
+Example usage:
 ```java
 @BeforeClass
 public static void beforeAll() {
-    stub = stubServer(9099, "/context");
-    dslServer = dslWrapped(stub);
-    stub.start();
+    server = newServer(9099);
+    stubServer = server.withContext("/context");
+
+    server.start();
+}
+
+@Before
+public void setUp() {
+    stubServer.reset();
 }
 
 @Test
 public void shouldStubHttpCalls() {
-    dslServer.get("/accounts/1").returns(response(200).withContent("account details"));
+    stubServer.get("/accounts/1").returns(response(200).withContent("account details"));
 
     Response response = httpClient.get("http://localhost:9099/context/accounts/1");
     assertThat(response.status(), is(200));
     assertThat(response.content(), is("account details"));
 }
 
-@After
-public void afterEach() {
-    stub.reset();
+@Test
+public void shouldMatchResponseForRequestsContainingHeaders() {
+    stubServer.get("/accounts/1").withHeader("x", "y").returns(response(200));
+
+    Response response = httpClient.get("http://localhost:9099/context/accounts/1", asList(new BasicHeader("x", "y")));
+    assertThat(response.status(), is(200));
 }
 
 @AfterClass
 public static void afterAll() {
-    stub.stop();
+    server.stop();
 }
 ```
 Refer to tests:
 + [RequestLineStubbingSpec](/src/test/scala/com/thoughtworks/webstub/RequestLineStubbingSpec.scala).
 + [HeaderStubbingSpec](/src/test/scala/com/thoughtworks/webstub/HeaderStubbingSpec.scala).
 + [BodyContentStubbingSpec](/src/test/scala/com/thoughtworks/webstub/BodyContentStubbingSpec.scala).
++ [MultipleContextStubbingSpec](/src/test/scala/com/thoughtworks/webstub/MultipleContextStubbingSpec.scala).
 
 For a real example, refer to [WebStubDemo](https://github.com/tusharm/WebStubDemo) where a real Spring application is tested using WebStub and [Inproctester](https://github.com/aharin/inproctester)
+The example uses the latest released version of WebStub and hence there might be minor differences to the example shown above.
 
 The artifact is available at [Maven Central Repository](http://search.maven.org/#search%7Cga%7C1%7Cweb-stub); give it a ride and give your feedback.
 The maven co-ordinates are:
@@ -54,6 +65,7 @@ The maven co-ordinates are:
 - Supports stubbing requests (method, uri, query params, headers, content) and responses (status code, headers, content)
 - Allows resetting stub configuration before/after every test, to keep individual tests independent
 - Requests/responses can take [ContentBuilder](/src/main/java/com/thoughtworks/webstub/dsl/builders/ContentBuilder.java) implementations; create ContentBuilders (e.g. to convert your domain objects to JSON or XML) to suit your needs
+- Supports stubbing multiple web contexts on a single server
 - Can be used for functional testing of services running externally or inside the test itself
 
 ## RoadMap

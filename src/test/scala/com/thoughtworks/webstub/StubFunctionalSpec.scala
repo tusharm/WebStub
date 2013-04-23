@@ -4,10 +4,10 @@ import server.HttpServer
 import utils.Client
 
 trait StubFunctionalSpec extends SmartSpec {
-  val stub: HttpServer
+  val server: HttpServer
   val httpClient = new Client
 
-  override protected def beforeAll() { stub.start }
-  override protected def afterAll() { stub.stop }
+  override protected def beforeAll() { server.start }
+  override protected def afterAll() { server.stop }
 
 }

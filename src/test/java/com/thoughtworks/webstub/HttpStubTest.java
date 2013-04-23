@@ -16,12 +16,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class HttpStubTest {
-    private static StubServerFacade server = newServer(9099);
-    private static HttpDsl stubServer = server.withContext("/context");
+    private static StubServerFacade server;
+    private static HttpDsl stubServer;
     private Client httpClient = new Client();
 
     @BeforeClass
     public static void beforeAll() {
+        server = newServer(9099);
+        stubServer = server.withContext("/context");
+
         server.start();
     }
 
