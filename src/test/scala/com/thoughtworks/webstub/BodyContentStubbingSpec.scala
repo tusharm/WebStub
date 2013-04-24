@@ -12,16 +12,22 @@ class BodyContentStubbingSpec extends StubFunctionalSpec {
   val server = newServer(9099)
   val dslServer = server.withContext("/context")
 
+  val content = <user>
+    <firstName>John</firstName>
+    <lastName>Doe</lastName>
+    <dob>03/03/1978</dob>
+  </user>.toString
+
   override protected def beforeEach() {
     dslServer.reset
   }
 
   describe("for entity enclosing requests") {
     it("should support POST with request body") {
-      dslServer.post("/users").withContent("new user").returns(response(201))
+      dslServer.post("/users").withContent(content).returns(response(201))
 
       httpClient.post(s"$contextUrl/users").status should be(400)
-      httpClient.post(s"$contextUrl/users", "new user").status should be(201)
+      httpClient.post(s"$contextUrl/users", content).status should be(201)
     }
 
     it("should support PUT with request body") {
@@ -31,11 +37,11 @@ class BodyContentStubbingSpec extends StubFunctionalSpec {
   }
 
   it("should support response body content") {
-    dslServer.get("/person").returns(response(200).withContent("Some person"))
+    dslServer.get("/person").returns(response(200).withContent(content))
 
     httpClient.get(s"$contextUrl/person") should have(
       'status(200),
-      'content("Some person")
+      'content(content)
     )
   }
 }
