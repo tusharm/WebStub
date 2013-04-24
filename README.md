@@ -60,16 +60,16 @@ The maven co-ordinates are:
 ```
 ## Features
 
-### 1.0.0
+#### 1.0.1 (next up)
+- Supports stubbing multiple web contexts on a single server
+
+#### 1.0.0
 - Stubs a real server (embedded Jetty) on-the-fly from within your tests (so test data setup lies in the test) using a fluent DSL
 - Supports GET, POST, PUT and DELETE verbs
 - Supports stubbing requests (method, uri, query params, headers, content) and responses (status code, headers, content)
 - Allows resetting stub configuration before/after every test, to keep individual tests independent
 - Requests/responses can take [ContentBuilder](/src/main/java/com/thoughtworks/webstub/dsl/builders/ContentBuilder.java) implementations; create ContentBuilders (e.g. to convert your domain objects to JSON or XML) to suit your needs
 - Can be used for functional testing of services running externally or inside the test itself
-
-### 1.0.1
-- Supports stubbing multiple web contexts on a single server
 
 ## RoadMap
 
