@@ -24,8 +24,7 @@ public class ContentMatcher extends RequestPartMatcher {
     @Override
     public boolean matches(HttpConfiguration configuration) throws IOException {
         String configuredContent = configuration.request().content();
-        String content = getContent(request);
-        return isBlank(configuredContent) || configuredContent.equals(content);
+        return isBlank(configuredContent) || configuredContent.equals(getContent(request));
     }
 
     private String getContent(HttpServletRequest req) throws IOException {
@@ -35,7 +34,8 @@ public class ContentMatcher extends RequestPartMatcher {
             List<String> lines = readLines(inputStream);
             return join(lines, "\n");
         } finally {
-            closeQuietly(inputStream);
+            if (inputStream != null)
+                inputStream.close();
         }
     }
 }
