@@ -1,7 +1,7 @@
 package com.thoughtworks.webstub.stub.creator;
 
 import com.thoughtworks.webstub.config.HttpConfiguration;
-import com.thoughtworks.webstub.dsl.Header;
+import com.thoughtworks.webstub.config.Header;
 
 import javax.servlet.http.HttpServletResponse;
 

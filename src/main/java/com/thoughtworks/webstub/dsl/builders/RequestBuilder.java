@@ -3,7 +3,7 @@ package com.thoughtworks.webstub.dsl.builders;
 import com.thoughtworks.webstub.config.ConfigurationProvider;
 import com.thoughtworks.webstub.config.HttpConfiguration;
 import com.thoughtworks.webstub.config.Request;
-import com.thoughtworks.webstub.dsl.Header;
+import com.thoughtworks.webstub.config.Header;
 
 import java.util.ArrayList;
 import java.util.Collection;

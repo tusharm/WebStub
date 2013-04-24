@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.dsl;
+package com.thoughtworks.webstub.config;
 
 public class Header {
     private final String name;

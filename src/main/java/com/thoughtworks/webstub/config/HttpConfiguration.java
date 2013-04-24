@@ -34,6 +34,14 @@ public class HttpConfiguration {
     }
 
     @Override
+    public int hashCode() {
+        int result = request.hashCode();
+        result = 31 * result + response.hashCode();
+        return result;
+    }
+
+    @Override
+
     public String toString() {
         return format("HttpConfiguration {" +
                 "method:%s, " +

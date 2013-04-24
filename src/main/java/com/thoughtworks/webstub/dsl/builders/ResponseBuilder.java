@@ -1,7 +1,7 @@
 package com.thoughtworks.webstub.dsl.builders;
 
 import com.thoughtworks.webstub.config.Response;
-import com.thoughtworks.webstub.dsl.Header;
+import com.thoughtworks.webstub.config.Header;
 
 import java.util.ArrayList;
 import java.util.Collection;

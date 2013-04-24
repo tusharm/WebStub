@@ -3,9 +3,8 @@ package com.thoughtworks.webstub.stub.matcher
 import com.thoughtworks.webstub.SmartSpec
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import com.thoughtworks.webstub.config.{Request, HttpConfiguration}
+import com.thoughtworks.webstub.config.{Header, Request, HttpConfiguration}
 import scala.collection.JavaConversions._
-import com.thoughtworks.webstub.dsl.Header
 import javax.servlet.http.HttpServletRequest
 import org.mockito.Mockito._
 

@@ -1,7 +1,7 @@
 package com.thoughtworks.webstub.stub.matcher;
 
 import com.thoughtworks.webstub.config.HttpConfiguration;
-import com.thoughtworks.webstub.dsl.Header;
+import com.thoughtworks.webstub.config.Header;
 import com.thoughtworks.webstub.utils.Predicate;
 
 import javax.servlet.http.HttpServletRequest;

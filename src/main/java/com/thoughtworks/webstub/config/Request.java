@@ -1,11 +1,9 @@
 package com.thoughtworks.webstub.config;
 
-import com.thoughtworks.webstub.dsl.Header;
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class Request {
     private String uri;
