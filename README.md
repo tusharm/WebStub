@@ -60,8 +60,9 @@ The maven co-ordinates are:
 ```
 ## Features
 
-#### 1.0.1 (next up)
+#### 1.0.1
 - Supports stubbing multiple web contexts on a single server
+- Fix: Resolved issue related to request content with multiple lines
 
 #### 1.0.0
 - Stubs a real server (embedded Jetty) on-the-fly from within your tests (so test data setup lies in the test) using a fluent DSL
