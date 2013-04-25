@@ -40,11 +40,7 @@ public static void afterAll() {
     server.stop();
 }
 ```
-Refer to tests:
-+ [RequestLineStubbingSpec](/src/test/scala/com/thoughtworks/webstub/RequestLineStubbingSpec.scala).
-+ [HeaderStubbingSpec](/src/test/scala/com/thoughtworks/webstub/HeaderStubbingSpec.scala).
-+ [BodyContentStubbingSpec](/src/test/scala/com/thoughtworks/webstub/BodyContentStubbingSpec.scala).
-+ [MultipleContextStubbingSpec](/src/test/scala/com/thoughtworks/webstub/MultipleContextStubbingSpec.scala).
+Refer to tests: [RequestLineStubbingSpec](/src/test/scala/com/thoughtworks/webstub/RequestLineStubbingSpec.scala), [HeaderStubbingSpec](/src/test/scala/com/thoughtworks/webstub/HeaderStubbingSpec.scala), [BodyContentStubbingSpec](/src/test/scala/com/thoughtworks/webstub/BodyContentStubbingSpec.scala), [MultipleContextStubbingSpec](/src/test/scala/com/thoughtworks/webstub/MultipleContextStubbingSpec.scala).
 
 For a real example, refer to [WebStubDemo](https://github.com/tusharm/WebStubDemo) where a real Spring application is tested using WebStub and [Inproctester](https://github.com/aharin/inproctester)
 The example uses the latest released version of WebStub and hence there might be minor differences to the example shown above.
