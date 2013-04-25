@@ -3,7 +3,7 @@ package com.thoughtworks.webstub.server;
 import static org.apache.commons.lang.StringUtils.isBlank;
 
 public class ServletContextFactory {
-    public static final String STATUS_PATH = "/status";
+    public static final String STATUS_PATH = "/__status__";
 
     public static ServletContextHandler create(String contextRoot) {
         ServletContextHandler context = contextFor(contextRoot);

@@ -15,11 +15,11 @@ class JettyHttpServerIntegrationSpec extends SmartSpec with WellBehavedServer {
 
   describe("A JettyHttpServer") {
     it("should display a status page if started") {
-      httpClient.get("http://localhost:9099/root/status").status should be(200)
+      httpClient.get("http://localhost:9099/root/__status__").status should be(200)
     }
 
     it("should report resource not found if context doesn't exist") {
-      httpClient.get("http://localhost:9099/doesNotExist/status").status should be(404)
+      httpClient.get("http://localhost:9099/doesNotExist/__status__").status should be(404)
     }
 
     it("should manipulate servlets on-the-fly") {
@@ -31,7 +31,7 @@ class JettyHttpServerIntegrationSpec extends SmartSpec with WellBehavedServer {
       context.removeServlet("/test")
       httpClient.get("http://localhost:9099/root/test").status should be(404)
 
-      httpClient.get("http://localhost:9099/root/status").status should be(200)
+      httpClient.get("http://localhost:9099/root/__status__").status should be(200)
     }
 
     it("should register multiple paths against the same servlet") {
@@ -49,7 +49,7 @@ class JettyHttpServerIntegrationSpec extends SmartSpec with WellBehavedServer {
       server.start
 
       server.addContext(ServletContextFactory.create("context"))
-      httpClient.get("http://localhost:9999/context/status").status should be(200)
+      httpClient.get("http://localhost:9999/context/__status__").status should be(200)
 
       server.stop
     }
