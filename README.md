@@ -45,15 +45,6 @@ Refer to tests: [RequestLineStubbingSpec](/src/test/scala/com/thoughtworks/webst
 For a real example, refer to [WebStubDemo](https://github.com/tusharm/WebStubDemo) where a real Spring application is tested using WebStub and [Inproctester](https://github.com/aharin/inproctester)
 The example uses the latest released version of WebStub and hence there might be minor differences to the example shown above.
 
-The artifact is available at [Maven Central Repository](http://search.maven.org/#search%7Cga%7C1%7Cweb-stub); give it a ride and give your feedback.
-The maven co-ordinates are:
-```
-<dependency>
-  <groupId>com.thoughtworks</groupId>
-  <artifactId>web-stub</artifactId>
-  <version>1.0.1</version>
-</dependency>
-```
 ## Features
 
 - Stubs a real server (embedded Jetty) on-the-fly from within your tests (so test data setup lies in the test) using a fluent DSL
@@ -63,6 +54,22 @@ The maven co-ordinates are:
 - Requests/responses can take [ContentBuilder](/src/main/java/com/thoughtworks/webstub/dsl/builders/ContentBuilder.java) implementations; create ContentBuilders (e.g. to convert your domain objects to JSON or XML) to suit your needs
 - Supports stubbing multiple web contexts on a single server
 - Can be used for functional testing of services running externally or inside the test itself
+
+## Releases
+
+The latest released version is 1.0.1
+
+The artifact is available at [Maven Central Repository](http://search.maven.org/#search%7Cga%7C1%7Cweb-stub).
+The maven co-ordinates are:
+```
+<dependency>
+  <groupId>com.thoughtworks</groupId>
+  <artifactId>web-stub</artifactId>
+  <version>x.y.z</version>
+</dependency>
+```
+
+The release notes are available [here](https://github.com/tusharm/WebStub/wiki/ReleaseNotes).
 
 ## RoadMap
 
