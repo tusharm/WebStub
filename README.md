@@ -80,6 +80,12 @@ The release notes are available [here](https://github.com/tusharm/WebStub/wiki/R
 - Dashboard for the stub server
 - Better reporting of assertion failures
 
+## Get involved
+
+- Raise bugs
+- Suggest features
+- Collaborate, fork
+
 ## License
 
 WebStub is distributed under the terms of Apache Software License v2.0: http://www.apache.org/licenses/LICENSE-2.0.html
