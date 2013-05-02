@@ -10,17 +10,26 @@ import com.thoughtworks.webstub.config.{Response, Request, HttpConfiguration}
 
 @RunWith(classOf[JUnitRunner])
 class ConfigurationsSpec extends SmartSpec {
-  val configurations = new Configurations(List(
-    httpConfiguration("GET", "/test1"),
-    httpConfiguration("PUT", "/test1"),
-    httpConfiguration("POST", "/test2")
-  ))
+  var configurations: Configurations = _
+
+  override def beforeEach() {
+    configurations = new Configurations(List(
+      httpConfiguration("GET", "/test1"),
+      httpConfiguration("PUT", "/test1"),
+      httpConfiguration("POST", "/test2")
+    ))
+  }
 
   it("should allow adding configuration") {
     configurations.add(httpConfiguration("DELETE", "/blah"))
 
     configurations.all should have size  (4)
     configurations.all should contain(httpConfiguration("DELETE", "/blah"))
+  }
+
+  it("should allow resetting") {
+    configurations.reset
+    configurations.all should have size(0)
   }
 
   it ("should filter a list of configurations based on the given matcher") {

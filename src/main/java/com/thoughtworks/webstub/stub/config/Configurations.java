@@ -15,7 +15,7 @@ public class Configurations {
     private final List<HttpConfiguration> configurations;
 
     public Configurations() {
-        this.configurations = new ArrayList<HttpConfiguration>();
+        this(new ArrayList<HttpConfiguration>());
     }
 
     public Configurations(List<HttpConfiguration> configurations) {
@@ -24,6 +24,14 @@ public class Configurations {
 
     public void add(HttpConfiguration configuration) {
         configurations.add(configuration);
+    }
+
+    public void reset() {
+        configurations.clear();
+    }
+
+    public List<HttpConfiguration> all() {
+        return Collections.unmodifiableList(configurations);
     }
 
     public Configurations filterBy(final RequestPartMatcher matcher) throws MissingMatchingConfigurationException {
@@ -42,11 +50,6 @@ public class Configurations {
             throw new MissingMatchingConfigurationException(matcher);
 
         return new Configurations(filtered);
-    }
-
-
-    public List<HttpConfiguration> all() {
-        return Collections.unmodifiableList(configurations);
     }
 
     public HttpConfiguration first() {

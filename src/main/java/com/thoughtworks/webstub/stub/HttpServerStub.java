@@ -13,9 +13,12 @@ public class HttpServerStub implements ConfigurationListener {
     private Configurations configurations;
 
     public HttpServerStub(HttpServer server, String contextRoot) {
-        this.contextHandler = create(contextRoot);
+        configurations = new Configurations();
+
+        contextHandler = create(contextRoot);
+        contextHandler.addServlet("/", new StubServlet(configurations));
+
         server.addContext(this.contextHandler);
-        initConfigurations();
     }
 
     @Override
@@ -25,13 +28,7 @@ public class HttpServerStub implements ConfigurationListener {
 
     @Override
     public void configurationCleared() {
-        initConfigurations();
-    }
-
-    private void initConfigurations() {
-        configurations = new Configurations();
-        contextHandler.removeServlet("/");
-        contextHandler.addServlet("/", new StubServlet(configurations));
+        configurations.reset();
     }
 }
 
