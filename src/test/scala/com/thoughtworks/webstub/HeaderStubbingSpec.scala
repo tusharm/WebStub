@@ -6,6 +6,7 @@ import StubServerFacade._
 import com.thoughtworks.webstub.dsl.builders.ResponseBuilder
 import ResponseBuilder.response
 import scala.collection.JavaConversions._
+import org.apache.http.message.BasicHeader
 
 @RunWith(classOf[JUnitRunner])
 class HeaderStubbingSpec extends StubFunctionalSpec {
@@ -18,12 +19,16 @@ class HeaderStubbingSpec extends StubFunctionalSpec {
     dslServer.reset
   }
 
-  ignore("should support request headers") {
-    /*
-       TODO: for some weird reason, this doesn't compile in scala (the withHeader() part);
-       this scenario is covered in HttpStubTest for now
-     */
-    // dslServer.get("/users/1").withHeader("name", "value").returns(response(200))
+  it("should support request headers") {
+    def requestWithHeaders = httpClient.get(s"$contextUrl/users/1", List(new BasicHeader("name", "value")))
+
+    dslServer.get("/users/1").withHeader("name", "value").returns(response(200))
+
+    httpClient.get(s"$contextUrl/users/1").status should be(412)
+    requestWithHeaders.status should be(200)
+
+    dslServer.get("/users/2").withHeaders(Map("name" -> "value")).returns(response(200))
+    requestWithHeaders.status should be(200)
   }
 
   it("should support response headers") {

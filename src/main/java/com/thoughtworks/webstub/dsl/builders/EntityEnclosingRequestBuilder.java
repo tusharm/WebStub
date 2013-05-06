@@ -3,7 +3,7 @@ package com.thoughtworks.webstub.dsl.builders;
 import com.thoughtworks.webstub.config.ConfigurationProvider;
 import com.thoughtworks.webstub.config.Request;
 
-public class EntityEnclosingRequestBuilder extends RequestBuilder {
+public class EntityEnclosingRequestBuilder extends RequestBuilder<EntityEnclosingRequestBuilder> {
     private String content;
 
     public EntityEnclosingRequestBuilder(ConfigurationProvider configurationProvider) {

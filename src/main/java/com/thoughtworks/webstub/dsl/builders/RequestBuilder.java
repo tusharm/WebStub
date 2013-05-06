@@ -7,8 +7,9 @@ import com.thoughtworks.webstub.config.Header;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
-public class RequestBuilder {
+public class RequestBuilder<T extends RequestBuilder<T>> {
     private ConfigurationProvider configurationProvider;
     protected String uri;
     protected String method;
@@ -18,18 +19,26 @@ public class RequestBuilder {
         this.configurationProvider = configurationProvider;
     }
 
-    public <T extends RequestBuilder> T withMethod(String method) {
+    public T withMethod(String method) {
         this.method = method;
         return (T) this;
     }
 
-    public <T extends RequestBuilder> T withUri(String uri) {
+    public T withUri(String uri) {
         this.uri = uri;
         return (T) this;
     }
 
-    public <T extends RequestBuilder> T withHeader(String name, String value) {
+    public T withHeader(String name, String value) {
         headers.add(new Header(name, value));
+        return (T) this;
+    }
+
+    public T withHeaders(Map<String, String> headersMap) {
+        headers.clear();
+        for (Map.Entry<String, String> entry : headersMap.entrySet()) {
+            headers.add(new Header(entry.getKey(), entry.getValue()));
+        }
         return (T) this;
     }
 
