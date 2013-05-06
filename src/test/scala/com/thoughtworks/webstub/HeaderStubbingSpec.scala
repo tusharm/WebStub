@@ -27,7 +27,7 @@ class HeaderStubbingSpec extends StubFunctionalSpec {
     httpClient.get(s"$contextUrl/users/1").status should be(412)
     requestWithHeaders.status should be(200)
 
-    dslServer.get("/users/2").withHeaders(Map("name" -> "value")).returns(response(200))
+    dslServer.get("/users/1").withHeaders(Map("name" -> "value")).returns(response(200))
     requestWithHeaders.status should be(200)
   }
 
