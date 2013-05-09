@@ -27,6 +27,9 @@ class UriMatcherSpec extends SmartSpec {
 
     matcher = new UriMatcher(requestFor("/test/1?a=b"))
     matcher.matches(httpConfiguration("/test/*")) should be(true)
+
+    matcher = new UriMatcher(requestFor("/department/1/employee"))
+    matcher.matches(httpConfiguration("/department/*/employee")) should be(true)
   }
 
 
