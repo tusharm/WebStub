@@ -52,7 +52,7 @@ public class Configurations {
         return new Configurations(filtered);
     }
 
-    public HttpConfiguration first() {
-        return configurations.get(0);
+    public HttpConfiguration last() {
+        return configurations.get(configurations.size() - 1);
     }
 }

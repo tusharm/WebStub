@@ -45,6 +45,10 @@ class ConfigurationsSpec extends SmartSpec {
     } should produce[MissingMatchingConfigurationException]
   }
 
+  it ("should return last configuration") {
+    configurations.last should be(httpConfiguration("POST", "/test2"))
+  }
+
   private def uriMatcherFor(uri: String) = new RequestPartMatcher(null, 101) {
     def matches(configuration: HttpConfiguration) = configuration.request().uri().equals(uri)
   }

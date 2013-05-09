@@ -77,7 +77,7 @@ class RequestLineStubbingSpec extends StubFunctionalSpec {
     httpClient.delete(s"$contextUrl/person/1").status should be(405)
   }
 
-  ignore("should support overriding expectations") {
+  it("should support overriding expectations") {
     dslServer.get("/person/1").returns(response(200))
     dslServer.get("/person/1").returns(response(405))
 

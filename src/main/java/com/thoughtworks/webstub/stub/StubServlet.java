@@ -69,7 +69,7 @@ public class StubServlet extends HttpServlet {
                     .filterBy(new HeadersMatcher(request))
                     .filterBy(new ContentMatcher(request));
 
-            for (ResponsePartCreator creator : responseCreators(filtered.first())) {
+            for (ResponsePartCreator creator : responseCreators(filtered.last())) {
                 creator.createFor(response);
             }
         } catch (MissingMatchingConfigurationException e) {
