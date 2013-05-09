@@ -47,7 +47,7 @@ class RequestLineStubbingSpec extends StubFunctionalSpec {
     httpClient.get(s"$contextUrl/person/1").status should be(405)
   }
 
-  ignore("should support wildcard urls") {
+  it("should support wildcard urls") {
     dslServer.get("/person/*").returns(response(200))
     httpClient.get(s"$contextUrl/person/1").status should be(200)
   }

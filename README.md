@@ -73,7 +73,6 @@ The release notes are available [here](https://github.com/tusharm/WebStub/wiki/R
 
 ## RoadMap
 
-- Support for wildcard urls
 - Support for https
 - Support for auth
 - Starting stub servers in-process, rather than on real native ports
