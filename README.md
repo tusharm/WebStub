@@ -48,7 +48,7 @@ The example uses the latest released version of WebStub and hence there might be
 ## Features
 
 - Stubs a real server (embedded Jetty) on-the-fly from within your tests (so test data setup lies in the test) using a fluent DSL
-- Supports GET, POST, PUT, DELETE, HEAD, OPTIONS, TRACE
+- Supports GET, POST, PUT, DELETE, HEAD, OPTIONS, TRACE and PATCH
 - Supports stubbing requests (method, uri, query params, headers, content) and responses (status code, headers, content)
 - Allows resetting stub configuration before/after every test, to keep individual tests independent
 - Requests/responses can take [ContentBuilder](/src/main/java/com/thoughtworks/webstub/dsl/builders/ContentBuilder.java) implementations; create ContentBuilders (e.g. to convert your domain objects to JSON or XML) to suit your needs

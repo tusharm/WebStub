@@ -72,6 +72,10 @@ public class Client {
         return execute(new HttpTrace(url));
     }
 
+    public Response patch(String url, String content) {
+        return executeWithContent(new HttpPatch(url), content);
+    }
+
     private Response executeWithContent(HttpEntityEnclosingRequestBase request, String content) {
         try {
             request.setEntity(new StringEntity(content));

@@ -26,6 +26,14 @@ public class StubServlet extends HttpServlet {
     }
 
     @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getMethod().equals("PATCH"))
+            doPatch(req, resp);
+        else
+            super.service(req, resp);
+    }
+
+    @Override
     public final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         handle(req, resp);
     }
@@ -57,6 +65,10 @@ public class StubServlet extends HttpServlet {
 
     @Override
     protected void doTrace(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        handle(req, resp);
+    }
+
+    protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         handle(req, resp);
     }
 

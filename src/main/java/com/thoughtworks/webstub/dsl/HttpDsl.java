@@ -38,6 +38,10 @@ public class HttpDsl extends ConfigurationProvider {
         return new RequestBuilder(this).withMethod("TRACE").withUri(uri);
     }
 
+    public EntityEnclosingRequestBuilder patch(String uri) {
+        return new EntityEnclosingRequestBuilder(this).withMethod("PATCH").withUri(uri);
+    }
+
     public void reset() {
         configurationCleared();
     }

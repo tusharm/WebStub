@@ -52,4 +52,9 @@ class MethodStubbingSpec extends StubFunctionalSpec {
     dslServer.trace("/person").returns(response(200).withContent("All Ok"))
     httpClient.trace(s"$contextUrl/person").status should be(200)
   }
+
+  it("should support PATCH") {
+    dslServer.patch("/person/1").withContent("files diffs").returns(response(204))
+    httpClient.patch(s"$contextUrl/person/1", "files diffs").status should be(204)
+  }
 }
