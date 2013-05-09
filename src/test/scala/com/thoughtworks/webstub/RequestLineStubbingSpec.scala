@@ -39,6 +39,21 @@ class RequestLineStubbingSpec extends StubFunctionalSpec {
     httpClient.put(s"$contextUrl/person", "some content").status should be(201)
   }
 
+  it("should support OPTIONS") {
+    dslServer.options("/person").returns(response(401))
+    httpClient.options(s"$contextUrl/person").status should be(401)
+  }
+
+  it("should support HEAD") {
+    dslServer.head("/person").returns(response(401))
+    httpClient.head(s"$contextUrl/person").status should be(401)
+  }
+
+  it("should support TRACE") {
+    dslServer.trace("/person").returns(response(200).withContent("All Ok"))
+    httpClient.trace(s"$contextUrl/person").status should be(200)
+  }
+
   it ("should support query params") {
     dslServer.get("/dogs?color=black&status=new born").returns(response(200))
 
@@ -60,5 +75,12 @@ class RequestLineStubbingSpec extends StubFunctionalSpec {
 
     httpClient.get(s"$contextUrl/person/1").status should be(200)
     httpClient.delete(s"$contextUrl/person/1").status should be(405)
+  }
+
+  ignore("should support overriding expectations") {
+    dslServer.get("/person/1").returns(response(200))
+    dslServer.get("/person/1").returns(response(405))
+
+    httpClient.get(s"$contextUrl/person/1").status should be(405)
   }
 }

@@ -60,6 +60,18 @@ public class Client {
         return execute(new HttpDelete(url));
     }
 
+    public Response options(String url) {
+        return execute(new HttpOptions(url));
+    }
+
+    public Response head(String url) {
+        return execute(new HttpHead(url));
+    }
+
+    public Response trace(String url) {
+        return execute(new HttpTrace(url));
+    }
+
     private Response executeWithContent(HttpEntityEnclosingRequestBase request, String content) {
         try {
             request.setEntity(new StringEntity(content));

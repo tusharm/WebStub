@@ -45,6 +45,21 @@ public class StubServlet extends HttpServlet {
         handle(req, resp);
     }
 
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        handle(req, resp);
+    }
+
+    @Override
+    protected void doHead(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        handle(req, resp);
+    }
+
+    @Override
+    protected void doTrace(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        handle(req, resp);
+    }
+
     private void handle(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             Configurations filtered = configurations

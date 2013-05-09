@@ -26,6 +26,18 @@ public class HttpDsl extends ConfigurationProvider {
         return new RequestBuilder(this).withMethod("DELETE").withUri(uri);
     }
 
+    public EntityEnclosingRequestBuilder options(String uri) {
+        return new EntityEnclosingRequestBuilder(this).withMethod("OPTIONS").withUri(uri);
+    }
+
+    public RequestBuilder head(String uri) {
+        return new RequestBuilder(this).withMethod("HEAD").withUri(uri);
+    }
+
+    public RequestBuilder trace(String uri) {
+        return new RequestBuilder(this).withMethod("TRACE").withUri(uri);
+    }
+
     public void reset() {
         configurationCleared();
     }

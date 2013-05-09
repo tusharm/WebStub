@@ -43,6 +43,11 @@ class HttpDslSpec extends SmartSpec {
     configs should contain(httpConfiguration("DELETE", "/delete", 404))
   }
 
+  it ("should support OPTIONS operation") {
+    provider.options("/delete").returns(response(404))
+    configs should contain(httpConfiguration("OPTIONS", "/delete", 404))
+  }
+
   it ("should support adding request content") {
     provider.post("/employees").withContent("new employee").returns(response(201))
     configs should contain(httpConfiguration("POST", "/employees", "new employee", 201))
