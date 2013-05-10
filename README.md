@@ -69,7 +69,7 @@ The maven co-ordinates are:
 </dependency>
 ```
 
-The release notes are available [here](https://github.com/tusharm/WebStub/wiki/ReleaseNotes).
+The release notes are available [here](https://github.com/tusharm/WebStub/wiki/Release-notes,-upcoming-features).
 
 ## RoadMap
 
