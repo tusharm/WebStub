@@ -5,3 +5,5 @@ target
 .project
 .settings
 *.patch
+.gradle/
+build/

@@ -1,0 +1,20 @@
+apply plugin: 'scala'
+
+dependencies {
+    compile 'org.eclipse.jetty:jetty-server:8.1.5.v20120716'
+    compile 'org.eclipse.jetty:jetty-servlet:8.1.5.v20120716'
+    compile 'commons-lang:commons-lang:2.6'
+    compile 'commons-collections:commons-collections:3.2.1'
+    compile 'commons-io:commons-io:2.0.1'
+    compile 'oro:oro:2.0.8'
+
+    testCompile 'org.scala-lang:scala-library:2.10.0'
+    testCompile 'org.scalatest:scalatest_2.10:1.9.1'
+    testCompile 'junit:junit:4.8.2'
+    testCompile 'org.mockito:mockito-all:1.9.0-rc1'
+    testCompile 'org.apache.httpcomponents:httpclient:4.2.3'
+}
+
+repositories {
+    mavenCentral()
+}
