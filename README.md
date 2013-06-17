@@ -57,7 +57,7 @@ The example uses the latest released version of WebStub and hence there might be
 
 ## Releases
 
-The latest released version is 1.0.1
+The latest released version is 1.1.0
 
 The released artifact is available at [Maven Central Repository](http://search.maven.org/#search%7Cga%7C1%7Cweb-stub), while the latest snapshot is available [here](https://oss.sonatype.org/content/repositories/snapshots/).
 The maven co-ordinates are:
