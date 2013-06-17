@@ -1,7 +1,7 @@
 apply plugin: 'scala'
 
 archivesBaseName = 'web-stub'
-version = '1.0.2-SNAPSHOT'
+version = '1.1.0-SNAPSHOT'
 
 dependencies {
     compile 'org.eclipse.jetty:jetty-server:8.1.5.v20120716'
