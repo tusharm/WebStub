@@ -22,6 +22,12 @@ end
 
 begin
   version = pom_version
+
+  if version.include?('SNAPSHOT')
+    raise "The artifact is not released. Aborting.."
+    exit 1
+  end
+
   success = system "mvn clean package ; cp pom.xml target/web-stub-#{version}.pom ; mvn source:jar ; mvn javadoc:jar"
   exit 1 unless success
 
