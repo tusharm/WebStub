@@ -73,11 +73,12 @@ The release notes are available [here](https://github.com/tusharm/WebStub/wiki/R
 
 ## RoadMap
 
+- Parallel test execution
+- Delayed and chaotic responses, to simulate unreliable external dependencies
 - Support for https
 - Support for auth
 - Starting stub servers in-process, rather than on real native ports
 - Dashboard for the stub server
-- Better reporting of assertion failures
 
 ## Get involved
 
