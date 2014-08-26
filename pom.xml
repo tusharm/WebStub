@@ -29,16 +29,20 @@
         <url>git@github.com:tusharm/WebStub.git</url>
     </scm>
 
+    <properties>
+        <jetty-server.version>9.2.0.M1</jetty-server.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-            <version>8.1.5.v20120716</version>
+            <version>${jetty-server.version}</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
-            <version>8.1.5.v20120716</version>
+            <version>${jetty-server.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
