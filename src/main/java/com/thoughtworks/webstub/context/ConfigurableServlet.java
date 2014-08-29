@@ -1,13 +1,11 @@
-package com.thoughtworks.webstub.stub;
+package com.thoughtworks.webstub.context;
 
 import com.thoughtworks.webstub.config.HttpConfiguration;
-import com.thoughtworks.webstub.stub.config.Configurations;
-import com.thoughtworks.webstub.stub.config.MissingMatchingConfigurationException;
-import com.thoughtworks.webstub.stub.creator.ContentCreator;
-import com.thoughtworks.webstub.stub.creator.HeadersCreator;
-import com.thoughtworks.webstub.stub.creator.ResponsePartCreator;
-import com.thoughtworks.webstub.stub.creator.StatusCreator;
-import com.thoughtworks.webstub.stub.matcher.*;
+import com.thoughtworks.webstub.context.creator.ContentCreator;
+import com.thoughtworks.webstub.context.creator.HeadersCreator;
+import com.thoughtworks.webstub.context.creator.ResponsePartCreator;
+import com.thoughtworks.webstub.context.creator.StatusCreator;
+import com.thoughtworks.webstub.context.matcher.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,10 +16,10 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 
-public class StubServlet extends HttpServlet {
+public class ConfigurableServlet extends HttpServlet {
     private Configurations configurations;
 
-    public StubServlet(Configurations configurations) {
+    public ConfigurableServlet(Configurations configurations) {
         this.configurations = configurations;
     }
 

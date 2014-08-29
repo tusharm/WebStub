@@ -1,12 +1,9 @@
-package com.thoughtworks.webstub.stub.matcher;
+package com.thoughtworks.webstub.context.matcher;
 
 import com.thoughtworks.webstub.config.HttpConfiguration;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 

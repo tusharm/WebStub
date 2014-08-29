@@ -1,11 +1,10 @@
-package com.thoughtworks.webstub.stub.matcher;
+package com.thoughtworks.webstub.context.matcher;
 
 import com.thoughtworks.webstub.config.HttpConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 
 import static java.net.URLDecoder.decode;
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;

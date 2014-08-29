@@ -3,14 +3,14 @@ package com.thoughtworks.webstub
 import dsl.builders.ResponseBuilder._
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
-import StubServerFacade._
+import StubServer._
 
 @RunWith(classOf[JUnitRunner])
 class MethodStubbingSpec extends StubFunctionalSpec {
   val contextUrl = "http://localhost:9099/context"
 
   val server = newServer(9099)
-  val dslServer = server.withContext("/context")
+  val dslServer = server.stub("/context")
 
   override protected def beforeEach() {
     dslServer.reset

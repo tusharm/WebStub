@@ -1,12 +1,12 @@
-package com.thoughtworks.webstub.stub
+package com.thoughtworks.webstub.context
 
-import config.{Configurations, MissingMatchingConfigurationException}
-import matcher.RequestPartMatcher
+import com.thoughtworks.webstub.SmartSpec
+import com.thoughtworks.webstub.config.{HttpConfiguration, Request, Response}
+import com.thoughtworks.webstub.context.matcher.RequestPartMatcher
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import com.thoughtworks.webstub.SmartSpec
+
 import scala.collection.JavaConversions._
-import com.thoughtworks.webstub.config.{Response, Request, HttpConfiguration}
 
 @RunWith(classOf[JUnitRunner])
 class ConfigurationsSpec extends SmartSpec {

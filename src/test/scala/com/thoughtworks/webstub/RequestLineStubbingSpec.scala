@@ -1,17 +1,17 @@
 package com.thoughtworks.webstub
 
 import dsl.builders.ResponseBuilder._
-import dsl.HttpDsl._
+import dsl.StubDsl._
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
-import StubServerFacade._
+import StubServer._
 
 @RunWith(classOf[JUnitRunner])
 class RequestLineStubbingSpec extends StubFunctionalSpec {
   val contextUrl = "http://localhost:9099/context"
 
   val server = newServer(9099)
-  val dslServer = server.withContext("/context")
+  val dslServer = server.stub("/context")
 
   override protected def beforeEach() {
     dslServer.reset

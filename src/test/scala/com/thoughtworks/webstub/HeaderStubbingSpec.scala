@@ -2,7 +2,7 @@ package com.thoughtworks.webstub
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import StubServerFacade._
+import StubServer._
 import com.thoughtworks.webstub.dsl.builders.ResponseBuilder
 import ResponseBuilder.response
 import scala.collection.JavaConversions._
@@ -13,7 +13,7 @@ class HeaderStubbingSpec extends StubFunctionalSpec {
   val contextUrl = "http://localhost:9099/context"
 
   val server = newServer(9099)
-  val dslServer = server.withContext("/context")
+  val dslServer = server.stub("/context")
 
   override protected def beforeEach() {
     dslServer.reset

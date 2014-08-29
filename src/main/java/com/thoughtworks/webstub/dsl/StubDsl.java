@@ -4,9 +4,9 @@ import com.thoughtworks.webstub.config.*;
 import com.thoughtworks.webstub.dsl.builders.EntityEnclosingRequestBuilder;
 import com.thoughtworks.webstub.dsl.builders.RequestBuilder;
 
-public class HttpDsl extends ConfigurationProvider {
+public class StubDsl extends ConfigurationProvider {
 
-    public HttpDsl(ConfigurationListener listener) {
+    public StubDsl(ConfigurationListener listener) {
         super(listener);
     }
 

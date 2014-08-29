@@ -10,9 +10,10 @@ import com.thoughtworks.webstub.config.{Response, Request, ConfigurationListener
 import scala.collection.JavaConversions._
 
 @RunWith(classOf[JUnitRunner])
-class HttpDslSpec extends SmartSpec {
+class StubDslSpec extends SmartSpec {
+
   val configs = MutableList[HttpConfiguration]()
-  val provider = new HttpDsl(new ConfigurationListener {
+  val provider = new StubDsl(new ConfigurationListener {
     def configurationCreated(configuration: HttpConfiguration) {
         configs += configuration
     }

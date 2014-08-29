@@ -1,22 +1,21 @@
-package com.thoughtworks.webstub.stub;
+package com.thoughtworks.webstub.context;
 
 import com.thoughtworks.webstub.config.ConfigurationListener;
 import com.thoughtworks.webstub.config.HttpConfiguration;
 import com.thoughtworks.webstub.server.HttpServer;
 import com.thoughtworks.webstub.server.ServletContextHandler;
-import com.thoughtworks.webstub.stub.config.Configurations;
 
 import static com.thoughtworks.webstub.server.ServletContextFactory.create;
 
-public class HttpServerStub implements ConfigurationListener {
+public class ConfigurableContext implements ConfigurationListener {
     private ServletContextHandler contextHandler;
     private Configurations configurations;
 
-    public HttpServerStub(HttpServer server, String contextRoot) {
+    public ConfigurableContext(HttpServer server, String contextRoot) {
         configurations = new Configurations();
 
         contextHandler = create(contextRoot);
-        contextHandler.addServlet("/", new StubServlet(configurations));
+        contextHandler.addServlet("/", new ConfigurableServlet(configurations));
 
         server.addContext(this.contextHandler);
     }

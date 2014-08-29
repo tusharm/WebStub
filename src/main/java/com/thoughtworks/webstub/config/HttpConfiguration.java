@@ -2,6 +2,9 @@ package com.thoughtworks.webstub.config;
 
 
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+import java.util.Objects;
 
 import static java.lang.String.format;
 
@@ -43,13 +46,13 @@ public class HttpConfiguration {
     @Override
 
     public String toString() {
-        return format("HttpConfiguration {" +
-                "method:%s, " +
-                "uri:%s, " +
-                "request content:%s, " +
-                "status:%d, " +
-                "response content:%s" +
-                "}", request.method(), request.uri(), request.content(), response.status(), response.content());
+        return new ToStringBuilder(this)
+                .append("method", request.method())
+                .append("uri", request.uri())
+                .append("request content", request.content())
+                .append("response status", response.status())
+                .append("response content", response.content())
+                .toString();
     }
 }
 

@@ -1,10 +1,9 @@
 package com.thoughtworks.webstub
 
-import server.HttpServer
-import utils.Client
+import com.thoughtworks.webstub.utils.Client
 
 trait StubFunctionalSpec extends SmartSpec {
-  val server: HttpServer
+  val server: StubServer
   val httpClient = new Client
 
   override protected def beforeAll() { server.start }

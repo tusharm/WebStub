@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.stub.matcher;
+package com.thoughtworks.webstub.context.matcher;
 
 import com.thoughtworks.webstub.config.HttpConfiguration;
 import com.thoughtworks.webstub.config.Header;

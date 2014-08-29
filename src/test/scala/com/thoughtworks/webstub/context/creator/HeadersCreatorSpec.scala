@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.stub.creator
+package com.thoughtworks.webstub.context.creator
 
 import com.thoughtworks.webstub.SmartSpec
 import org.junit.runner.RunWith

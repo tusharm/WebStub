@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.stub.matcher
+package com.thoughtworks.webstub.context.matcher
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
