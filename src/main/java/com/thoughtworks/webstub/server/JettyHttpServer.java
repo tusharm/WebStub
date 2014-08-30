@@ -1,6 +1,7 @@
 package com.thoughtworks.webstub.server;
 
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 
 public class JettyHttpServer implements HttpServer {
@@ -16,7 +17,7 @@ public class JettyHttpServer implements HttpServer {
     }
 
     @Override
-    public void addContext(ServletContextHandler contextHandler) {
+    public void addContext(ContextHandler contextHandler) {
         handlerCollection.addHandler(contextHandler);
         start(contextHandler);
     }
@@ -39,7 +40,7 @@ public class JettyHttpServer implements HttpServer {
         }
     }
 
-    private void start(ServletContextHandler contextHandler) {
+    private void start(ContextHandler contextHandler) {
         try {
             contextHandler.start();
         } catch (Exception e) {

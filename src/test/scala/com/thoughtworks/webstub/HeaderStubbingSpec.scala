@@ -13,21 +13,21 @@ class HeaderStubbingSpec extends StubFunctionalSpec {
   val contextUrl = "http://localhost:9099/context"
 
   val server = newServer(9099)
-  val dslServer = server.stub("/context")
+  val contextService = server.stub("/context")
 
   override protected def beforeEach() {
-    dslServer.reset
+    contextService.reset
   }
 
   it("should support request headers") {
     def requestWithHeaders = httpClient.get(s"$contextUrl/users/1", List(new BasicHeader("name", "value")))
 
-    dslServer.get("/users/1").withHeader("name", "value").returns(response(200))
+    contextService.get("/users/1").withHeader("name", "value").returns(response(200))
 
     httpClient.get(s"$contextUrl/users/1").status should be(412)
     requestWithHeaders.status should be(200)
 
-    dslServer.get("/users/1").withHeaders(Map("name" -> "value")).returns(response(200))
+    contextService.get("/users/1").withHeaders(Map("name" -> "value")).returns(response(200))
     requestWithHeaders.status should be(200)
   }
 
@@ -37,7 +37,7 @@ class HeaderStubbingSpec extends StubFunctionalSpec {
       response(200).withHeaders(Map("Content-Length" -> "13"))
     ).foreach {
       response =>
-        dslServer.get("/users/1").returns(response)
+        contextService.get("/users/1").returns(response)
 
         val resp = httpClient.get(s"$contextUrl/users/1")
         resp.header("Content-Length") should contain("13")

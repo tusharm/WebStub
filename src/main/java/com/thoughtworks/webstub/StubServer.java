@@ -1,5 +1,6 @@
 package com.thoughtworks.webstub;
 
+import com.thoughtworks.webstub.context.WebAppContext;
 import com.thoughtworks.webstub.dsl.StubDsl;
 import com.thoughtworks.webstub.server.HttpServer;
 import com.thoughtworks.webstub.server.JettyHttpServer;
@@ -14,6 +15,11 @@ public class StubServer {
 
     private StubServer(HttpServer httpServer) {
         this.httpServer = httpServer;
+    }
+
+    public StubServer withWebConsole() {
+        new WebAppContext(httpServer, "webconsole");
+        return this;
     }
 
     public void start() {
