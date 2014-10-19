@@ -1,6 +1,6 @@
 package com.thoughtworks.webstub.config;
 
-import com.thoughtworks.webstub.context.matcher.RequestPartMatcher;
+import com.thoughtworks.webstub.server.servlet.matcher.RequestPartMatcher;
 import com.thoughtworks.webstub.utils.Predicate;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.server.servlet;
+package com.thoughtworks.webstub.server.context;
 
 import com.thoughtworks.webstub.server.utils.JettyHandlerRemover;
 import com.thoughtworks.webstub.server.utils.JettyServletRemover;

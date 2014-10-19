@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.context.matcher;
+package com.thoughtworks.webstub.server.servlet.matcher;
 
 import com.thoughtworks.webstub.config.HttpConfiguration;
 
@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.List;
 
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
-import static org.apache.commons.io.IOUtils.closeQuietly;
 import static org.apache.commons.io.IOUtils.readLines;
 import static org.apache.commons.lang.StringUtils.isBlank;
 import static org.apache.commons.lang.StringUtils.join;

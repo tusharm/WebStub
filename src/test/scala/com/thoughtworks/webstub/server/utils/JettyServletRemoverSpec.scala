@@ -1,6 +1,6 @@
 package com.thoughtworks.webstub.server.utils
 
-import com.thoughtworks.webstub.server.servlet.ServletContextHandler
+import com.thoughtworks.webstub.server.context.ServletContextHandler
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.eclipse.jetty.servlet.{ServletHolder, ServletMapping, ServletHandler}

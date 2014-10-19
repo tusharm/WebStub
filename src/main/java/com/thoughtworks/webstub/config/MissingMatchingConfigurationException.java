@@ -1,6 +1,6 @@
 package com.thoughtworks.webstub.config;
 
-import com.thoughtworks.webstub.context.matcher.RequestPartMatcher;
+import com.thoughtworks.webstub.server.servlet.matcher.RequestPartMatcher;
 
 public class MissingMatchingConfigurationException extends Exception {
     private RequestPartMatcher matcher;

@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.context.creator;
+package com.thoughtworks.webstub.server.servlet.creator;
 
 import com.thoughtworks.webstub.config.HttpConfiguration;
 

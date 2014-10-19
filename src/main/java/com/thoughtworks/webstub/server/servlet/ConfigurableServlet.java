@@ -3,11 +3,11 @@ package com.thoughtworks.webstub.server.servlet;
 import com.thoughtworks.webstub.config.Configurations;
 import com.thoughtworks.webstub.config.HttpConfiguration;
 import com.thoughtworks.webstub.config.MissingMatchingConfigurationException;
-import com.thoughtworks.webstub.context.creator.ContentCreator;
-import com.thoughtworks.webstub.context.creator.HeadersCreator;
-import com.thoughtworks.webstub.context.creator.ResponsePartCreator;
-import com.thoughtworks.webstub.context.creator.StatusCreator;
-import com.thoughtworks.webstub.context.matcher.*;
+import com.thoughtworks.webstub.server.servlet.creator.ContentCreator;
+import com.thoughtworks.webstub.server.servlet.creator.HeadersCreator;
+import com.thoughtworks.webstub.server.servlet.creator.ResponsePartCreator;
+import com.thoughtworks.webstub.server.servlet.creator.StatusCreator;
+import com.thoughtworks.webstub.server.servlet.matcher.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

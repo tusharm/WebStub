@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.context.creator
+package com.thoughtworks.webstub.server.servlet.creator
 
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith

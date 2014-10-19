@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.context;
+package com.thoughtworks.webstub.server.context;
 
 import com.thoughtworks.webstub.server.HttpServer;
 import org.eclipse.jetty.server.handler.ContextHandler;

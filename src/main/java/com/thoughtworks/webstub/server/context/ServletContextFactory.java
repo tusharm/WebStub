@@ -1,4 +1,6 @@
-package com.thoughtworks.webstub.server.servlet;
+package com.thoughtworks.webstub.server.context;
+
+import com.thoughtworks.webstub.server.servlet.StatusServlet;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
 

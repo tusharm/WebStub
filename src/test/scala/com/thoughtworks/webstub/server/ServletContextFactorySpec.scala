@@ -1,6 +1,6 @@
 package com.thoughtworks.webstub.server
 
-import com.thoughtworks.webstub.server.servlet.ServletContextFactory
+import com.thoughtworks.webstub.server.context.ServletContextFactory
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.thoughtworks.webstub.SmartSpec

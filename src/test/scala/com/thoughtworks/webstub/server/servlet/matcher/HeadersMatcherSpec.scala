@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.context.matcher
+package com.thoughtworks.webstub.server.servlet.matcher
 
 import com.thoughtworks.webstub.SmartSpec
 import org.junit.runner.RunWith

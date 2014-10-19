@@ -1,8 +1,8 @@
-package com.thoughtworks.webstub.context
+package com.thoughtworks.webstub.server.context
 
 import com.thoughtworks.webstub.SmartSpec
 import com.thoughtworks.webstub.config._
-import com.thoughtworks.webstub.context.matcher.RequestPartMatcher
+import com.thoughtworks.webstub.server.servlet.matcher.RequestPartMatcher
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 

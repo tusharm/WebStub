@@ -1,10 +1,10 @@
 package com.thoughtworks.webstub;
 
-import com.thoughtworks.webstub.context.WebAppContext;
+import com.thoughtworks.webstub.server.context.WebAppContext;
 import com.thoughtworks.webstub.dsl.StubDsl;
 import com.thoughtworks.webstub.server.HttpServer;
 import com.thoughtworks.webstub.server.JettyHttpServer;
-import com.thoughtworks.webstub.context.ConfigurableContext;
+import com.thoughtworks.webstub.server.context.ConfigurableContext;
 
 public class StubServer {
     public static StubServer newServer(int port) {
