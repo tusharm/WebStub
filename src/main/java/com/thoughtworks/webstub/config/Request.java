@@ -9,7 +9,7 @@ public class Request {
     private String uri;
     private String method;
     private String content;
-    private Collection<Header> headers = new ArrayList<Header>();
+    private Collection<Header> headers = new ArrayList<>();
 
     public Request(String method, String uri) {
         this.method = method;

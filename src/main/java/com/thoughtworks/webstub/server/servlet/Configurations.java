@@ -1,5 +1,6 @@
-package com.thoughtworks.webstub.config;
+package com.thoughtworks.webstub.server.servlet;
 
+import com.thoughtworks.webstub.config.HttpConfiguration;
 import com.thoughtworks.webstub.server.servlet.matcher.RequestPartMatcher;
 import com.thoughtworks.webstub.utils.Predicate;
 
@@ -18,7 +19,7 @@ public class Configurations {
     }
 
     public Configurations(List<HttpConfiguration> configurations) {
-        this.configurations = new ArrayList<HttpConfiguration>(configurations);
+        this.configurations = new ArrayList<>(configurations);
     }
 
     public void add(HttpConfiguration configuration) {

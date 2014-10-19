@@ -1,6 +1,6 @@
 package com.thoughtworks.webstub;
 
-import com.thoughtworks.webstub.server.context.WebAppContext;
+import com.thoughtworks.webstub.server.context.WebConsoleContext;
 import com.thoughtworks.webstub.dsl.StubDsl;
 import com.thoughtworks.webstub.server.HttpServer;
 import com.thoughtworks.webstub.server.JettyHttpServer;
@@ -18,7 +18,7 @@ public class StubServer {
     }
 
     public StubServer withWebConsole() {
-        new WebAppContext(httpServer, "webconsole");
+        new WebConsoleContext(httpServer, "webconsole");
         return this;
     }
 
@@ -31,6 +31,9 @@ public class StubServer {
     }
 
     public StubDsl stub(String contextRoot) {
+        if (contextRoot.equals("/"))
+            throw new IllegalArgumentException("The root context cannot be stubbed since is reserved for internal use.");
+
         return new StubDsl(new ConfigurableContext(httpServer, contextRoot));
     }
 }

@@ -1,8 +1,6 @@
 package com.thoughtworks.webstub.server.servlet;
 
-import com.thoughtworks.webstub.config.Configurations;
 import com.thoughtworks.webstub.config.HttpConfiguration;
-import com.thoughtworks.webstub.config.MissingMatchingConfigurationException;
 import com.thoughtworks.webstub.server.servlet.creator.ContentCreator;
 import com.thoughtworks.webstub.server.servlet.creator.HeadersCreator;
 import com.thoughtworks.webstub.server.servlet.creator.ResponsePartCreator;

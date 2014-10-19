@@ -1,6 +1,7 @@
 package com.thoughtworks.webstub.server.context;
 
 import com.thoughtworks.webstub.server.servlet.StatusServlet;
+import com.thoughtworks.webstub.server.servlet.WebSocketServlet;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
 

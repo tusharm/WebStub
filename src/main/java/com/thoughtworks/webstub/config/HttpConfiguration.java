@@ -4,10 +4,6 @@ package com.thoughtworks.webstub.config;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import java.util.Objects;
-
-import static java.lang.String.format;
-
 public class HttpConfiguration {
     private Request request;
     private Response response;
