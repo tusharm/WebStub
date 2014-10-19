@@ -1,6 +1,5 @@
-package com.thoughtworks.webstub.context;
+package com.thoughtworks.webstub.config;
 
-import com.thoughtworks.webstub.config.HttpConfiguration;
 import com.thoughtworks.webstub.context.matcher.RequestPartMatcher;
 import com.thoughtworks.webstub.utils.Predicate;
 

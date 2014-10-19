@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.server;
+package com.thoughtworks.webstub.server.servlet;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
 

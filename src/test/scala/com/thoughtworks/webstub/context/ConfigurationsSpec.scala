@@ -1,7 +1,7 @@
 package com.thoughtworks.webstub.context
 
 import com.thoughtworks.webstub.SmartSpec
-import com.thoughtworks.webstub.config.{HttpConfiguration, Request, Response}
+import com.thoughtworks.webstub.config._
 import com.thoughtworks.webstub.context.matcher.RequestPartMatcher
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner

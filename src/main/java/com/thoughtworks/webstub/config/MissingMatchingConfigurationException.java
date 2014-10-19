@@ -1,4 +1,4 @@
-package com.thoughtworks.webstub.context;
+package com.thoughtworks.webstub.config;
 
 import com.thoughtworks.webstub.context.matcher.RequestPartMatcher;
 

@@ -1,11 +1,13 @@
 package com.thoughtworks.webstub.context;
 
 import com.thoughtworks.webstub.config.ConfigurationListener;
+import com.thoughtworks.webstub.config.Configurations;
 import com.thoughtworks.webstub.config.HttpConfiguration;
+import com.thoughtworks.webstub.server.servlet.ConfigurableServlet;
 import com.thoughtworks.webstub.server.HttpServer;
-import com.thoughtworks.webstub.server.ServletContextHandler;
+import com.thoughtworks.webstub.server.servlet.ServletContextHandler;
 
-import static com.thoughtworks.webstub.server.ServletContextFactory.create;
+import static com.thoughtworks.webstub.server.servlet.ServletContextFactory.create;
 
 public class ConfigurableContext implements ConfigurationListener {
     private ServletContextHandler contextHandler;
