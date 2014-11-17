@@ -55,6 +55,8 @@ The example uses the latest released version of WebStub and hence there might be
 - Supports stubbing multiple web contexts on a single server
 - Can be used for functional testing of services running externally or inside the test itself
 
+Release notes are available on the [Wiki](https://github.com/tusharm/WebStub/wiki).
+
 ## Releases
 
 The latest released version is 1.1.0
