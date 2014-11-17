@@ -11,6 +11,10 @@ public class StubServer {
         return new StubServer(new JettyHttpServer(port));
     }
 
+    public static StubServer newServer() {
+        return new StubServer(new JettyHttpServer());
+    }
+
     private HttpServer httpServer;
 
     private StubServer(HttpServer httpServer) {
@@ -22,6 +26,13 @@ public class StubServer {
         return this;
     }
 
+    public StubDsl stub(String contextRoot) {
+        if (contextRoot.equals("/"))
+            throw new IllegalArgumentException("The root context cannot be stubbed since is reserved for internal use.");
+
+        return new StubDsl(new ConfigurableContext(httpServer, contextRoot));
+    }
+
     public void start() {
         httpServer.start();
     }
@@ -30,10 +41,7 @@ public class StubServer {
         httpServer.stop();
     }
 
-    public StubDsl stub(String contextRoot) {
-        if (contextRoot.equals("/"))
-            throw new IllegalArgumentException("The root context cannot be stubbed since is reserved for internal use.");
-
-        return new StubDsl(new ConfigurableContext(httpServer, contextRoot));
+    public int port() {
+        return httpServer.port();
     }
 }

@@ -6,4 +6,5 @@ public interface HttpServer {
     void start();
     void stop();
     void addContext(ContextHandler contextHandler);
+    int port();
 }
